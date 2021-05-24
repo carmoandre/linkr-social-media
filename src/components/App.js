@@ -10,7 +10,9 @@ export default function App() {
             <BrowserRouter>
                 <ResetCSS />
 
-                <Switch></Switch>
+                <Switch>
+                    <Route path="/">Teste</Route>
+                </Switch>
             </BrowserRouter>
         </UserContext.Provider>
     );
