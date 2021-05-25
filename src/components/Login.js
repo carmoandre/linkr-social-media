@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from "react-router-dom"
 
 export default function Login () {
     return (
@@ -13,11 +14,15 @@ export default function Login () {
                 <input placeholder="e-mail"></input>
                 <input placeholder="password"></input>
                 <button>Login</button>
-                <p>First time? Create an account!</p>
+                <Link to="/sign-up">
+                    <p>First time? Create an account!</p>
+                </Link>
             </Form>
         </Container>
     )
 }
+
+//styled component
 
 const Container = styled.div `
     width: 100%;
@@ -56,4 +61,36 @@ const Form = styled.div `
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;`
+    align-items: center;
+        input {
+            width: 80%;
+            height: 65px;
+            font-family:'Oswald', sans-serif;
+            font-size: 27px;
+            font-weight: 700;
+            margin-bottom: 13px;
+            border-radius: 6px;
+            border: none;
+            padding-left: 17px;
+            color: #9F9F9F;
+        }
+        button {
+            width: 80%;
+            height: 65px;
+            background: #1877F2;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-family:'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 27px;
+            margin-bottom: 22px;
+        }
+        p {
+            color: #fff;
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 20px;
+            text-decoration: underline;
+        }`
+        
