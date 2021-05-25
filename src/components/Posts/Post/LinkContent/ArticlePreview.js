@@ -16,7 +16,7 @@ export default function ArticlePreview({ linkProps }) {
       </ul>
 
       <picture>
-        <img src={srcImage} alt={title} />
+        <a href={href}><img src={srcImage} alt={title} /></a>
       </picture>
     </PreviewWrapper>
   );

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Caption({ caption }) {
   function CaptionFragment({ fragment }) {
     return fragment[0] === "#" ? (
-      <Link className="caption--link-hashtag" to={`/${fragment}`}>
+      <Link className="caption--link-hashtag" to={`/hashtag/${fragment.slice(1,)}`}>
         {fragment}
       </Link>
     ) : (
