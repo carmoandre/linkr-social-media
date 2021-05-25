@@ -14,17 +14,19 @@ export default function MyPosts(){
         Authorization: `Bearer ${token}`
       }
     }
+    console.log("entrou");
     axios
       .get(url, config)
       .then(({data})=>{
-        setPosts(data.posts)
+        setPosts(data.posts);
         console.log(data);
       })
-      .catch((err)=> console.log(err));
+      .catch((err) => console.log(err));
   },[])
 
   return (
     <>
+      my posts
       {
         posts.length === 0 
         ? ""

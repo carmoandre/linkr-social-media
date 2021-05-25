@@ -4,7 +4,7 @@ export default function ArticlePreview({ linkProps }) {
   const { href, title, description, srcImage } = linkProps;
 
   return (
-    <PreviewWrapper>
+    <PreviewWrapper href={href}>
       <ul className="preview--textList">
         <li className="textList--title">{title}</li>
         <li className="textList--description">{description}</li>
@@ -16,13 +16,13 @@ export default function ArticlePreview({ linkProps }) {
       </ul>
 
       <picture>
-        <a href={href}><img src={srcImage} alt={title} /></a>
+        <img src={srcImage} alt={title} />
       </picture>
     </PreviewWrapper>
   );
 }
 
-const PreviewWrapper = styled.article`
+const PreviewWrapper = styled.a`
   width: 100%;
   border-radius: 11px;
   border: 1px solid #4d4d4d;
