@@ -46,10 +46,7 @@ function sendData (email, password, username, picture, setBoolean, user, setUser
     }
 
     const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up", body)
-    request.then(promise => {
-                    setUser(promise.data)
-                    history.push("/")}
-                )
+    request.then(promise => {history.push("/")})
     request.catch(()=> alert("O e-mail inserido já está cadastrado"))
 }
 
