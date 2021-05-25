@@ -4,6 +4,7 @@ import { useState } from "react";
 import UserContext from "../contexts/UserContext";
 import SignUp from "./SignUp";
 import Login from "./Login"
+import MyPosts from './MyPosts';
 
 export default function App() {
     const [user, setUser] = useState(null);
@@ -14,6 +15,9 @@ export default function App() {
                 <Switch>
                     <Route path="/sign-up">
                         <SignUp />
+                    </Route>
+                    <Route exact path="/my-posts">
+                        <MyPosts />
                     </Route>
                     <Route path="/" exact>
                         <Login />
