@@ -1,7 +1,15 @@
 import styled from 'styled-components';
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import { useState } from 'react';
 
 export default function SignUp () {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("");
+    const [picture, setPicture] = useState("");
+    const [boolean, setBoolean] = useState(false)
+
     return (
         <Container>
             <Banner>
@@ -11,12 +19,12 @@ export default function SignUp () {
                 </Logo>
             </Banner>
             <Form>
-                <input placeholder="e-mail"></input>
-                <input placeholder="password"></input>
-                <input placeholder="username"></input>
-                <input placeholder="picture url"></input>
-                <button>Sign Up</button>
-                <Link to="/" exact>
+                <input placeholder="e-mail" type="email" value={email} required onChange={e => setEmail(e.target.value)}></input>
+                <input placeholder="password" type="password" value={password} required onChange={e => setPassword(e.target.value)}></input>
+                <input placeholder="username" type="text" value={username} required onChange={e => setUsername(e.target.value)}></input>
+                <input placeholder="picture url" type="url" value={picture} required onChange={e => setPicture(e.target.value)}></input>
+                <button onClick={() => sendData(email, password, username, picture, setBoolean)} disabled={boolean} >Sign Up</button>
+                <Link to="/">
                     <p>Switch back to log in</p>
                 </Link>
             </Form>
@@ -24,7 +32,16 @@ export default function SignUp () {
     )
 }
 
-//styled components
+function sendData (email, password, username, picture, setBoolean) {
+    //incluir dados da API
+    setBoolean(true)
+    if(email, password, username, picture === "") {
+        alert("Preencha todos os campos")
+    }
+}
+
+
+//styled components (fazer um componente disso aqui)
 
 const Container = styled.div `
     width: 100%;
@@ -56,7 +73,7 @@ const Logo = styled.div `
             color: #fff;
         }`
 
-const Form = styled.div `
+const Form = styled.form `
     width: 35%;
     height: 100vh;
     background: #333333;

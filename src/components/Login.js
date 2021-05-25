@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 import { Link } from "react-router-dom"
+import { useState } from "react"
 
 export default function Login () {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [boolean, setBoolean] = useState(false)
+
     return (
         <Container>
             <Banner>
@@ -11,9 +17,9 @@ export default function Login () {
                 </Logo>
             </Banner>
             <Form>
-                <input placeholder="e-mail"></input>
-                <input placeholder="password"></input>
-                <button>Login</button>
+                <input placeholder="e-mail" type="email" value={email} required onChange={e => setEmail(e.target.value)}></input>
+                <input placeholder="password" type="password" value={password} required onChange={e => setPassword(e.target.value)}></input>
+                <button onClick={() => sendData(email, password, setBoolean)} disabled={boolean}>Login</button>
                 <Link to="/sign-up">
                     <p>First time? Create an account!</p>
                 </Link>
@@ -22,7 +28,15 @@ export default function Login () {
     )
 }
 
-//styled component
+function sendData (email, password, setBoolean) {
+    //incluir dados da API
+    setBoolean(true)
+    if(email, password === "") {
+        alert("Preencha todos os campos")
+    }
+}
+
+//styled component (fazer um componente disso aqui)
 
 const Container = styled.div `
     width: 100%;
@@ -54,7 +68,7 @@ const Logo = styled.div `
             color: #fff;
         }`
 
-const Form = styled.div `
+const Form = styled.form `
     width: 35%;
     height: 100vh;
     background: #333333;
