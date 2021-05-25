@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { useContext } from "react";
-import UserContext from "../contexts/UserContext";
+//import { useContext } from "react";
+//import UserContext from "../contexts/UserContext";
 
 export default function PostCreatorBox() {
     // const { user, setUser } = useContext(UserContext);
@@ -59,7 +59,6 @@ const UserRoundedIMG = styled.img`
 const InputFields = styled.div`
     width: 100%;
     height: 100%;
-    background-color: pink;
     display: flex;
     flex-direction: column;
 
