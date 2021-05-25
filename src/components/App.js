@@ -2,6 +2,8 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { useState } from "react";
 import UserContext from "../contexts/UserContext";
+import SignUp from "./SignUp";
+import Login from "./Login"
 
 export default function App() {
     const [user, setUser] = useState(null);
@@ -9,9 +11,13 @@ export default function App() {
         <UserContext.Provider value={{ user, setUser }}>
             <BrowserRouter>
                 <ResetCSS />
-
                 <Switch>
-                    <Route path="/">Teste</Route>
+                    <Route path="/sign-up">
+                        <SignUp />
+                    </Route>
+                    <Route path="/">
+                        <Login />
+                    </Route>
                 </Switch>
             </BrowserRouter>
         </UserContext.Provider>
