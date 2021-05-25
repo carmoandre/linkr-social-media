@@ -7,7 +7,7 @@ import Login from "./Login"
 import Timeline from "./Timeline";
 
 export default function App() {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState("");
     return (
         <UserContext.Provider value={{ user, setUser }}>
             <BrowserRouter>
