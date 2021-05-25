@@ -26,10 +26,10 @@ export default function MyPosts(){
 
   return (
     <>
-      my posts
+      my posts<br />
       {
         posts.length === 0 
-        ? ""
+        ? "Loading..."
         : <Posts posts={posts}/>
       }
 
