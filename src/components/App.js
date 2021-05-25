@@ -2,9 +2,9 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { useState } from "react";
 import UserContext from "../contexts/UserContext";
-import Header from "./Header";
 import SignUp from "./SignUp";
 import Login from "./Login"
+import Timeline from "./Timeline";
 
 
 export default function App() {
@@ -14,14 +14,15 @@ export default function App() {
             <BrowserRouter>
                 <ResetCSS />
 
-                <Header />
-
                 <Switch>
                     <Route path="/sign-up">
                         <SignUp />
                     </Route>
                     <Route path="/" exact>
                         <Login />
+                    </Route>
+                    <Route path="/timeline" exact>
+                        <Timeline />
                     </Route>
                 </Switch>
             </BrowserRouter>
