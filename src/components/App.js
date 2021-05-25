@@ -3,6 +3,9 @@ import { createGlobalStyle } from "styled-components";
 import { useState } from "react";
 import UserContext from "../contexts/UserContext";
 import Header from "./Header";
+import SignUp from "./SignUp";
+import Login from "./Login"
+
 
 export default function App() {
     const [user, setUser] = useState(null);
@@ -10,9 +13,16 @@ export default function App() {
         <UserContext.Provider value={{ user, setUser }}>
             <BrowserRouter>
                 <ResetCSS />
+
                 <Header />
+
                 <Switch>
-                    <Route path="/">Teste</Route>
+                    <Route path="/sign-up">
+                        <SignUp />
+                    </Route>
+                    <Route path="/" exact>
+                        <Login />
+                    </Route>
                 </Switch>
             </BrowserRouter>
         </UserContext.Provider>
