@@ -5,6 +5,7 @@ import UserContext from "../contexts/UserContext";
 import SignUp from "./SignUp";
 import Login from "./Login"
 import MyPosts from './MyPosts';
+import Timeline from "./Timeline";
 
 export default function App() {
     const [user, setUser] = useState(null);
@@ -21,6 +22,9 @@ export default function App() {
                     </Route>
                     <Route path="/" exact>
                         <Login />
+                    </Route>
+                    <Route path="/timeline">
+                        <Timeline />
                     </Route>
                 </Switch>
             </BrowserRouter>

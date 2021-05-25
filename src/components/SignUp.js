@@ -35,7 +35,7 @@ export default function SignUp () {
 function sendData (email, password, username, picture, setBoolean) {
     //incluir dados da API
     setBoolean(true)
-    if(email, password, username, picture === "") {
+    if(email==="" || password==="" || username==="" || picture ==="") {
         alert("Preencha todos os campos")
     }
 }
