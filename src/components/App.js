@@ -2,6 +2,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { useState } from "react";
 import UserContext from "../contexts/UserContext";
+import Header from "./Header";
 
 export default function App() {
     const [user, setUser] = useState(null);
@@ -9,7 +10,7 @@ export default function App() {
         <UserContext.Provider value={{ user, setUser }}>
             <BrowserRouter>
                 <ResetCSS />
-
+                <Header />
                 <Switch>
                     <Route path="/">Teste</Route>
                 </Switch>
