@@ -12,7 +12,7 @@ export default function Loading(){
 }
 
 const Box = styled.div`
-    width: 611px;
+    width: 100%;
     margin-top: 50px;
     margin-right: 25px;
     display: flex;
