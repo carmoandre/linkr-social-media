@@ -1,7 +1,8 @@
 import axios from "axios";
 import styled from "styled-components";
-import { useContext, useState } from "react";
-import UserContext from "../contexts/UserContext";
+//import { useContext, useState } from "react";
+import { useState } from "react";
+//import UserContext from "../contexts/UserContext";
 
 export default function PostCreatorBox() {
     // const { user, setUser } = useContext(UserContext);
@@ -13,43 +14,44 @@ export default function PostCreatorBox() {
      * Abaixo constante temporária até que o componente seja integrado;
      ******************************************/
     const user = {
-        token: "token",
+        token: "e5de92ce-3ab2-4b85-985f-f17d27ec7aaa",
         user: {
-            avatar: "https://i.gifer.com/1KhG.gif",
+            avatar: "https://st.depositphotos.com/1766887/1279/i/600/depositphotos_12798739-stock-photo-egyptian-papyrus.jpg",
         },
     };
     //console.log(user);
 
     function publish(event) {
         event.preventDefault();
+        const body = {
+            text,
+            link,
+        };
+
         const config = {
             headers: {
                 Authorization: `Bearer ${user.token}`,
             },
         };
 
-        const body = {
-            text,
-            link,
-        };
-
         const request = axios.post(
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts",
-            config,
-            body
+            body,
+            config
         );
 
         setDisabled(true);
         setButtonText("Publishing...");
 
         request.then((response) => {
-            console.log(response.data);
-            console.log("Deu certo");
             setLink("");
             setText("");
             setDisabled(false);
             setButtonText("Publish");
             //comando para atualizar lista de posts da timeline
+            //tirar comentário quando a decisão de como essa função vai chegar
+            // a esse componente for tomada
+            //renderPosts();
         });
 
         request.catch((error) => {
