@@ -11,7 +11,7 @@ export default function AnyUsersPosts(){
 
   const [posts, setPosts] = useState([]);
   const [isReadyToRender, setIsReadyToRender] = useState(false);
-  const [targetUserName, setTargetUserName] = useState(undefined);
+  const [targetUserName, setTargetUserName] = useState(null);
 
   const {id:targetId} = useParams();
   
@@ -41,7 +41,7 @@ export default function AnyUsersPosts(){
     history.push("/");
   }
   
-  const pageTitle = targetUserName !== undefined ? `${targetUserName}’s posts` : <>&nbsp;</>;
+  const pageTitle = targetUserName !== null ? `${targetUserName}’s posts` : <>&nbsp;</>;
   return (
     <LayoutInterface pageTitle={pageTitle}>
       {
