@@ -16,9 +16,6 @@ export default function Timeline(){
                     <Ps>
 
                     </Ps>
-                    <Ps>
-
-                    </Ps>
                 </Left>
                 <Trending />
             </Box>
@@ -35,7 +32,7 @@ const Body = styled.main`
 `;
 
 const Title = styled.div`
-    width: 65%;
+    width: 937px;
     color: #FFF;
     font-family: "Oswald";
     font-size: 43px;
@@ -43,16 +40,15 @@ const Title = styled.div`
     margin: 125px auto 0 auto;
 
     @media (max-width: 375px){
-        margin: 91px 0 0 17px;
+        margin: 91px 0 0 26px;
     }
 `;
 
 const Box = styled.div`
-    width: 65%;
+    width: 937px;
     height: 100%;
     margin: 43px auto 0 auto;
     display: flex;
-    justify-content: space-between;
 
     @media (max-width: 375px){
         width: 100%;
@@ -61,10 +57,12 @@ const Box = styled.div`
 `;
 
 const Left = styled.div`
-    width: 65%;
+    width: 611px;
+    margin-right: 25px;
 
     @media (max-width: 375px){
         width: 100%;
+        margin-right: 0;
     }
 
 `;

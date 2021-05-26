@@ -11,13 +11,10 @@ export default function Trending(){
 }
 
 const Box = styled.div`
-    position: fixed;
     width: 301px;
     height: 406px;
     background: #171717;
     border-radius: 16px;
-    z-index: 1;
-    right: calc((100vw - 864px)/2);
 
     @media (max-width: 375px){
         display: none;
