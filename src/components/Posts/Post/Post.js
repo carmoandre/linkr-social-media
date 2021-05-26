@@ -2,18 +2,19 @@ import styled from "styled-components";
 import { IoHeartOutline } from "react-icons/io5";
 import Caption from "./Caption";
 import ArticlePreview from './LinkContent/ArticlePreview';
+import {Link} from "react-router-dom";
 
 export default function Post({originalPoster, caption, likes, linkProps}) {
   return (
     <PostWrapper>
       <section className="post--avatarAndLikes">
-        <img src={originalPoster.avatar} alt={originalPoster.name} />
+        <Link to={`/user/${originalPoster.id}`}><img src={originalPoster.avatar} alt={originalPoster.name}/></Link>
         <IoHeartOutline color="white" size="20" />
         <p>{likes.length} likes</p>
       </section>
       <section className="post--body">
         <header>
-          {originalPoster.name}&nbsp;
+        <Link to={`/user/${originalPoster.id}`}>{originalPoster.name}</Link>&nbsp; 
         </header>
         <Caption caption={caption} />
         <ArticlePreview linkProps={linkProps}/>

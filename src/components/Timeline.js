@@ -9,7 +9,7 @@ import LayoutInterface from "./LayoutInterface/LayoutInterface";
 
 export default function Timeline(){
     // const { user, setUser } = useContext(UserContext);
-    const [showPosts, setShowPosts] = useState(true);
+    // const [posts, setPosts] = useState(false);
     
     useEffect(() => {
         renderPosts();
@@ -29,7 +29,7 @@ export default function Timeline(){
     //         if (res.length===0){
     //             alert("Nenhum post encontrado");
     //         }else{
-    //             setShowPosts(res);
+    //             setPosts(res);
     //         }
     //     })
     //     request.catch(error => {
@@ -40,7 +40,7 @@ const [posts, setPosts] = useState([]);
     
 useEffect(()=>{
   const token = "6a58d8fe-c3d4-4439-9f99-3cddf4f28430";
-  const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/7/posts";
+  const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts";
   const config = {
     headers:{
       Authorization: `Bearer ${token}`
@@ -52,22 +52,14 @@ useEffect(()=>{
       setPosts(data.posts);
     })
     .catch((err) => console.log(err));
-},[]) 
+    },[]) 
 
     return(
         <LayoutInterface pageTitle="timeline">
             <>
                 <PostCreatorBox />
-                {showPosts===false ? <Loading /> : <Posts posts={posts} />}
+                {posts===false ? <Loading /> : <Posts posts={posts} />}
             </>
         </LayoutInterface>
-        /* // <Main>
-        //     <Header />
-        //     <Title>timeline</Title>
-        //     <Content>
-        //         {showPosts===false ? <Loading /> : <PostsColumn />}
-        //         <Trending />
-        //     </Content>
-        // </Main> */
     );
 }

@@ -1,6 +1,10 @@
 import styled from "styled-components";
+import axios from "axios";
 
 export default function Trending(){
+    
+
+
     return(
         <Box>
             <Title>trending</Title>
