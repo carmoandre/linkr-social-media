@@ -19,7 +19,6 @@ export default function PostCreatorBox() {
             avatar: "https://st.depositphotos.com/1766887/1279/i/600/depositphotos_12798739-stock-photo-egyptian-papyrus.jpg",
         },
     };
-    //console.log(user);
 
     function publish(event) {
         event.preventDefault();
