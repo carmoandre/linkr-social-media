@@ -6,6 +6,7 @@ import SignUp from "./SignUp";
 import Login from "./Login"
 import MyPosts from './MyPosts';
 import Timeline from "./Timeline";
+import AnyUsersPosts from "./AnyUsersPosts";
 
 export default function App() {
     const [user, setUser] = useState(null);
@@ -19,6 +20,9 @@ export default function App() {
                     </Route>
                     <Route exact path="/my-posts">
                         <MyPosts />
+                    </Route>
+                    <Route exact path="/user/:id">
+                        <AnyUsersPosts />
                     </Route>
                     <Route path="/" exact>
                         <Login />
