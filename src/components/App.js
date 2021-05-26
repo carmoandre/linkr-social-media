@@ -3,10 +3,10 @@ import { createGlobalStyle } from "styled-components";
 import { useState } from "react";
 import UserContext from "../contexts/UserContext";
 import SignUp from "./SignUp";
-import Login from "./Login"
-import MyPosts from './MyPosts';
+import Login from "./Login";
+import MyPosts from "./MyPosts";
 import Timeline from "./Timeline";
-import LayoutInterface from './LayoutInterface/LayoutInterface';
+//import LayoutInterface from "./LayoutInterface/LayoutInterface";
 
 export default function App() {
     const [user, setUser] = useState("");
