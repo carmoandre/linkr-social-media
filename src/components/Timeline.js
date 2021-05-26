@@ -8,7 +8,7 @@ import Loading from "./Loading";
 import LayoutInterface from "./LayoutInterface/LayoutInterface";
 
 export default function Timeline(){
-    // const { user, setUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [posts, setPosts] = useState(false);
     
     useEffect(() => {
@@ -16,7 +16,7 @@ export default function Timeline(){
     }, []);
 
     function renderPosts(){
-        const token = "6a58d8fe-c3d4-4439-9f99-3cddf4f28430";
+        const token = user.token;
         const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts";
         const config = {
             headers:{
