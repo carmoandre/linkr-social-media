@@ -5,8 +5,8 @@ import UserContext from "../contexts/UserContext";
 import SignUp from "./Login-SignUp/SignUp";
 import Login from "./Login-SignUp/Login"
 import Timeline from "./Timeline";
+import AnyUsersPosts from "./AnyUsersPosts";
 import MyPosts from "./MyPosts"
-//import LayoutInterface from "./LayoutInterface/LayoutInterface";
 
 export default function App() {
     const [user, setUser] = useState("");
@@ -22,10 +22,12 @@ export default function App() {
                     <Route exact path="/my-posts">
                         <MyPosts />
                     </Route>
+                    <Route exact path="/user/:id">
+                        <AnyUsersPosts />
+                    </Route>
                     <Route path="/" exact>
                         <Login />
                     </Route>
-
                     <Route path="/timeline" exact>
                         <Timeline />
                     </Route>
