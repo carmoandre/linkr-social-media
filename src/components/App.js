@@ -3,8 +3,10 @@ import { createGlobalStyle } from "styled-components";
 import { useState } from "react";
 import UserContext from "../contexts/UserContext";
 import SignUp from "./SignUp";
-import Login from "./Login"
+import Login from "./Login";
+import MyPosts from "./MyPosts";
 import Timeline from "./Timeline";
+//import LayoutInterface from "./LayoutInterface/LayoutInterface";
 
 export default function App() {
     const [user, setUser] = useState(null);
@@ -12,14 +14,19 @@ export default function App() {
         <UserContext.Provider value={{ user, setUser }}>
             <BrowserRouter>
                 <ResetCSS />
+
                 <Switch>
                     <Route path="/sign-up">
                         <SignUp />
                     </Route>
+                    <Route exact path="/my-posts">
+                        <MyPosts />
+                    </Route>
                     <Route path="/" exact>
                         <Login />
                     </Route>
-                    <Route path="/timeline">
+
+                    <Route path="/timeline" exact>
                         <Timeline />
                     </Route>
                 </Switch>
