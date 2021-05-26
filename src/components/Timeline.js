@@ -3,7 +3,7 @@ import UserContext from "../contexts/UserContext"
 
 export default function Timeline () {
 
-    const {user, setUser} = useContext(UserContext)
+    const {user} = useContext(UserContext)
     console.log(user)
     return (<> </>)
 }
