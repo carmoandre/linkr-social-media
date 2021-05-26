@@ -1,25 +1,83 @@
+import axios from "axios";
 import styled from "styled-components";
-//import { useContext } from "react";
-//import UserContext from "../contexts/UserContext";
+import { useContext, useState } from "react";
+import UserContext from "../contexts/UserContext";
 
 export default function PostCreatorBox() {
     // const { user, setUser } = useContext(UserContext);
+    const [link, setLink] = useState("");
+    const [text, setText] = useState("");
+    const [disabled, setDisabled] = useState(false);
+    const [buttonText, setButtonText] = useState("Publish");
     /*************************
-     * Abaixo atribuição temporária até que o componente seja integrado;
+     * Abaixo constante temporária até que o componente seja integrado;
      ******************************************/
-    const user = { avatar: "https://i.gifer.com/1KhG.gif" };
-    console.log(user);
+    const user = {
+        token: "token",
+        user: {
+            avatar: "https://i.gifer.com/1KhG.gif",
+        },
+    };
+    //console.log(user);
+
+    function publish(event) {
+        event.preventDefault();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
+        };
+
+        const body = {
+            text,
+            link,
+        };
+
+        const request = axios.post(
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts",
+            config,
+            body
+        );
+
+        setDisabled(true);
+        setButtonText("Publishing...");
+
+        request.then((response) => {
+            console.log(response.data);
+            console.log("Deu certo");
+            setLink("");
+            setText("");
+            setDisabled(false);
+            setButtonText("Publish");
+        });
+
+        request.catch((error) => {
+            alert("Houve um erro ao publicar seu link");
+            setDisabled(false);
+            setButtonText("Publish");
+        });
+    }
     return (
-        <FormHolder id="postForm">
+        <FormHolder id="postForm" onSubmit={publish}>
             <UserRoundedIMG user={user} />
             <InputFields>
                 <p>O que você tem pra favoritar hoje?</p>
-                <LinkInput type="url" placeholder="http://..." />
+                <LinkInput
+                    type="url"
+                    required
+                    disabled={disabled}
+                    placeholder="http://..."
+                    value={link}
+                    onChange={(e) => setLink(e.target.value)}
+                />
                 <TextBox
                     form="postForm"
+                    disabled={disabled}
                     placeholder="Muito irado esse link falando de #javascript"
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
                 />
-                <PublishButton>Publicar</PublishButton>
+                <PublishButton disabled={disabled}>{buttonText}</PublishButton>
             </InputFields>
         </FormHolder>
     );
@@ -46,7 +104,7 @@ const FormHolder = styled.form`
 const UserRoundedIMG = styled.img`
     width: 50px;
     height: 50px;
-    background: url(${(props) => props.user.avatar});
+    background: url(${(props) => props.user.user.avatar});
     background-size: 100%;
     background-repeat: no-repeat;
     border-radius: 27px;
@@ -66,7 +124,7 @@ const InputFields = styled.div`
         font-weight: 300;
         font-size: 20px;
         line-height: 24px;
-        margin: 5px 0 7px 0;
+        margin: 6px 0 8px 0;
         color: #707070;
     }
 
@@ -86,7 +144,7 @@ const InputFields = styled.div`
 const LinkInput = styled.input`
     height: 30px;
     width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     background: #efefef;
     border: none;
     border-radius: 5px;
