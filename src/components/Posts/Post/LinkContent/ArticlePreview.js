@@ -74,16 +74,12 @@ const PreviewWrapper = styled.a`
 
     .textList--domain {
       color: #cecece;
-
+      word-break: break-all;
       font-size: 11px;
       line-height: 13px;
       @media (max-width: 375px) {
         font-size: 9px;
         line-height: 11px;
-      }
-
-      .domain--link {
-        word-break: break-all;
       }
     }
   }
