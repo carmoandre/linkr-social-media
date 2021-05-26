@@ -23,7 +23,7 @@ export default function SignUp () {
                     <h2>save, share and discover the best links on the web</h2>
                 </Logo>
             </Banner>
-            <Form>
+            <Form onSubmit={(e)=>e.preventDefault()}>
                 <input placeholder="e-mail" type="email" value={email} required onChange={e => setEmail(e.target.value)}></input>
                 <input placeholder="password" type="password" value={password} required onChange={e => setPassword(e.target.value)}></input>
                 <input placeholder="username" type="text" value={username} required onChange={e => setUsername(e.target.value)}></input>
@@ -38,15 +38,15 @@ export default function SignUp () {
 }
 
 function sendData (email, password, username, picture, setBoolean, user, setUser, history) {
+    setBoolean(true)
     const body = {"email": email, "password": password, "username": username, "pictureUrl": picture}
 
-    setBoolean(true)
     if(email==="" || password==="" || username==="" || picture ==="") {
         alert("Preencha todos os campos")
     }
 
     const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up", body)
-    request.then(promise => {history.push("/")})
+    request.then(promise => history.push("/"))
     request.catch(()=> alert("O e-mail inserido já está cadastrado"))
 }
 
