@@ -36,6 +36,10 @@ const Title = styled.div`
     top:0;
     left:0;
 
+    @media (max-width: 375px){
+        padding-left: 17px;
+    }
+
     h1{
         font-family: 'Passion One';
         font-size: 49px;

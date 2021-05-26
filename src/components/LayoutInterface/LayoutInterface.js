@@ -8,7 +8,6 @@ export default function TimeLine(){
   return (
     <LayoutInterface pageTitle="timeline">
         <PostsColumn />
-        <Trending />
     </LayoutInterface>
   );
 }
@@ -21,6 +20,7 @@ function LayoutInterface({pageTitle, children}){
             <Title>{pageTitle}</Title>
             <Content>
               {children}
+              <Trending />
             </Content>
         </Main>
     );
