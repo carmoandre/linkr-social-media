@@ -70,4 +70,3 @@ useEffect(()=>{
         //     </Content>
         // </Main> */
     );
-}
