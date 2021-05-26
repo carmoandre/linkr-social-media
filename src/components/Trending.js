@@ -11,10 +11,13 @@ export default function Trending(){
 }
 
 const Box = styled.div`
-    width: 301px;
+    max-width: 301px;
     height: 406px;
     background: #171717;
     border-radius: 16px;
+    @media (max-width: 500px){
+        display: none;
+    }
 `;
 
 const Title = styled.h1`
