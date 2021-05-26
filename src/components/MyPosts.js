@@ -1,6 +1,7 @@
 import Posts from './Posts/Posts';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
+import LayoutInterface from './LayoutInterface/LayoutInterface';
 
 export default function MyPosts(){
 
@@ -25,14 +26,12 @@ export default function MyPosts(){
   },[])
 
   return (
-    <>
-      my posts<br />
+    <LayoutInterface pageTitle="my posts">
       {
         posts.length === 0 
         ? "Loading..."
         : <Posts posts={posts}/>
       }
-
-    </>
+    </LayoutInterface>
   );
 }
