@@ -1,14 +1,18 @@
-import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Navbar(){
-    const history = useHistory();
-    const pushToMyPosts = () => history.push("/my-posts");
     return(
         <Box>
-            <div onClick={pushToMyPosts}><h1>My posts</h1></div>
-            <div><h1>My likes</h1></div>
-            <div><h1>Logout</h1></div>
+            <Link to="/my-posts">
+                <div><h1>My posts</h1></div>
+            </Link>
+            <Link to="/my-likes">
+                <div><h1>My likes</h1></div>
+            </Link>
+            <Link to="/">
+                <div><h1>Logout</h1></div>
+            </Link>
         </Box>
     );
 }
@@ -36,12 +40,19 @@ const Box = styled.nav`
 
     div{
         width: 100%;
-        height: calc(100vh/3);
+        height: auto;
         display: flex;
         justify-content: center;
         align-items: center;
         transition: all .2s linear;
         cursor: pointer;
+        margin-top: 11px;
+
+        h1 {
+            font-family: Lato, sans-serif;
+            font-weight: 700;
+            font-size: 17px;
+        }
 
         :nth-child(3n){
             border-bottom-left-radius: 20px;

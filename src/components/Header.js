@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import UserContext from "../contexts/UserContext";
 
 export default function Header(){
     const [showMenu, setShowMenu] = useState(false);
-    
+    const { user } = useContext(UserContext);
+
     return(
         <>
             <Title>
@@ -15,7 +17,7 @@ export default function Header(){
                 </Link>
                 <div>
                     {showMenu ? <BiChevronUp onClick={() => setShowMenu(!showMenu)} color="#FFF" size="50px" cursor="pointer" /> : <BiChevronDown onClick={() => setShowMenu(!showMenu)} color="#FFF" size="50px" cursor="pointer" />}               
-                    <img src="https://blog.cobasi.com.br/wp-content/uploads/2020/06/Ropuinhas_pug.png" alt=""/>
+                    <img src={user.user.avatar} alt={user.user.username}/>
                 </div>
             </Title>
             {showMenu && <Navbar />}

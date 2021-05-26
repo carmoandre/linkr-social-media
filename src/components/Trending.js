@@ -1,14 +1,11 @@
 import styled from "styled-components";
 
 export default function Trending(){
-    
-
-
     return(
         <Box>
             <Title>trending</Title>
             <Line></Line>
-            <Hash>#javascript</Hash>
+            <TrendingTopics>#javascript</TrendingTopics>
         </Box>
     );
 }
@@ -37,7 +34,7 @@ const Line = styled.div`
     margin-bottom: 18px;
 `;
 
-const Hash = styled.p`
+const TrendingTopics = styled.p`
     color: #FFF;
     font-size: 19px;
     font-family: "Lato";
