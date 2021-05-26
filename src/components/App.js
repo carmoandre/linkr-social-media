@@ -6,7 +6,6 @@ import SignUp from "./SignUp";
 import Login from "./Login"
 import MyPosts from './MyPosts';
 import Timeline from "./Timeline";
-import LayoutInterface from './LayoutInterface/LayoutInterface';
 
 export default function App() {
     const [user, setUser] = useState("");

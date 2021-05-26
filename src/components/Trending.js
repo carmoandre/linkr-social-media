@@ -1,41 +1,11 @@
 import styled from "styled-components";
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import UserContext from "../contexts/UserContext";
-
 
 export default function Trending(){
-    // const { user, setUser } = useContext(UserContext);
-    const [trendings, setTrendings] = useState([]);
-
-    useEffect(() => {
-        renderTrendings();
-    },[]);
-
-    function renderTrendings(){
-        const token = "6a58d8fe-c3d4-4439-9f99-3cddf4f28430";
-        const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/trending";
-        const config = {
-            headers:{
-                Authorization: `Bearer ${token}`
-            }
-        }
-        axios
-            .get(url, config)
-            .then(({data})=>{
-                setTrendings(data)
-                console.log(trendings)
-            })
-            .catch(() => alert("Houve uma falha as trendings. Por favor, atualize a página"));
-    }
-    
     return(
         <Box>
             <Title>trending</Title>
             <Line></Line>
-            {/* {trendings.map(t => (
-                <TrendingTopics>#{t.name}</TrendingTopics>
-            ))} */}
+            <TrendingTopics>#javascript</TrendingTopics>
         </Box>
     );
 }
