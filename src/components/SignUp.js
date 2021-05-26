@@ -1,6 +1,8 @@
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { Link, useHistory } from "react-router-dom";
+import { useContext, useState } from 'react';
+import axios from 'axios';
+import UserContext from '../contexts/UserContext';
 
 export default function SignUp () {
 
@@ -10,6 +12,9 @@ export default function SignUp () {
     const [picture, setPicture] = useState("");
     const [boolean, setBoolean] = useState(false)
 
+    const { user, setUser } = useContext(UserContext)
+    const history = useHistory()
+
     return (
         <Container>
             <Banner>
@@ -18,12 +23,12 @@ export default function SignUp () {
                     <h2>save, share and discover the best links on the web</h2>
                 </Logo>
             </Banner>
-            <Form>
+            <Form onSubmit={(e)=>e.preventDefault()}>
                 <input placeholder="e-mail" type="email" value={email} required onChange={e => setEmail(e.target.value)}></input>
                 <input placeholder="password" type="password" value={password} required onChange={e => setPassword(e.target.value)}></input>
                 <input placeholder="username" type="text" value={username} required onChange={e => setUsername(e.target.value)}></input>
                 <input placeholder="picture url" type="url" value={picture} required onChange={e => setPicture(e.target.value)}></input>
-                <button onClick={() => sendData(email, password, username, picture, setBoolean)} disabled={boolean} >Sign Up</button>
+                <button onClick={() => sendData(email, password, username, picture, setBoolean, user, setUser, history)} disabled={boolean} >Sign Up</button>
                 <Link to="/">
                     <p>Switch back to log in</p>
                 </Link>
@@ -32,12 +37,17 @@ export default function SignUp () {
     )
 }
 
-function sendData (email, password, username, picture, setBoolean) {
-    //incluir dados da API
+function sendData (email, password, username, picture, setBoolean, user, setUser, history) {
     setBoolean(true)
+    const body = {"email": email, "password": password, "username": username, "pictureUrl": picture}
+
     if(email==="" || password==="" || username==="" || picture ==="") {
         alert("Preencha todos os campos")
     }
+
+    const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up", body)
+    request.then(promise => history.push("/"))
+    request.catch(()=> alert("O e-mail inserido já está cadastrado"))
 }
 
 
