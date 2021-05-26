@@ -12,6 +12,7 @@ export default function Trending(){
 
 const Box = styled.div`
     max-width: 301px;
+    width: 100%;
     height: 406px;
     background: #171717;
     border-radius: 16px;

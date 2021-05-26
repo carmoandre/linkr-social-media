@@ -11,9 +11,12 @@ export default function PostsColumn(){
 }
 
 const Box = styled.div`
+    width: 100%;
+    max-width: 611px;
     & > * + * {
         margin-top: 29px;
-    }`;
+    }
+`;
 
 const Posts = styled.div`
     width: 100%;
