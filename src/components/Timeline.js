@@ -13,7 +13,7 @@ export default function Timeline(){
     
     useEffect(() => {
         renderPosts();
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     function renderPosts(){
         const token = user.token;
@@ -38,7 +38,7 @@ export default function Timeline(){
     return(
         <LayoutInterface pageTitle="timeline">
             <>
-                <PostCreatorBox />
+                <PostCreatorBox renderPosts={renderPosts}/>
                 {posts===false ? <Loading /> : <Posts posts={posts} />}
             </>
         </LayoutInterface>
