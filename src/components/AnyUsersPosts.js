@@ -1,39 +1,54 @@
 import Posts from './Posts/Posts';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import {useState, useEffect, useContext} from 'react';
+import { useParams, useHistory} from 'react-router-dom';
+import LayoutInterface from './LayoutInterface/LayoutInterface';
+import { getUsersPostsAsync, getUserInfoAsync } from '../helperFunctions/http/apiRequests';
+import isValidUserState from '../helperFunctions/isValidUserState';
+import Loading from './Loading';
+import UserContext from '../contexts/UserContext';
 
 export default function AnyUsersPosts(){
 
   const [posts, setPosts] = useState([]);
+  const [isReadyToRender, setIsReadyToRender] = useState(false);
+  const [targetUserName, setTargetUserName] = useState(undefined);
+
   const {id:targetId} = useParams();
+  
+  const { user } = useContext(UserContext);
+  const history = useHistory();
+
   useEffect(()=>{
-    const token = "6a58d8fe-c3d4-4439-9f99-3cddf4f28430";
-    const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${targetId}/posts`;
-    const config = {
-      headers:{
-        Authorization: `Bearer ${token}`
-      }
-    }
-    console.log("entrou");
-    axios
-      .get(url, config)
-      .then(({data})=>{
-        setPosts(data.posts);
-        console.log(data);
-      })
-      .catch((err) => console.log(err));
-  },[])
+    if (!isValidUserState(user)) return;
+    const [token] = [user.token];
+    const usersPostsAsync = getUsersPostsAsync(targetId, token)
+    const usersInfoAsync = getUserInfoAsync(targetId, token)
 
+    Promise.all([usersPostsAsync, usersInfoAsync])
+    .then(([usersPosts, usersInfo])=>{
+      setPosts(usersPosts.data.posts);
+      setTargetUserName(usersInfo.data.user.username);
+    })
+    .catch((err)=>{
+      alert(`Falha ao buscar posts erro ${err.response.status}`)
+    })
+    .finally(()=>{
+      setIsReadyToRender(true);
+    })
+  },[user, targetId])
+
+  if (!isValidUserState(user)){
+    history.push("/");
+  }
+  
+  const pageTitle = targetUserName !== undefined ? `${targetUserName}’s posts` : "";
   return (
-    <>
-      my posts<br />
+    <LayoutInterface pageTitle={pageTitle}>
       {
-        posts.length === 0 
-        ? "Loading..."
-        : <Posts posts={posts}/>
+        isReadyToRender 
+        ? <Posts posts={posts}/>
+        : <Loading />
       }
-
-    </>
+    </LayoutInterface>
   );
 }

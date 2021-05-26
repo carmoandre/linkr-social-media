@@ -13,3 +13,8 @@ export function getUsersPostsAsync(id, token){
   return axios.get(url,config);
 }
 
+export function getUserInfoAsync(id, token){
+  const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}`;
+  const config = axiosConfig(token);
+  return axios.get(url,config);
+}
