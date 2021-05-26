@@ -16,6 +16,12 @@ const Box = styled.div`
     & > * + * {
         margin-top: 29px;
     }
+
+    @media (max-width: 375px){
+        & > * + * {
+            margin-top: 16px;
+        }
+    }
 `;
 
 const Posts = styled.div`

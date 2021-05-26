@@ -6,7 +6,7 @@ import styled from "styled-components"
 export default function TimeLine(){
   
   return (
-    <LayoutInterface pageTitle="TimeLine">
+    <LayoutInterface pageTitle="timeline">
         <PostsColumn />
         <Trending />
     </LayoutInterface>
@@ -33,6 +33,9 @@ const Main = styled.div`
     min-height: 100vh;
     margin-top: 72px;
     padding-top: 53px;
+    @media (max-width: 375px){
+      padding-top: 15px;
+    }
 `;
 
 const Title = styled.div`
@@ -42,8 +45,16 @@ const Title = styled.div`
     font-family: "Oswald";
     font-size: 43px;
     line-height: 64px;
+    font-weight: bold;
     padding: var(--center-box-padding);
     margin: 0 auto;
+
+    @media (max-width: 375px){
+      padding-left: 17px;
+      padding-right: 17px;
+      font-size: 33px;
+      line-height: 49px;
+    }
 `;
 
 const Content = styled.div`
@@ -62,5 +73,6 @@ const Content = styled.div`
     @media (max-width: 375px){
       padding-left: 0;
       padding-right: 0;
+      margin-top: 13px;
     }
 `;
