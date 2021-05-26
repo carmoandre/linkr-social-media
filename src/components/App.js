@@ -4,7 +4,6 @@ import { useState } from "react";
 import UserContext from "../contexts/UserContext";
 import SignUp from "./SignUp";
 import Login from "./Login";
-import GenericPage from "./GenericPage";
 
 export default function App() {
     const [user, setUser] = useState(null);
@@ -18,9 +17,6 @@ export default function App() {
                     </Route>
                     <Route path="/" exact>
                         <Login />
-                    </Route>
-                    <Route path="/teste" exact>
-                        <GenericPage />
                     </Route>
                 </Switch>
             </BrowserRouter>

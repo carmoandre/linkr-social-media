@@ -49,6 +49,7 @@ export default function PostCreatorBox() {
             setText("");
             setDisabled(false);
             setButtonText("Publish");
+            //comando para atualizar lista de posts da timeline
         });
 
         request.catch((error) => {
@@ -94,11 +95,11 @@ const FormHolder = styled.form`
     font-family: Lato;
     font-weight: 300;
 
-    /*
-    height: 164px;
-    border-radius: none;
-    padding: 10px 15px 12px 15px;
-    */
+    @media (max-width: 375px) {
+        height: 164px;
+        border-radius: 0;
+        padding: 10px 15px 12px 15px;
+    }
 `;
 
 const UserRoundedIMG = styled.img`
@@ -109,9 +110,10 @@ const UserRoundedIMG = styled.img`
     background-repeat: no-repeat;
     border-radius: 27px;
     margin-right: 18px;
-    /*
-    display: none
-    */
+
+    @media (max-width: 375px) {
+        display: none;
+    }
 `;
 
 const InputFields = styled.div`
@@ -128,17 +130,17 @@ const InputFields = styled.div`
         color: #707070;
     }
 
-    /*
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    & > p {
-        font-size: 17px;
-        line-height: 20px;
-        margin-top: 0;
-        margin: 5px auto 7px auto;
+    @media (max-width: 375px) {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        & > p {
+            font-size: 17px;
+            line-height: 20px;
+            margin-top: 0;
+            margin: 5px auto 7px auto;
+        }
     }
-    */
 `;
 
 const LinkInput = styled.input`
@@ -162,9 +164,10 @@ const TextBox = styled.textarea`
     font-weight: 300;
     padding-left: 12px;
     resize: none;
-    /*
-    height: 47px;
-    */
+
+    @media (max-width: 375px) {
+        height: 47px;
+    }
 `;
 
 const PublishButton = styled.button`
@@ -179,4 +182,8 @@ const PublishButton = styled.button`
     font-size: 14px;
     line-height: 17px;
     margin: auto 0 0 auto;
+
+    @media (max-width: 375px) {
+        height: 22px;
+    }
 `;
