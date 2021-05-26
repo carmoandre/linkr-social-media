@@ -41,7 +41,7 @@ export default function AnyUsersPosts(){
     history.push("/");
   }
   
-  const pageTitle = targetUserName !== undefined ? `${targetUserName}’s posts` : "";
+  const pageTitle = targetUserName !== undefined ? `${targetUserName}’s posts` : <>&nbsp;</>;
   return (
     <LayoutInterface pageTitle={pageTitle}>
       {
