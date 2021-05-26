@@ -8,11 +8,7 @@ export default function ArticlePreview({ linkProps }) {
       <ul className="preview--textList">
         <li className="textList--title">{title}</li>
         <li className="textList--description">{description}</li>
-        <li className="textList--domain">
-          <a className="domain--link" href={href}>
-            {href}
-          </a>
-        </li>
+        <li className="textList--domain">{href}</li>
       </ul>
 
       <picture>
