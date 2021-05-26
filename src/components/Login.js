@@ -31,7 +31,7 @@ export default function Login () {
 function sendData (email, password, setBoolean) {
     //incluir dados da API
     setBoolean(true)
-    if(email, password === "") {
+    if(email==="" || password === "") {
         alert("Preencha todos os campos")
     }
 }
