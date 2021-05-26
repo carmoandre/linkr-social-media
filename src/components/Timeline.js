@@ -2,8 +2,8 @@ import Posts from "./Posts/Posts";
 import PostCreatorBox from "./PostCreatorBox";
 import { useEffect } from "react";
 import axios from "axios";
-import { useContext, useState } from "react";
-import UserContext from "../contexts/UserContext";
+import { useState } from "react";
+
 import Loading from "./Loading";
 import LayoutInterface from "./LayoutInterface/LayoutInterface";
 

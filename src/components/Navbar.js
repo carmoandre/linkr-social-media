@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 
 export default function Navbar(){
+    const history = useHistory();
+    const pushToMyPosts = () => history.push("/my-posts");
     return(
         <Box>
             <Link to="/my-posts">
