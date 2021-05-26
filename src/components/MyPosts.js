@@ -30,7 +30,7 @@ export default function MyPosts(){
     })
     .catch((err) => alert(`Falha ao buscar posts erro ${err.response.status}`))
     .finally(() => setIsReadyToRender(true))
-  },[posts])
+  },[])
 
   if (!isValidUserState(mockUserState)){
     history.push("/")
