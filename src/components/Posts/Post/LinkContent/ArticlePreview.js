@@ -4,7 +4,7 @@ export default function ArticlePreview({ linkProps }) {
   const { href, title, description, srcImage } = linkProps;
 
   return (
-    <PreviewWrapper href={href}>
+    <PreviewWrapper href={href} target="_blank">
       <ul className="preview--textList">
         <li className="textList--title">{title}</li>
         <li className="textList--description">{description}</li>
