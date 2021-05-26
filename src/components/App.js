@@ -6,46 +6,45 @@ import SignUp from "./Login-SignUp/SignUp";
 import Login from "./Login-SignUp/Login"
 import Timeline from "./Timeline";
 import MyLikes from "./MyLikes";
-//import LayoutInterface from "./LayoutInterface/LayoutInterface";
 import AnyUsersPosts from "./AnyUsersPosts";
 import HashtagPosts from './HashtagPosts';
 import MyPosts from "./MyPosts"
 
 
 export default function App() {
+
     const [user, setUser] = useState("");
     return (
-        <UserContext.Provider value={{ user, setUser }}>
-            <BrowserRouter>
-                <ResetCSS />
-
-                <Switch>
-                    <Route path="/sign-up">
-                        <SignUp />
-                    </Route>
-                    <Route exact path="/my-posts">
-                        <MyPosts />
-                    </Route>
-                    <Route exact path="/user/:id">
-                        <AnyUsersPosts />
-                    </Route>
-                    <Route exact path="/hashtag/:hashtag">
-                        <HashtagPosts />
-                    </Route>
-                    <Route path="/" exact>
-                        <Login />
-                    </Route>
-                    <Route path="/timeline" exact>
-                        <Timeline />
-                    </Route>
-                    <Route path="/my-likes">
-                        <MyLikes />
-                    </Route>
-                </Switch>
-            </BrowserRouter>
-        </UserContext.Provider>
-    );
-}
+            <UserContext.Provider value={{ user, setUser }}>
+                <BrowserRouter>
+                    <ResetCSS />
+                    <Switch>
+                        <Route path="/sign-up">
+                            <SignUp />
+                        </Route>
+                        <Route exact path="/my-posts">
+                            <MyPosts />
+                        </Route>
+                        <Route exact path="/user/:id">
+                            <AnyUsersPosts />
+                        </Route>
+                        <Route exact path="/hashtag/:hashtag">
+                            <HashtagPosts />
+                        </Route>
+                        <Route path="/" exact>
+                            <Login />
+                        </Route>
+                        <Route path="/timeline" exact>
+                            <Timeline />
+                        </Route>
+                        <Route path="/my-likes">
+                            <MyLikes />
+                        </Route>
+                    </Switch>
+                </BrowserRouter>
+            </UserContext.Provider>
+        )
+    }
 
 const ResetCSS = createGlobalStyle`
     /* http://meyerweb.com/eric/tools/css/reset/ 
