@@ -6,6 +6,7 @@ import SignUp from "./Login-SignUp/SignUp";
 import Login from "./Login-SignUp/Login"
 import Timeline from "./Timeline";
 import AnyUsersPosts from "./AnyUsersPosts";
+import HashtagPosts from './HashtagPosts';
 import MyPosts from "./MyPosts"
 
 export default function App() {
@@ -24,6 +25,9 @@ export default function App() {
                     </Route>
                     <Route exact path="/user/:id">
                         <AnyUsersPosts />
+                    </Route>
+                    <Route exact path="/hashtag/:hashtag">
+                        <HashtagPosts />
                     </Route>
                     <Route path="/" exact>
                         <Login />
