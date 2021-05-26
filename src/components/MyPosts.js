@@ -4,7 +4,7 @@ import LayoutInterface from './LayoutInterface/LayoutInterface';
 import { getUsersPostsAsync } from '../helperFunctions/http/apiRequests';
 import {useHistory} from 'react-router-dom';
 import isValidUserState from '../helperFunctions/isValidUserState';
-
+import Loading from './Loading';
 
 const mockUserState = {
   "token": "6a58d8fe-c3d4-4439-9f99-3cddf4f28430",
@@ -41,7 +41,7 @@ export default function MyPosts(){
       {
         isReadyToRender 
         ? <Posts posts={posts}/>
-        : "Loading..."
+        : <Loading />
       }
     </LayoutInterface>
   );
