@@ -1,6 +1,7 @@
 import Header from "./Header";
 import styled from "styled-components"
 import Trending from "./Trending";
+import PostCreatorBox from "./PostCreatorBox";
 
 export default function Timeline(){
     return(
@@ -10,7 +11,7 @@ export default function Timeline(){
             <Box>
                 <Left>
                     <Publi>
-
+                        <PostCreatorBox />
                     </Publi>
 
                     <Ps>
