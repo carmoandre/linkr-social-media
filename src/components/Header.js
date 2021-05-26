@@ -11,7 +11,7 @@ export default function Header(){
         <>
             <Title>
                 <Link to="/">
-                    <h1>Linkr</h1>
+                    <h1>linkr</h1>
                 </Link>
                 <div>
                     {showMenu ? <BiChevronUp onClick={() => setShowMenu(!showMenu)} color="#FFF" size="50px" cursor="pointer" /> : <BiChevronDown onClick={() => setShowMenu(!showMenu)} color="#FFF" size="50px" cursor="pointer" />}               

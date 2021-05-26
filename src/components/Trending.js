@@ -5,6 +5,7 @@ export default function Trending(){
         <Box>
             <Title>trending</Title>
             <Line></Line>
+            <Hash>#javascript</Hash>
         </Box>
     );
 }
@@ -17,16 +18,31 @@ const Box = styled.div`
     border-radius: 16px;
     z-index: 1;
     right: calc((100vw - 864px)/2);
+
+    @media (max-width: 375px){
+        display: none;
+    }
 `;
 
 const Title = styled.h1`
     color: #FFF;
     font-size: 27px;
     font-family: "Oswald";
-    margin-top: 9px;
-    margin-left: 16px; 
+    margin: 12px 0 15px 16px;
 `;
 
 const Line = styled.div`
     width: 100%;
+    border: 1px solid #484848;
+    margin-bottom: 18px;
+`;
+
+const Hash = styled.p`
+    color: #FFF;
+    font-size: 19px;
+    font-family: "Lato";
+    line-height: 23px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin: 0 0 10px 16px;
 `;

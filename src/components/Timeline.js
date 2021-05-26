@@ -21,13 +21,12 @@ export default function Timeline(){
                     </Ps>
                 </Left>
                 <Trending />
-
             </Box>
         </Body>
     );
 }
 
-const Body = styled.body`
+const Body = styled.main`
     position: absolute;
     background: #333333;
     width: 100%;
@@ -42,6 +41,10 @@ const Title = styled.div`
     font-size: 43px;
     line-height: 64px;
     margin: 125px auto 0 auto;
+
+    @media (max-width: 375px){
+        margin: 91px 0 0 17px;
+    }
 `;
 
 const Box = styled.div`
@@ -50,10 +53,20 @@ const Box = styled.div`
     margin: 43px auto 0 auto;
     display: flex;
     justify-content: space-between;
+
+    @media (max-width: 375px){
+        width: 100%;
+        margin-top: 19px;
+    }
 `;
 
 const Left = styled.div`
     width: 65%;
+
+    @media (max-width: 375px){
+        width: 100%;
+    }
+
 `;
 
 const Publi = styled.div`
@@ -63,6 +76,10 @@ const Publi = styled.div`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 16px;
     margin-bottom: 29px;
+
+    @media (max-width: 375px){
+        border-radius: 0;
+    }
 `;
 
 const Ps = styled.div`
@@ -71,4 +88,8 @@ const Ps = styled.div`
     background: #171717;
     border-radius: 16px;
     margin-bottom: 16px;
+
+    @media (max-width: 375px){
+        border-radius: 0;
+    }
 `;
