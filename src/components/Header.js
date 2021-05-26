@@ -33,6 +33,8 @@ const Title = styled.div`
     padding: 0 17px 0 26px;
     position: fixed;
     z-index: 2;
+    top:0;
+    left:0;
 
     h1{
         font-family: 'Passion One';

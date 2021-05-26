@@ -25,11 +25,10 @@ export default function Timeline(){
 }
 
 const Body = styled.main`
-    position: absolute;
     background: #333333;
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
+    min-height: 100vh;
 `;
 
 const Title = styled.div`
@@ -38,7 +37,8 @@ const Title = styled.div`
     font-family: "Oswald";
     font-size: 43px;
     line-height: 64px;
-    margin: 125px auto 0 auto;
+    padding-top: 125px;
+    margin: 0 auto 0 auto;
 
     @media (max-width: 375px){
         margin: 91px 0 0 26px;
