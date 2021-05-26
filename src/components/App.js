@@ -2,8 +2,8 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { useState } from "react";
 import UserContext from "../contexts/UserContext";
-import SignUp from "./SignUp";
-import Login from "./Login"
+import SignUp from "./Login-SignUp/SignUp";
+import Login from "./Login-SignUp/Login"
 import Timeline from "./Timeline";
 
 export default function App() {

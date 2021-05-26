@@ -1,8 +1,12 @@
-import styled from 'styled-components';
 import { Link, useHistory } from "react-router-dom";
 import { useContext, useState } from 'react';
 import axios from 'axios';
-import UserContext from '../contexts/UserContext';
+import UserContext from '../../contexts/UserContext';
+
+import Container from './Styles/Container'
+import Banner from './Styles/Banner'
+import Logo from './Styles/Logo'
+import Form from './Styles/Form'
 
 export default function SignUp () {
 
@@ -49,76 +53,3 @@ function sendData (email, password, username, picture, setBoolean, user, setUser
     request.then(promise => history.push("/"))
     request.catch(()=> alert("O e-mail inserido já está cadastrado"))
 }
-
-
-//styled components (fazer um componente disso aqui)
-
-const Container = styled.div `
-    width: 100%;
-    display: flex;`
-
-const Banner = styled.div `
-    width: 65%;
-    height: 100vh;
-    background: #151515;
-    display: flex;
-    justify-content: center;`
-
-const Logo = styled.div `
-    width: 442px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-        h1 {
-            font-family: 'Passion One', cursive;
-            font-weight: 700;
-            font-size: 106px;
-            color: #fff;
-        }
-        h2 {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: 43px;
-            color: #fff;
-        }`
-
-const Form = styled.form `
-    width: 35%;
-    height: 100vh;
-    background: #333333;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-        input {
-            width: 80%;
-            height: 65px;
-            font-family:'Oswald', sans-serif;
-            font-size: 27px;
-            font-weight: 700;
-            margin-bottom: 13px;
-            border-radius: 6px;
-            border: none;
-            padding-left: 17px;
-            color: #9F9F9F;
-        }
-        button {
-            width: 80%;
-            height: 65px;
-            background: #1877F2;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-family:'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: 27px;
-            margin-bottom: 22px;
-        }
-        p {
-            color: #fff;
-            font-family: 'Lato', sans-serif;
-            font-weight: 400;
-            font-size: 20px;
-            text-decoration: underline;
-        }`
