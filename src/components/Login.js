@@ -41,7 +41,6 @@ function sendData (email, password, setBoolean, user, setUser, history) {
     request.then(promise => {
         setUser(promise.data)
         history.push("/timeline")
-        console.log("logou")
         }
     )
     request.catch(() => alert("Email/senha incorretos"))
