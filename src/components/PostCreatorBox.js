@@ -1,24 +1,15 @@
 import axios from "axios";
 import styled from "styled-components";
-//import { useContext, useState } from "react";
-import { useState } from "react";
-//import UserContext from "../contexts/UserContext";
+import { useContext, useState } from "react";
+import UserContext from "../contexts/UserContext";
 
-export default function PostCreatorBox() {
-    // const { user, setUser } = useContext(UserContext);
+export default function PostCreatorBox(props) {
+    const {renderPosts} = props;
+    const { user } = useContext(UserContext);
     const [link, setLink] = useState("");
     const [text, setText] = useState("");
     const [disabled, setDisabled] = useState(false);
     const [buttonText, setButtonText] = useState("Publish");
-    /*************************
-     * Abaixo constante temporária até que o componente seja integrado;
-     ******************************************/
-    const user = {
-        token: "e5de92ce-3ab2-4b85-985f-f17d27ec7aaa",
-        user: {
-            avatar: "https://st.depositphotos.com/1766887/1279/i/600/depositphotos_12798739-stock-photo-egyptian-papyrus.jpg",
-        },
-    };
 
     function publish(event) {
         event.preventDefault();
@@ -47,10 +38,7 @@ export default function PostCreatorBox() {
             setText("");
             setDisabled(false);
             setButtonText("Publish");
-            //comando para atualizar lista de posts da timeline
-            //tirar comentário quando a decisão de como essa função vai chegar
-            // a esse componente for tomada
-            //renderPosts();
+            renderPosts();
         });
 
         request.catch((error) => {
