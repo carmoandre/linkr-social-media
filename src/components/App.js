@@ -7,6 +7,7 @@ import Login from "./Login";
 import MyPosts from "./MyPosts";
 import Timeline from "./Timeline";
 import AnyUsersPosts from "./AnyUsersPosts";
+import HashtagPosts from './HashtagPosts';
 
 export default function App() {
     const [user, setUser] = useState("");
@@ -24,6 +25,9 @@ export default function App() {
                     </Route>
                     <Route exact path="/user/:id">
                         <AnyUsersPosts />
+                    </Route>
+                    <Route exact path="/hashtag/:hashtag">
+                        <HashtagPosts />
                     </Route>
                     <Route path="/" exact>
                         <Login />
