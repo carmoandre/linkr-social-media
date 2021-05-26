@@ -30,6 +30,7 @@ const PostWrapper = styled.li`
     text-decoration: none;
     color: inherit;
   }
+  font-family: 'Lato', sans-serif;
 
   width: 100%;
   display: flex;
