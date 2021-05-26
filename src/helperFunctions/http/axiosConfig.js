@@ -1,5 +1,5 @@
 export default function axiosConfig(token){
-  return config = {
+  return {
     headers:{
       Authorization: `Bearer ${token}`
     }

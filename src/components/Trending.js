@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export default function Trending(){
+    
+
+
     return(
         <Box>
             <Title>trending</Title>
