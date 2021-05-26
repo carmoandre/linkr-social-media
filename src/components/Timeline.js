@@ -1,11 +1,11 @@
 import Posts from "./Posts/Posts";
 import PostCreatorBox from "./PostCreatorBox";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
-
 import Loading from "./Loading";
 import LayoutInterface from "./LayoutInterface/LayoutInterface";
+import UserContext from "../contexts/UserContext";
 
 export default function Timeline(){
     const { user } = useContext(UserContext);
