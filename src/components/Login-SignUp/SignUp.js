@@ -1,7 +1,6 @@
 import { Link, useHistory } from "react-router-dom";
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import UserContext from '../../contexts/UserContext';
 
 import Container from './Styles/Container'
 import Banner from './Styles/Banner'
@@ -15,8 +14,6 @@ export default function SignUp () {
     const [username, setUsername] = useState("");
     const [picture, setPicture] = useState("");
     const [boolean, setBoolean] = useState(false)
-
-    const { user, setUser } = useContext(UserContext)
     const history = useHistory()
 
     return (
@@ -27,12 +24,12 @@ export default function SignUp () {
                     <h2>save, share and discover the best links on the web</h2>
                 </Logo>
             </Banner>
-            <Form onSubmit={(e)=>e.preventDefault()}>
+            <Form onSubmit={(e)=>sendData(e, email, password, username, picture, setBoolean, history)}>
                 <input placeholder="e-mail" type="email" value={email} required onChange={e => setEmail(e.target.value)}></input>
                 <input placeholder="password" type="password" value={password} required onChange={e => setPassword(e.target.value)}></input>
                 <input placeholder="username" type="text" value={username} required onChange={e => setUsername(e.target.value)}></input>
                 <input placeholder="picture url" type="url" value={picture} required onChange={e => setPicture(e.target.value)}></input>
-                <button onClick={() => sendData(email, password, username, picture, setBoolean, user, setUser, history)} disabled={boolean} >Sign Up</button>
+                <button type="submit" disabled={boolean} >Sign Up</button>
                 <Link to="/">
                     <p>Switch back to log in</p>
                 </Link>
@@ -41,7 +38,8 @@ export default function SignUp () {
     )
 }
 
-function sendData (email, password, username, picture, setBoolean, user, setUser, history) {
+function sendData (e, email, password, username, picture, setBoolean, history) {
+    e.preventDefault()
     setBoolean(true)
     const body = {"email": email, "password": password, "username": username, "pictureUrl": picture}
 

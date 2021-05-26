@@ -14,7 +14,7 @@ export default function Login () {
     const [password, setPassword] = useState("");
     const [boolean, setBoolean] = useState(false)
 
-    const { user, setUser } = useContext(UserContext)
+    const { setUser } = useContext(UserContext)
     const history = useHistory()
 
     return (
@@ -25,10 +25,10 @@ export default function Login () {
                     <h2>save, share and discover the best links on the web</h2>
                 </Logo>
             </Banner>
-            <Form onSubmit={(e)=>e.preventDefault()}>
+            <Form onSubmit={(e)=>sendData(e, email, password, setBoolean, setUser, history)}>
                 <input placeholder="e-mail" type="email" value={email} required onChange={e => setEmail(e.target.value)}></input>
                 <input placeholder="password" type="password" value={password} required onChange={e => setPassword(e.target.value)}></input>
-                <button onClick={() => sendData(email, password, setBoolean, user, setUser, history)} disabled={boolean}>Log In</button>
+                <button type="submit" disabled={boolean}>Log In</button>
                 <Link to="/sign-up">
                     <p>First time? Create an account!</p>
                 </Link>
@@ -37,8 +37,8 @@ export default function Login () {
     )
 }
 
-function sendData (email, password, setBoolean, user, setUser, history) {
-
+function sendData (e, email, password, setBoolean, setUser, history) {
+    e.preventDefault()
     const body = {"email": email, "password": password}
     
     const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-in", body)
