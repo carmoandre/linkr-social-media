@@ -1,4 +1,5 @@
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Navbar(){
@@ -7,7 +8,9 @@ export default function Navbar(){
     return(
         <Box>
             <div onClick={pushToMyPosts}><h1>My posts</h1></div>
-            <div><h1>My likes</h1></div>
+            <Link to="/my-likes">
+                <div><h1>My likes</h1></div>
+            </Link>
             <div><h1>Logout</h1></div>
         </Box>
     );

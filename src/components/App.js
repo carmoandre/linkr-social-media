@@ -6,6 +6,7 @@ import SignUp from "./SignUp";
 import Login from "./Login";
 import MyPosts from "./MyPosts";
 import Timeline from "./Timeline";
+import MyLikes from "./MyLikes";
 //import LayoutInterface from "./LayoutInterface/LayoutInterface";
 
 export default function App() {
@@ -25,9 +26,11 @@ export default function App() {
                     <Route path="/" exact>
                         <Login />
                     </Route>
-
                     <Route path="/timeline" exact>
                         <Timeline />
+                    </Route>
+                    <Route path="/my-likes">
+                        <MyLikes />
                     </Route>
                 </Switch>
             </BrowserRouter>
