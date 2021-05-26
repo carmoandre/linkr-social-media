@@ -1,25 +1,30 @@
 import Header from "../Header";
-import PostsColumn from "./PostsColumn";
 import Trending from "../Trending";
 import styled from "styled-components"
 
-export default function TimeLine(){
-  
-  return (
-    <LayoutInterface pageTitle="timeline">
-        <PostsColumn />
-    </LayoutInterface>
-  );
-}
+// LayoutInterface eh um componente opinionado que espera 1 child dentro 
+// dele e um nome de pagina passado como prop pageTitle
+// o componente renderiza o layout padronizado da pagina e inclui a child na coluna principal
 
+// como usar LayoutInterface :
+// <LayoutInterface pageTitle="nome da pagina">
+//   <componente que vai dentro de Box (pode incluir a caixa de adicionar novo post) />
+// </LayoutInterface>
+// exemplo:
+// <LayoutInterface pageTitle="timeline">
+//   <PostCreatorBox />
+//   <Posts posts={posts} />
+// </LayoutInterface>
 
-function LayoutInterface({pageTitle, children}){
+export default function LayoutInterface({pageTitle, children}){
     return(
         <Main>
             <Header />
             <Title>{pageTitle}</Title>
             <Content>
-              {children}
+              <Box>
+                {children}
+              </Box>
               <Trending />
             </Content>
         </Main>
@@ -74,5 +79,19 @@ const Content = styled.div`
       padding-left: 0;
       padding-right: 0;
       margin-top: 13px;
+    }
+`;
+
+const Box = styled.div`
+    width: 100%;
+    max-width: 611px;
+    & > * + * {
+        margin-top: 29px;
+    }
+
+    @media (max-width: 375px){
+        & > * + * {
+            margin-top: 16px;
+        }
     }
 `;

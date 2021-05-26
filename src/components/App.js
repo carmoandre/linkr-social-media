@@ -16,9 +16,6 @@ export default function App() {
                 <ResetCSS />
 
                 <Switch>
-                    <Route path="/LayoutInterface">
-                        <LayoutInterface />
-                    </Route>
                     <Route path="/sign-up">
                         <SignUp />
                     </Route>
