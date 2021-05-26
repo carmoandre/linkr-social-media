@@ -2,12 +2,15 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { useState } from "react";
 import UserContext from "../contexts/UserContext";
-import SignUp from "./SignUp";
-import Login from "./Login";
-import MyPosts from "./MyPosts";
+import SignUp from "./Login-SignUp/SignUp";
+import Login from "./Login-SignUp/Login"
 import Timeline from "./Timeline";
 import MyLikes from "./MyLikes";
 //import LayoutInterface from "./LayoutInterface/LayoutInterface";
+import AnyUsersPosts from "./AnyUsersPosts";
+import HashtagPosts from './HashtagPosts';
+import MyPosts from "./MyPosts"
+
 
 export default function App() {
     const [user, setUser] = useState("");
@@ -22,6 +25,12 @@ export default function App() {
                     </Route>
                     <Route exact path="/my-posts">
                         <MyPosts />
+                    </Route>
+                    <Route exact path="/user/:id">
+                        <AnyUsersPosts />
+                    </Route>
+                    <Route exact path="/hashtag/:hashtag">
+                        <HashtagPosts />
                     </Route>
                     <Route path="/" exact>
                         <Login />
