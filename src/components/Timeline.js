@@ -1,12 +1,11 @@
-import Header from "./Header";
-import PostsColumn from "./PostsColumn";
-import Trending from "./Trending";
-import styled from "styled-components"
+import Posts from "./Posts/Posts";
+import PostCreatorBox from "./PostCreatorBox";
 import { useEffect } from "react";
 import axios from "axios";
 import { useContext, useState } from "react";
 import UserContext from "../contexts/UserContext";
 import Loading from "./Loading";
+import LayoutInterface from "./LayoutInterface/LayoutInterface";
 
 export default function Timeline(){
     // const { user, setUser } = useContext(UserContext);
@@ -37,40 +36,38 @@ export default function Timeline(){
     //         alert("Houve uma falha ao obter os posts. Por favor, atualize a página")
     //     })
 }
+const [posts, setPosts] = useState([]);
     
+useEffect(()=>{
+  const token = "6a58d8fe-c3d4-4439-9f99-3cddf4f28430";
+  const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/7/posts";
+  const config = {
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  }
+  axios
+    .get(url, config)
+    .then(({data})=>{
+      setPosts(data.posts);
+    })
+    .catch((err) => console.log(err));
+},[]) 
 
     return(
-        <Main>
-            <Header />
-            <Title>timeline</Title>
-            <Content>
-                {showPosts===false ? <Loading /> : <PostsColumn />}
-                <Trending />
-            </Content>
-        </Main>
+        <LayoutInterface pageTitle="timeline">
+            <>
+                <PostCreatorBox />
+                {showPosts===false ? <Loading /> : <Posts posts={posts} />}
+            </>
+        </LayoutInterface>
+        /* // <Main>
+        //     <Header />
+        //     <Title>timeline</Title>
+        //     <Content>
+        //         {showPosts===false ? <Loading /> : <PostsColumn />}
+        //         <Trending />
+        //     </Content>
+        // </Main> */
     );
 }
-
-const Main = styled.div`
-    background: #333333;
-    width: 100%;
-    height: 100%;
-    min-height: 100vh;
-`;
-
-const Title = styled.div`
-    width: 937px;
-    color: #FFF;
-    font-family: "Oswald";
-    font-size: 43px;
-    line-height: 64px;
-    padding-top: 125px;
-    margin: 0 auto 0 auto;
-`;
-
-const Content = styled.div`
-    width: 937px;
-    height: 100%;
-    margin: 43px auto 0 auto;
-    display: flex;
-`;
