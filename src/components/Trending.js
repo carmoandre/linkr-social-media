@@ -15,10 +15,6 @@ const Box = styled.div`
     height: 406px;
     background: #171717;
     border-radius: 16px;
-
-    @media (max-width: 375px){
-        display: none;
-    }
 `;
 
 const Title = styled.h1`
