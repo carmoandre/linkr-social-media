@@ -10,6 +10,8 @@ import UserContext from "../../../contexts/UserContext";
 import Modal from "react-modal";
 import ReactModal from "react-modal";
 
+ReactModal.defaultStyles.overlay.zIndex = 5;
+
 Modal.setAppElement(document.querySelector(".root"));
 
 export default function Post(props) {
@@ -216,10 +218,15 @@ const StyledModal = styled(ReactModal)`
     align-items: center;
     justify-content: center;
     position: absolute;
+    z-index: 5;
     padding: 0 110px 0 110px;
 
     div {
         display: flex;
+    }
+
+    .backdrop {
+        background-color: green;
     }
 
     @media (max-width: 375px) {
