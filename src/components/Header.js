@@ -55,5 +55,6 @@ const Title = styled.div`
         height: 53px;
         object-fit: cover;
         border-radius: 50%;
+        user-select: none;
     }
 `;
