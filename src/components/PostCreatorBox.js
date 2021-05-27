@@ -95,8 +95,9 @@ const UserRoundedIMG = styled.img`
     width: 50px;
     height: 50px;
     background: url(${(props) => props.user.user.avatar});
-    background-size: 100%;
-    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
     border-radius: 27px;
     margin-right: 18px;
 
