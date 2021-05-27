@@ -16,6 +16,9 @@ export default function Posts({ posts, renderPosts, setPosts }) {
                         caption={caption}
                         likes={likes}
                         linkProps={linkProps}
+                        post={post}
+                        posts={posts}
+                        setPosts={setPosts}
                     />
                 );
             })}

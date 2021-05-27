@@ -34,7 +34,7 @@ export default function MyPosts(){
     <LayoutInterface pageTitle="my posts">
       {
         isReadyToRender 
-        ? <Posts posts={posts}/>
+        ? <Posts posts={posts} setPosts={setPosts}/>
         : <Loading />
       }
     </LayoutInterface>

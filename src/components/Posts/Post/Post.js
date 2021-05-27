@@ -15,6 +15,7 @@ import {
     GoBackButton,
     ConfirmButton,
 } from "./StyledModal";
+import {IoHeartSharp} from 'react-icons/io5';
 
 ReactModal.defaultStyles.overlay.zIndex = 5;
 
@@ -23,10 +24,12 @@ Modal.setAppElement(document.querySelector(".root"));
 export default function Post(props) {
     const { postID, renderPosts, originalPoster, caption, likes, linkProps } =
         props;
+    const {post, posts, setPosts} = props;
     const { user } = useContext(UserContext);
     const [modalIsOpen, setModalIsOPen] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const permission = user.user.id === originalPoster.id;
+    const [like, setLike] = useState(true);
 
     function toggleModal() {
         modalIsOpen ? setModalIsOPen(false) : setModalIsOPen(true);
@@ -61,6 +64,30 @@ export default function Post(props) {
         });
     }
 
+
+    function likePost(){
+        const config = {
+        headers:{
+            Authorization: `Bearer ${user.token}`
+            }
+        }
+        
+        let request;
+        
+        if (like){
+          request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${postID}/like`, {}, config)
+          setLike(false)
+        } else{
+          request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${postID}/dislike`, {}, config)
+          setLike(true)
+        }
+    
+        request.then(response => {
+          post.likes = response.data.post.likes;
+          setPosts([...posts]);
+        })
+      }
+
     return (
         <>
             <PostWrapper>
@@ -71,7 +98,11 @@ export default function Post(props) {
                             alt={originalPoster.name}
                         />
                     </Link>
-                    <IoHeartOutline color="white" size="20" />
+                    {
+                        like 
+                        ? <IoHeartOutline onClick={likePost}  color="white" size="20" data-tip="Fulano e mais tantas pessoas"/> 
+                        : <IoHeartSharp onClick={likePost} color="red" size="20" data-tip="Você, fulano e mais tantas pessoas"/>
+                    }
                     <p>{likes.length} likes</p>
                 </section>
                 <section className="post--body">

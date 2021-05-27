@@ -47,7 +47,7 @@ export default function AnyUsersPosts(){
     <LayoutInterface pageTitle={pageTitle}>
       {
         isReadyToRender 
-        ? <Posts posts={posts}/>
+        ? <Posts posts={posts} setPosts={setPosts}/>
         : <Loading />
       }
     </LayoutInterface>
