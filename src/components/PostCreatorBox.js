@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import UserContext from "../contexts/UserContext";
 
 export default function PostCreatorBox(props) {
-    const {renderPosts} = props;
+    const { renderPosts } = props;
     const { user } = useContext(UserContext);
     const [link, setLink] = useState("");
     const [text, setText] = useState("");
@@ -93,13 +93,14 @@ const FormHolder = styled.form`
 
 const UserRoundedIMG = styled.img`
     width: 50px;
+    min-width: 50px;
     height: 50px;
     background: url(${(props) => props.user.user.avatar});
-    background-size: cover;
-    background-position: center;
-    flex-shrink: 0;
-    border-radius: 27px;
-    margin-right: 18px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 50%;
 
     @media (max-width: 375px) {
         display: none;
@@ -109,6 +110,7 @@ const UserRoundedIMG = styled.img`
 const InputFields = styled.div`
     width: 100%;
     height: 100%;
+    margin-left: 18px;
     display: flex;
     flex-direction: column;
 
