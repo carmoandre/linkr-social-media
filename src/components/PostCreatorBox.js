@@ -101,7 +101,6 @@ const UserRoundedIMG = styled.img`
     object-fit: cover;
     overflow: hidden;
     border-radius: 50%;
-    //margin-right: 18px;
 
     @media (max-width: 375px) {
         display: none;
