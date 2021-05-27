@@ -12,7 +12,7 @@ export default function Header(){
     return(
         <>
             <Title>
-                <Link to="/">
+                <Link to="/timeline">
                     <h1>linkr</h1>
                 </Link>
                 <div>

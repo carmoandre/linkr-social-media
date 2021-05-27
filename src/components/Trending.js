@@ -1,11 +1,42 @@
 import styled from "styled-components";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import UserContext from "../contexts/UserContext";
+import { Link } from "react-router-dom";
 
 export default function Trending(){
+    const { user } = useContext(UserContext);
+    const [trendings, setTrendings] = useState(false);
+
+    useEffect(() => {
+        renderTrendings();
+    },[]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    function renderTrendings(){
+        const token = user.token;
+        const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/trending";
+        const config = {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        }
+        axios
+            .get(url, config)
+            .then(({data})=>{
+                setTrendings(data)
+            })
+            .catch(() => alert("Houve uma falha as trendings. Por favor, atualize a página"));
+    }
+    
     return(
         <Box>
             <Title>trending</Title>
             <Line></Line>
-            <TrendingTopics>#javascript</TrendingTopics>
+            {trendings!==false && trendings.hashtags.map(t => (
+                    <TrendingTopics key={t.id}>
+                        #<Link to={`/hashtag/${t.name}`}>{t.name}</Link>
+                    </TrendingTopics>
+            ))}
         </Box>
     );
 }
