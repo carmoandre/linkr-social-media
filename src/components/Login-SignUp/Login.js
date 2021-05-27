@@ -47,6 +47,7 @@ function sendData (e, email, password, setBoolean, setUser, history) {
     request.then(promise => {
         setUser(promise.data)
         history.push("/timeline")
+        localStorage.setItem("user", JSON.stringify(promise.data))
         }
     )
     request.catch(() => alert("Email/senha incorretos"))

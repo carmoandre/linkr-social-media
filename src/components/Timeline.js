@@ -10,13 +10,12 @@ import UserContext from "../contexts/UserContext";
 export default function Timeline(){
     const { user } = useContext(UserContext);
     const [posts, setPosts] = useState(false);
-    
+
     useEffect(() => {
         renderPosts();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     function renderPosts(){
-        localStorage.setItem("user", JSON.stringify(user))
         const token = user.token;
         const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts";
         const config = {

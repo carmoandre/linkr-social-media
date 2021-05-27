@@ -3,10 +3,12 @@ import UserContext from "../contexts/UserContext";
 import Timeline from "./Timeline";
 
 export default function PersistentLogin ({UserStorage}) {
-    const {user, setUser} = useContext(UserContext)
-    console.log(user)
+    console.log("entrou na persistent login")
+    const { user, setUser } = useContext(UserContext)
 
-    setUser(UserStorage)
+    const getUserStorage = JSON.parse(localStorage.getItem("user"))
+    setUser(getUserStorage)
+
     return (
         <Timeline />
     )
