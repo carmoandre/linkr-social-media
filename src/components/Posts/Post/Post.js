@@ -1,15 +1,48 @@
 import styled from "styled-components";
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
 import Caption from "./Caption";
 import ArticlePreview from './LinkContent/ArticlePreview';
 import {Link} from "react-router-dom";
+import React, { useContext, useState } from "react";
+import UserContext from "../../../contexts/UserContext";
+import axios from "axios";
+import ReactTooltip from 'react-tooltip';
 
-export default function Post({originalPoster, caption, likes, linkProps}) {
+export default function Post({posts, post, setPosts, postid, originalPoster, caption, likes, linkProps}) {
+  const [like, setLike] = useState(true)
+  const { user } = useContext(UserContext)
+  const config = {
+    headers:{
+      Authorization: `Bearer ${user.token}`
+    }
+  }
+
+  function likePost(){
+    let request;
+    
+    if (like){
+      request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${postid}/like`, {}, config)
+      setLike(false)
+    } else{
+      request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${postid}/dislike`, {}, config)
+      setLike(true)
+    }
+
+    request.then(response => {
+      console.log(response.data)
+      post=response.data.post
+      setPosts({...posts});
+    })
+  }
+
   return (
     <PostWrapper>
       <section className="post--avatarAndLikes">
         <Link to={`/user/${originalPoster.id}`}><img src={originalPoster.avatar} alt={originalPoster.name}/></Link>
-        <IoHeartOutline color="white" size="20" />
+        {like 
+        ? <IoHeartOutline onClick={likePost}  color="white" size="20" data-tip="Fulano e mais tantas pessoas"/> 
+        : <IoHeartSharp onClick={likePost} color="red" size="20" data-tip="Você, fulano e mais tantas pessoas"/>}
+        <ReactTooltip place="bottom" type="light" effect="solid"/>
         <p>{likes.length} likes</p>
       </section>
       <section className="post--body">

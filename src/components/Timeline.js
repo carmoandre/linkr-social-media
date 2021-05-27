@@ -39,7 +39,7 @@ export default function Timeline(){
         <LayoutInterface pageTitle="timeline">
             <>
                 <PostCreatorBox renderPosts={renderPosts}/>
-                {posts===false ? <Loading /> : <Posts posts={posts} />}
+                {posts===false ? <Loading /> : <Posts posts={posts} setPosts={setPosts} />}
             </>
         </LayoutInterface>
     );
