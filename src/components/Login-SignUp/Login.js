@@ -17,6 +17,8 @@ export default function Login () {
     const { setUser } = useContext(UserContext)
     const history = useHistory()
 
+    
+
     return (
         <Container>
             <Banner>
@@ -45,7 +47,6 @@ function sendData (e, email, password, setBoolean, setUser, history) {
     request.then(promise => {
         setUser(promise.data)
         history.push("/timeline")
-        console.log("logou")
         }
     )
     request.catch(() => alert("Email/senha incorretos"))
