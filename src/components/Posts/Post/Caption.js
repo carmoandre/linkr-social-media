@@ -30,6 +30,7 @@ const CaptionWrapper = styled.p`
 
   color: #b7b7b7;
   margin-bottom: 13px;
+  word-break: break-word;
 
   font-size: 17px;
   line-height: 20px;
