@@ -31,8 +31,8 @@ function parsePost(post) {
     };
     const linkProps = {
         href: post.link,
-        title: post.title,
-        description: post.description,
+        title: post.linkTitle,
+        description: post.linkDescription,
         srcImage: post.linkImage,
     };
     const caption = post.text;
