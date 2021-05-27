@@ -19,7 +19,7 @@ export default function MyLikes () {
             setRenderPage(true)
             setPosts(response.data.posts)
             })
-        request.catch(() => console.log("deu erro na request"));
+        request.catch((err) => alert(`Falha ao buscar posts erro ${err.response.status}`));
     },
     [user])
 

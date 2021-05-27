@@ -16,7 +16,6 @@ export default function Caption({ caption }) {
   const fragmentList =
     typeof caption === "string" ? caption.split(/((?<=[\s\n])#[áàâãéèêíïóôõöúçña-z0-9]+(?=[\s\n])|(?<=[\s\n])#[áàâãéèêíïóôõöúçña-z0-9]+$|^#[áàâãéèêíïóôõöúçña-z0-9]+(?=[\s\n])|^#[áàâãéèêíïóôõöúçña-z0-9]+$)/i) : [];
 
-  console.log(fragmentList);
   return (
     <CaptionWrapper>
       {fragmentList.map((fragment, i) => (
