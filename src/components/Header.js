@@ -53,6 +53,7 @@ const Title = styled.div`
     img{
         width: 53px;
         height: 53px;
+        object-fit: cover;
         border-radius: 50%;
     }
 `;
