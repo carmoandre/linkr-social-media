@@ -38,6 +38,7 @@ const Main = styled.div`
     min-height: 100vh;
     margin-top: 72px;
     padding-top: 53px;
+    padding-bottom: 40px;
     @media (max-width: 375px){
       padding-top: 15px;
     }
