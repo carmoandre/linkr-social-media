@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Caption({ caption }) {
 
   function CaptionFragment({ fragment }) {
-    return /(#[áàâãéèêíïóôõöúçña-z0-9]+)/i.test(fragment) ? (
+    return /^#[áàâãéèêíïóôõöúçña-z0-9]+$/i.test(fragment) ? (
       <Link className="caption--link-hashtag" to={`/hashtag/${fragment.slice(1,)}`}>
         {fragment}
       </Link>
@@ -14,7 +14,7 @@ export default function Caption({ caption }) {
   }
 
   const fragmentList =
-    typeof caption === "string" ? caption.split(/([\s\n])/i) : [];
+    typeof caption === "string" ? caption.split(/((?<=[\s\n])#[áàâãéèêíïóôõöúçña-z0-9]+(?=[\s\n])|(?<=[\s\n])#[áàâãéèêíïóôõöúçña-z0-9]+$|^#[áàâãéèêíïóôõöúçña-z0-9]+(?=[\s\n])|^#[áàâãéèêíïóôõöúçña-z0-9]+$)/i) : [];
 
   console.log(fragmentList);
   return (
