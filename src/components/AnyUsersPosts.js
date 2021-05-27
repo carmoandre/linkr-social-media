@@ -20,6 +20,7 @@ export default function AnyUsersPosts(){
 
   useEffect(()=>{
     if (!isValidUserState(user)) return;
+    window.scrollTo(0, 0);
     const [token] = [user.token];
     const usersPostsAsync = getUsersPostsAsync(targetId, token)
     const usersInfoAsync = getUserInfoAsync(targetId, token)

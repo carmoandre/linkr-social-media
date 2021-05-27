@@ -19,6 +19,7 @@ export default function AnyUsersPosts(){
 
   useEffect(()=>{
     if (!isValidUserState(user)) return;
+    window.scrollTo(0, 0);
     const [token] = [user.token];
 
     getHashtagPostsAsync(hashtag, token)
@@ -39,7 +40,7 @@ export default function AnyUsersPosts(){
   }
   
   return (
-    <LayoutInterface pageTitle={"#hashtag"}>
+    <LayoutInterface pageTitle={`#${hashtag}`}>
       {
         isReadyToRender 
         ? <Posts posts={posts}/>

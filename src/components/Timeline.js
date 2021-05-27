@@ -12,6 +12,7 @@ export default function Timeline(){
     const [posts, setPosts] = useState(false);
     
     useEffect(() => {
+        window.scrollTo(0, 0);
         renderPosts();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
