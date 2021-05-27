@@ -16,6 +16,7 @@ export default function Timeline(){
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     function renderPosts(){
+        localStorage.setItem("user", JSON.stringify(user))
         const token = user.token;
         const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts";
         const config = {

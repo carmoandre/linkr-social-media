@@ -9,11 +9,14 @@ import MyLikes from "./MyLikes";
 import AnyUsersPosts from "./AnyUsersPosts";
 import HashtagPosts from './HashtagPosts';
 import MyPosts from "./MyPosts"
+import PersistentLogin from "./PersistentLogin";
 
 
 export default function App() {
 
     const [user, setUser] = useState("");
+    const UserStorage = localStorage.getItem("user")
+
     return (
             <UserContext.Provider value={{ user, setUser }}>
                 <BrowserRouter>
@@ -32,7 +35,7 @@ export default function App() {
                             <HashtagPosts />
                         </Route>
                         <Route path="/" exact>
-                            <Login />
+                            {UserStorage ? <PersistentLogin UserStorage={UserStorage}/> : <Login />}
                         </Route>
                         <Route path="/timeline" exact>
                             <Timeline />
