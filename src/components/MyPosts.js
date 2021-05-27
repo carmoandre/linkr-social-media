@@ -16,6 +16,7 @@ export default function MyPosts(){
   const history = useHistory();
   useEffect(()=>{
     if (!isValidUserState(user)) return;
+    window.scrollTo(0, 0);
     const [token, id] = [user.token, user.user.id];
     getUsersPostsAsync(id, token)
     .then(({data})=>{
