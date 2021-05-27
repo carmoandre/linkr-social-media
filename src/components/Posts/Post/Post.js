@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import axios from "axios";
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
 import { MdModeEdit, MdDelete } from "react-icons/md";
 import Caption from "./Caption";
 import ArticlePreview from "./LinkContent/ArticlePreview";
 import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
+import ReactTooltip from "react-tooltip";
 import UserContext from "../../../contexts/UserContext";
 import Modal from "react-modal";
 import ReactModal from "react-modal";
@@ -15,7 +16,6 @@ import {
     GoBackButton,
     ConfirmButton,
 } from "./StyledModal";
-import {IoHeartSharp} from 'react-icons/io5';
 
 ReactModal.defaultStyles.overlay.zIndex = 5;
 
@@ -30,6 +30,8 @@ export default function Post(props) {
     const [disabled, setDisabled] = useState(false);
     const permission = user.user.id === originalPoster.id;
     const [like, setLike] = useState(true);
+
+    console.log(post.likes)
 
     function toggleModal() {
         modalIsOpen ? setModalIsOPen(false) : setModalIsOPen(true);
@@ -86,7 +88,19 @@ export default function Post(props) {
           post.likes = response.data.post.likes;
           setPosts([...posts]);
         })
-      }
+    }
+
+    // const text = "";
+
+    // if (post.likes.length=0){
+    //     text = "";
+    // } else if (post.likes.length=1){
+    //     text = `tal pessoa curtiu`
+    // } else if (post.likes.length=2){
+    //     text = `pessoa[0] e mais 1 pessoa`
+    // } else{
+    //     text = `pessoa[0] e mais post.likes.length-1 pessoas`
+    // }
 
     return (
         <>
@@ -100,9 +114,10 @@ export default function Post(props) {
                     </Link>
                     {
                         like 
-                        ? <IoHeartOutline onClick={likePost}  color="white" size="20" data-tip="Fulano e mais tantas pessoas"/> 
-                        : <IoHeartSharp onClick={likePost} color="red" size="20" data-tip="Você, fulano e mais tantas pessoas"/>
+                        ? <IoHeartOutline onClick={likePost}  color="white" size="20" data-tip="sdgsdg"/> 
+                        : <IoHeartSharp onClick={likePost} color="red" size="20"/>
                     }
+                    <ReactTooltip place="bottom" type="light" effect="solid"/> 
                     <p>{likes.length} likes</p>
                 </section>
                 <section className="post--body">
