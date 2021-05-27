@@ -11,9 +11,11 @@ import HashtagPosts from './HashtagPosts';
 import MyPosts from "./MyPosts"
 
 
+
 export default function App() {
 
     const [user, setUser] = useState("");
+
     return (
             <UserContext.Provider value={{ user, setUser }}>
                 <BrowserRouter>
