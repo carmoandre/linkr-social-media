@@ -8,35 +8,20 @@ import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import UserContext from "../../../contexts/UserContext";
 import Modal from "react-modal";
+import ReactModal from "react-modal";
 
-const customStyles = {
-    content: {
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%)",
-    },
-};
-
-Modal.setAppElement(document.getElementById("root"));
+Modal.setAppElement(document.querySelector(".root"));
 
 export default function Post(props) {
-    const { postID, originalPoster, caption, likes, linkProps } = props;
+    const { postID, renderPosts, originalPoster, caption, likes, linkProps } =
+        props;
     const { user } = useContext(UserContext);
-    const [permission, setPermission] = useState(false);
     const [modalIsOpen, setModalIsOPen] = useState(false);
-    const subtitle = "teste de modal";
-
-    setPermission(user.user.id === originalPoster.id);
+    const [disabled, setDisabled] = useState(false);
+    const permission = user.user.id === originalPoster.id;
 
     function toggleModal() {
         modalIsOpen ? setModalIsOPen(false) : setModalIsOPen(true);
-    }
-
-    function afterOpenModal() {
-        console.log("efeito de abertura da modal");
     }
 
     function erase() {
@@ -51,12 +36,20 @@ export default function Post(props) {
             config
         );
 
+        setDisabled(true);
+
         request.then((response) => {
-            console.log(response.data);
+            setDisabled(false);
+            toggleModal();
+            renderPosts();
         });
 
         request.catch((error) => {
-            console.log(error);
+            setDisabled(false);
+            toggleModal();
+            alert(
+                "Não foi possível excluir o post. Tente novamente mais tarde."
+            );
         });
     }
 
@@ -91,24 +84,25 @@ export default function Post(props) {
                     <ArticlePreview linkProps={linkProps} />
                 </section>
             </PostWrapper>
-            <Modal
+            <StyledModal
                 isOpen={modalIsOpen}
-                onAfterOpen={afterOpenModal}
                 onRequestClose={toggleModal}
-                style={customStyles}
-                contentLabel="Example Modal"
+                contentLabel="Erase Modal"
             >
-                <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-                <button onClick={toggleModal}>close</button>
-                <div>I am a modal</div>
-                <form>
-                    <input />
-                    <button>tab navigation</button>
-                    <button>stays</button>
-                    <button>inside</button>
-                    <button>the modal</button>
-                </form>
-            </Modal>
+                <ModalText>
+                    {disabled
+                        ? "Excluindo..."
+                        : `Tem certeza que deseja excluir essa publicação?`}
+                </ModalText>
+                <div>
+                    <GoBackButton disabled={disabled} onClick={toggleModal}>
+                        Não, voltar
+                    </GoBackButton>
+                    <ConfirmButton disabled={disabled} onClick={erase}>
+                        Sim, excluir
+                    </ConfirmButton>
+                </div>
+            </StyledModal>
         </>
     );
 }
@@ -204,4 +198,87 @@ const EditAndEraseHolder = styled.div`
     width: 40px;
     display: ${(props) => (props.permission ? "flex" : "none")};
     justify-content: space-between;
+`;
+
+const StyledModal = styled(ReactModal)`
+    top: 50vh;
+    left: 50vw;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 597px;
+    height: 262px;
+    background: #333333;
+    border-radius: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    padding: 0 110px 0 110px;
+
+    div {
+        display: flex;
+    }
+
+    @media (max-width: 375px) {
+        width: 350px;
+        height: 170px;
+        padding: 0 30px 0 30px;
+    }
+`;
+
+const ModalText = styled.p`
+    font-family: "Lato", sans-serif;
+    font-weight: bold;
+    font-size: 34px;
+    line-height: 41px;
+    color: #ffffff;
+    margin-bottom: 40px;
+
+    @media (max-width: 375px) {
+        margin-left: 5px;
+        margin-bottom: 30px;
+        line-height: 30px;
+        font-size: 20px;
+        padding: 0 35px 0 35px;
+    }
+`;
+
+const GoBackButton = styled.button`
+    width: 134px;
+    height: 37px;
+    background: #ffffff;
+    color: #1877f2;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    border-radius: 5px;
+    border: none;
+    margin-right: 27px;
+
+    @media (max-width: 375px) {
+        font-size: 14px;
+        width: 100px;
+        height: 25px;
+    }
+`;
+
+const ConfirmButton = styled.button`
+    width: 134px;
+    height: 37px;
+    background: #1877f2;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    border-radius: 5px;
+    border: none;
+
+    @media (max-width: 375px) {
+        font-size: 14px;
+        width: 100px;
+        height: 25px;
+    }
 `;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Post from "./Post/Post";
 
-export default function Posts({ posts }) {
+export default function Posts({ posts, renderPosts }) {
     return (
         <PostsWrapper>
             {posts.map((post) => {
@@ -11,6 +11,7 @@ export default function Posts({ posts }) {
                     <Post
                         key={id}
                         postID={id}
+                        renderPosts={renderPosts}
                         originalPoster={originalPoster}
                         caption={caption}
                         likes={likes}
