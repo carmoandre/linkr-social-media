@@ -12,13 +12,14 @@ export default function MyLikes () {
     const [renderPage, setRenderPage] = useState(false)
 
     useEffect(()=>{
+        window.scrollTo(0, 0);
         const config = {headers: {Authorization: `Bearer ${user.token}`}};
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked", config)
         request.then(response => {
             setRenderPage(true)
             setPosts(response.data.posts)
             })
-        request.catch(() => console.log("deu erro na request"));
+        request.catch((err) => alert(`Falha ao buscar posts erro ${err.response.status}`));
     },
     [user])
 
