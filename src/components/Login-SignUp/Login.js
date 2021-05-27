@@ -1,5 +1,5 @@
 import { Link, useHistory } from "react-router-dom"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import axios from 'axios';
 import UserContext from '../../contexts/UserContext';
 
@@ -12,12 +12,19 @@ export default function Login () {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [boolean, setBoolean] = useState(false)
+    const [boolean, setBoolean] = useState(false);
 
-    const { setUser } = useContext(UserContext)
-    const history = useHistory()
+    const { setUser } = useContext(UserContext);
+    const history = useHistory();
 
+    const UserStorage = localStorage.getItem("user");
     
+    useEffect(() => {
+        if (UserStorage) {
+            setUser(JSON.parse(UserStorage))
+            history.push("/timeline")
+        }
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <Container>
