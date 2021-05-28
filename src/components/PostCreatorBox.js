@@ -93,12 +93,11 @@ const FormHolder = styled.form`
 
 const UserRoundedIMG = styled.img`
     width: 50px;
-    min-width: 50px;
     height: 50px;
+    flex-shrink: 0;
     background: url(${(props) => props.user.user.avatar});
-    background-size: 100%;
-    background-repeat: no-repeat;
-    object-fit: cover;
+    background-size: cover;
+    background-position: center;
     overflow: hidden;
     border-radius: 50%;
 
