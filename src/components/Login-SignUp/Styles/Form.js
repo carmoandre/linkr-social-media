@@ -49,6 +49,10 @@ align-items: center;
         margin-bottom: 22px;
         cursor: pointer;
 
+        &:disabled{
+            filter: brightness(50%);
+        }
+        
         @media (max-width: 375px) {
             width: 90%;
         }
