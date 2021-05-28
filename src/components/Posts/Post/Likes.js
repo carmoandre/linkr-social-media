@@ -5,12 +5,12 @@ import {useState} from 'react';
 import {likePostAsync, dislikePostAsync} from '../../../helperFunctions/http/apiRequests';
 
 export default function Likes({likesProps}){
-  const { user , posts, setPosts} = likesProps;
+  const { user } = likesProps;
 
   const [likes, setLikes] = useState(likesProps.likes);
   const [isLiked, setIsLikeD] = useState(isLikedByCurrentUser(likes, user));
   
-  const toggleLike = () => toggleLikeAsync(likesProps, isLiked, setIsLikeD, likes, setLikes, posts, setPosts);
+  const toggleLike = () => toggleLikeAsync(likesProps, isLiked, setIsLikeD, setLikes);
   
   const tooltip = getTooltip(likes, user);
 
@@ -56,11 +56,11 @@ function getTooltip(likes, user){
 }
 
 function isLikedByCurrentUser(likes, user){
-  const idsOfLikes = likes.map(like=>like["user.id"]);
+  const idsOfLikes = likes.map(like=>like["user.id"] || like.userId);
   return idsOfLikes.includes(user.user.id);
 }
 
-function toggleLikeAsync(likesProps , isLiked, setIsLikeD, likes, setLikes, posts, setPosts){
+function toggleLikeAsync(likesProps , isLiked, setIsLikeD, setLikes){
   const { user, postID } = likesProps;
   const request = isLiked 
     ? dislikePostAsync(postID, user.token) 
@@ -68,7 +68,6 @@ function toggleLikeAsync(likesProps , isLiked, setIsLikeD, likes, setLikes, post
 
   request.then(response => {
     setIsLikeD(!isLiked);
-    setLikes([...likes]);
-    setPosts([...posts]);
+    setLikes(response.data.post.likes);
   });
 }
