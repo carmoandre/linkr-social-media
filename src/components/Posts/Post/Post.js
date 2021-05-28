@@ -174,7 +174,7 @@ const PostWrapper = styled.li`
     padding: 18px;
     gap: 18px;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         border-radius: 0;
         padding: 15px;
         gap: 14px;
@@ -189,7 +189,7 @@ const PostWrapper = styled.li`
         flex-shrink: 0;
 
         width: 50px;
-        @media (max-width: 375px) {
+        @media (max-width: 430px) {
             width: 40px;
         }
 
@@ -206,7 +206,7 @@ const PostWrapper = styled.li`
             height: 50px;
             width: 50px;
 
-            @media (max-width: 375px) {
+            @media (max-width: 430px) {
                 height: 40px;
                 width: 40px;
                 margin-bottom: 17px;
@@ -217,7 +217,7 @@ const PostWrapper = styled.li`
             font-size: 11px;
             line-height: 13px;
 
-            @media (max-width: 375px) {
+            @media (max-width: 430px) {
                 font-size: 9px;
                 line-height: 11px;
             }
@@ -236,7 +236,7 @@ const PostWrapper = styled.li`
 
             font-size: 19px;
             line-height: 23px;
-            @media (max-width: 375px) {
+            @media (max-width: 430px) {
                 font-size: 17px;
                 line-height: 20px;
             }

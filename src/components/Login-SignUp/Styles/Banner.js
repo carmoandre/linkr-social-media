@@ -7,7 +7,7 @@ const Banner = styled.div `
     display: flex;
     justify-content: center;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         width: 100%;
         height: 175px;
         flex-direction: column;

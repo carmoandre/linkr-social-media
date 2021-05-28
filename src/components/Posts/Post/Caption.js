@@ -110,7 +110,7 @@ const CaptionWrapper = styled.p`
 
     font-size: 17px;
     line-height: 20px;
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         font-size: 15px;
         line-height: 18px;
     }

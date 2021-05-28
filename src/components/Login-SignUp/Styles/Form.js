@@ -9,7 +9,7 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 
-@media (max-width: 375px) {
+@media (max-width: 430px) {
     width: 100%;
     justify-content: unset;
     padding: 40px 0 0 0;
@@ -31,7 +31,7 @@ align-items: center;
             color: #9F9F9F;
         }
 
-        @media (max-width: 375px) {
+        @media (max-width: 430px) {
             width: 90%;
         }
     }
@@ -53,7 +53,7 @@ align-items: center;
             filter: brightness(50%);
         }
         
-        @media (max-width: 375px) {
+        @media (max-width: 430px) {
             width: 90%;
         }
     }

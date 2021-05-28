@@ -53,7 +53,7 @@ const PreviewWrapper = styled.a`
       line-height: 19px;
       word-break: break-word;
       color: #cecece;
-      @media (max-width: 375px) {
+      @media (max-width: 430px) {
         font-size: 11px;
         line-height: 13px;
         margin-bottom: 4px;
@@ -66,7 +66,7 @@ const PreviewWrapper = styled.a`
       margin-bottom: 13px;
       font-size: 11px;
       line-height: 13px;
-      @media (max-width: 375px) {
+      @media (max-width: 430px) {
         font-size: 9px;
         line-height: 11px;
         margin-bottom: 4px;
@@ -78,7 +78,7 @@ const PreviewWrapper = styled.a`
       word-break: break-all;
       font-size: 11px;
       line-height: 13px;
-      @media (max-width: 375px) {
+      @media (max-width: 430px) {
         font-size: 9px;
         line-height: 11px;
       }

@@ -84,7 +84,7 @@ const FormHolder = styled.form`
     font-family: Lato;
     font-weight: 300;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         height: 164px;
         border-radius: 0;
         padding: 10px 15px 12px 15px;
@@ -101,7 +101,7 @@ const UserRoundedIMG = styled.img`
     overflow: hidden;
     border-radius: 50%;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         display: none;
     }
 `;
@@ -121,7 +121,7 @@ const InputFields = styled.div`
         color: #707070;
     }
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         width: 100%;
         margin: 0;
         padding: 0;
@@ -156,7 +156,7 @@ const TextBox = styled.textarea`
     padding-left: 12px;
     resize: none;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         height: 47px;
     }
 `;
@@ -175,7 +175,7 @@ const PublishButton = styled.button`
     margin: auto 0 0 auto;
     cursor: pointer;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         height: 22px;
     }
 `;
