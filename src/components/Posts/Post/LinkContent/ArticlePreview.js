@@ -51,6 +51,7 @@ const PreviewWrapper = styled.a`
       margin-bottom: 5px;
       font-size: 16px;
       line-height: 19px;
+      word-break: break-word;
       color: #cecece;
       @media (max-width: 375px) {
         font-size: 11px;
@@ -61,7 +62,7 @@ const PreviewWrapper = styled.a`
 
     .textList--description {
       color: #9b9595;
-
+      word-break: break-word;
       margin-bottom: 13px;
       font-size: 11px;
       line-height: 13px;
