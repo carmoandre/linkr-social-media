@@ -48,7 +48,7 @@ export default function Timeline() {
                 {posts === false ? (
                     <Loading />
                 ) : (
-                    <Posts renderPosts={renderPosts} posts={posts} />
+                    <Posts posts={posts} setPosts={setPosts}/>
                 )}
             </>
         </LayoutInterface>

@@ -43,7 +43,7 @@ export default function AnyUsersPosts(){
     <LayoutInterface pageTitle={`#${hashtag}`}>
       {
         isReadyToRender 
-        ? <Posts posts={posts}/>
+        ? <Posts posts={posts} setPosts={setPosts}/>
         : <Loading />
       }
     </LayoutInterface>

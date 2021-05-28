@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import axios from "axios";
-import { IoHeartOutline } from "react-icons/io5";
 import { MdModeEdit, MdDelete } from "react-icons/md";
 import Caption from "./Caption";
 import ArticlePreview from "./LinkContent/ArticlePreview";
 import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import UserContext from "../../../contexts/UserContext";
 import Modal from "react-modal";
 import ReactModal from "react-modal";
+import Likes from './Likes';
 import {
     StyledModal,
     ModalText,
@@ -23,12 +23,25 @@ Modal.setAppElement(document.querySelector(".root"));
 export default function Post(props) {
     const { postID, renderPosts, originalPoster, caption, likes, linkProps } =
         props;
+    const {post, posts, setPosts} = props;
     const { user } = useContext(UserContext);
     const [modalIsOpen, setModalIsOPen] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const [onEdition, setOnEdition] = useState(false);
     const [editedText, setEditedText] = useState(caption);
     const permission = user.user.id === originalPoster.id;
+    const [like, setLike] = useState(true);
+
+    const likesProps = {
+        like,
+        user,
+        postID,
+        setLike,
+        post,
+        posts,
+        setPosts,
+        likes
+    }
 
     function toggleEdition() {
         onEdition ? setOnEdition(false) : setOnEdition(true);
@@ -78,8 +91,9 @@ export default function Post(props) {
                             alt={originalPoster.name}
                         />
                     </Link>
-                    <IoHeartOutline color="white" size="20" />
-                    <p>{likes.length} likes</p>
+
+                    <Likes likesProps={likesProps}/>
+
                 </section>
                 <section className="post--body">
                     <header>
