@@ -25,12 +25,17 @@ align-items: center;
         border-radius: 6px;
         border: none;
         padding-left: 17px;
-        color: #9F9F9F;
+        color: black;
+
+        &::placeholder{
+            color: #9F9F9F;
+        }
 
         @media (max-width: 375px) {
             width: 90%;
         }
     }
+
     button {
         width: 80%;
         height: 65px;
@@ -43,7 +48,7 @@ align-items: center;
         font-size: 27px;
         margin-bottom: 22px;
         cursor: pointer;
-        
+
         @media (max-width: 375px) {
             width: 90%;
         }
