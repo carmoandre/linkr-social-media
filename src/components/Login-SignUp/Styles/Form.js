@@ -9,7 +9,7 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 
-@media (max-width: 375px) {
+@media (max-width: 430px) {
     width: 100%;
     justify-content: unset;
     padding: 40px 0 0 0;
@@ -25,12 +25,17 @@ align-items: center;
         border-radius: 6px;
         border: none;
         padding-left: 17px;
-        color: #9F9F9F;
+        color: black;
 
-        @media (max-width: 375px) {
+        &::placeholder{
+            color: #9F9F9F;
+        }
+
+        @media (max-width: 430px) {
             width: 90%;
         }
     }
+
     button {
         width: 80%;
         height: 65px;
@@ -42,8 +47,13 @@ align-items: center;
         font-weight: 700;
         font-size: 27px;
         margin-bottom: 22px;
+        cursor: pointer;
 
-        @media (max-width: 375px) {
+        &:disabled{
+            filter: brightness(50%);
+        }
+        
+        @media (max-width: 430px) {
             width: 90%;
         }
     }

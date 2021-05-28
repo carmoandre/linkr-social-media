@@ -21,7 +21,7 @@ ReactModal.defaultStyles.overlay.zIndex = 5;
 Modal.setAppElement(document.querySelector(".root"));
 
 export default function Post(props) {
-    const { postID, renderPosts, originalPoster, caption, likes, linkProps } =
+    const { postID, originalPoster, caption, likes, linkProps } =
         props;
     const {post, posts, setPosts} = props;
     const { user } = useContext(UserContext);
@@ -69,7 +69,9 @@ export default function Post(props) {
         request.then((response) => {
             setDisabled(false);
             toggleModal();
-            renderPosts();
+            const indexOfPost = posts.indexOf(post);
+            posts.splice(indexOfPost,1);
+            setPosts([...posts]);
         });
 
         request.catch((error) => {
@@ -85,7 +87,7 @@ export default function Post(props) {
         <>
             <PostWrapper>
                 <section className="post--avatarAndLikes">
-                    <Link to={`/user/${originalPoster.id}`}>
+                    <Link className="avatarAndLikes--link" to={`/user/${originalPoster.id}`}>
                         <img
                             src={originalPoster.avatar}
                             alt={originalPoster.name}
@@ -157,6 +159,11 @@ const PostWrapper = styled.li`
     }
     font-family: "Lato", sans-serif;
 
+
+    svg {
+        cursor: pointer;
+    }
+
     width: 100%;
     display: flex;
 
@@ -167,7 +174,7 @@ const PostWrapper = styled.li`
     padding: 18px;
     gap: 18px;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         border-radius: 0;
         padding: 15px;
         gap: 14px;
@@ -182,8 +189,12 @@ const PostWrapper = styled.li`
         flex-shrink: 0;
 
         width: 50px;
-        @media (max-width: 375px) {
+        @media (max-width: 430px) {
             width: 40px;
+        }
+
+        .avatarAndLikes--link{
+            margin-bottom: 19px;
         }
 
         img {
@@ -194,9 +205,8 @@ const PostWrapper = styled.li`
 
             height: 50px;
             width: 50px;
-            margin-bottom: 19px;
 
-            @media (max-width: 375px) {
+            @media (max-width: 430px) {
                 height: 40px;
                 width: 40px;
                 margin-bottom: 17px;
@@ -207,7 +217,7 @@ const PostWrapper = styled.li`
             font-size: 11px;
             line-height: 13px;
 
-            @media (max-width: 375px) {
+            @media (max-width: 430px) {
                 font-size: 9px;
                 line-height: 11px;
             }
@@ -226,7 +236,7 @@ const PostWrapper = styled.li`
 
             font-size: 19px;
             line-height: 23px;
-            @media (max-width: 375px) {
+            @media (max-width: 430px) {
                 font-size: 17px;
                 line-height: 20px;
             }

@@ -8,7 +8,8 @@ const StyledModal = styled(ReactModal)`
     bottom: auto;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    width: 597px;
+    max-width: 597px;
+    width: 100%;
     height: 262px;
     background: #333333;
     border-radius: 50px;
@@ -28,8 +29,7 @@ const StyledModal = styled(ReactModal)`
         background-color: green;
     }
 
-    @media (max-width: 375px) {
-        width: 350px;
+    @media (max-width: 430px) {
         height: 170px;
         padding: 0 30px 0 30px;
     }
@@ -43,7 +43,7 @@ const ModalText = styled.p`
     color: #ffffff;
     margin-bottom: 40px;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         margin-left: 5px;
         margin-bottom: 30px;
         line-height: 30px;
@@ -64,7 +64,7 @@ const GoBackButton = styled.button`
     border: none;
     margin-right: 27px;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         font-size: 14px;
         width: 100px;
         height: 25px;
@@ -82,7 +82,7 @@ const ConfirmButton = styled.button`
     border-radius: 5px;
     border: none;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         font-size: 14px;
         width: 100px;
         height: 25px;

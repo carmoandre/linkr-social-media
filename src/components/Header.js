@@ -38,7 +38,7 @@ const Title = styled.div`
     top:0;
     left:0;
 
-    @media (max-width: 375px){
+    @media (max-width: 430px){
         padding-left: 17px;
     }
 

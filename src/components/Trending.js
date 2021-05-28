@@ -42,12 +42,11 @@ export default function Trending(){
 }
 
 const Box = styled.div`
-    max-width: 301px;
-    width: 100%;
+    flex: 1 1.3 301px;
     height: 406px;
     background: #171717;
     border-radius: 16px;
-    @media (max-width: 500px){
+    @media (max-width: 768px){
         display: none;
     }
 `;

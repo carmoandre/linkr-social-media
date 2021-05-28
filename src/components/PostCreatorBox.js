@@ -84,7 +84,7 @@ const FormHolder = styled.form`
     font-family: Lato;
     font-weight: 300;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         height: 164px;
         border-radius: 0;
         padding: 10px 15px 12px 15px;
@@ -93,16 +93,15 @@ const FormHolder = styled.form`
 
 const UserRoundedIMG = styled.img`
     width: 50px;
-    min-width: 50px;
     height: 50px;
+    flex-shrink: 0;
     background: url(${(props) => props.user.user.avatar});
-    background-size: 100%;
-    background-repeat: no-repeat;
-    object-fit: cover;
+    background-size: cover;
+    background-position: center;
     overflow: hidden;
     border-radius: 50%;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         display: none;
     }
 `;
@@ -122,7 +121,7 @@ const InputFields = styled.div`
         color: #707070;
     }
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         width: 100%;
         margin: 0;
         padding: 0;
@@ -157,7 +156,7 @@ const TextBox = styled.textarea`
     padding-left: 12px;
     resize: none;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         height: 47px;
     }
 `;
@@ -174,8 +173,9 @@ const PublishButton = styled.button`
     font-size: 14px;
     line-height: 17px;
     margin: auto 0 0 auto;
+    cursor: pointer;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         height: 22px;
     }
 `;

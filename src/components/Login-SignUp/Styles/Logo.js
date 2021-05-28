@@ -7,7 +7,7 @@ const Logo = styled.div `
     flex-direction: column;
     justify-content: center;
 
-    @media (max-width: 375px) {
+    @media (max-width: 430px) {
         width: 70%;
         align-items: center;
         height: 175px;
@@ -19,7 +19,7 @@ const Logo = styled.div `
             font-size: 106px;
             color: #fff;
 
-            @media (max-width: 375px) {
+            @media (max-width: 430px) {
                 font-size: 76px;
             }
         }
@@ -29,7 +29,7 @@ const Logo = styled.div `
             font-size: 43px;
             color: #fff;
 
-            @media (max-width: 375px) {
+            @media (max-width: 430px) {
                 font-size: 23px;
                 text-align: center;
             }
