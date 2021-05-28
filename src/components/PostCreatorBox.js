@@ -173,6 +173,7 @@ const PublishButton = styled.button`
     font-size: 14px;
     line-height: 17px;
     margin: auto 0 0 auto;
+    cursor: pointer;
 
     @media (max-width: 375px) {
         height: 22px;

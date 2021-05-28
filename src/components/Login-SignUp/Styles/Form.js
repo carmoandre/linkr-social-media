@@ -42,7 +42,8 @@ align-items: center;
         font-weight: 700;
         font-size: 27px;
         margin-bottom: 22px;
-
+        cursor: pointer;
+        
         @media (max-width: 375px) {
             width: 90%;
         }
