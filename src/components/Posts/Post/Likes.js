@@ -12,7 +12,7 @@ export default function Likes({likesProps}){
   const [isInteractive, setIsInteractive] = useState(true);
 
   const toggleLike = () => isInteractive && toggleLikeAsync(likesProps, isLiked, setIsLiked, likes, setLikes, setIsInteractive);
-
+  
   
   ReactTooltip.rebuild();
   const tooltip = getTooltip(likes, user);
