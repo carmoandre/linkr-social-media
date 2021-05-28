@@ -8,7 +8,8 @@ const StyledModal = styled(ReactModal)`
     bottom: auto;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    width: 597px;
+    max-width: 597px;
+    width: 100%;
     height: 262px;
     background: #333333;
     border-radius: 50px;
@@ -29,7 +30,6 @@ const StyledModal = styled(ReactModal)`
     }
 
     @media (max-width: 375px) {
-        width: 350px;
         height: 170px;
         padding: 0 30px 0 30px;
     }
