@@ -76,7 +76,7 @@ function toggleLikeAsync(likesProps , isLiked, setIsLiked, likes, setLikes, setI
 
   function setLastValidResponse(){
     setIsWaiting(true);
-    for (let i=likeBuffer.length-1; i>=0; i++){
+    for (let i=likeBuffer.length-1; i>=0; i--){
       if (likeBuffer[i].hasOwnProperty("data")){
         const responseLikes = likeBuffer[i].data.post.likes;
         setIsLiked(isLikedByCurrentUser(responseLikes, user));
@@ -85,7 +85,7 @@ function toggleLikeAsync(likesProps , isLiked, setIsLiked, likes, setLikes, setI
         break;
       }
     }
-    likeBuffer.length = 1;
+    likeBuffer.splice(1,likeBuffer.length);
     setIsWaiting(false);
   }
   
