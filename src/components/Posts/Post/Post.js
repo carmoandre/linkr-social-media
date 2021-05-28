@@ -21,7 +21,7 @@ ReactModal.defaultStyles.overlay.zIndex = 5;
 Modal.setAppElement(document.querySelector(".root"));
 
 export default function Post(props) {
-    const { postID, renderPosts, originalPoster, caption, likes, linkProps } =
+    const { postID, originalPoster, caption, likes, linkProps } =
         props;
     const {post, posts, setPosts} = props;
     const { user } = useContext(UserContext);
