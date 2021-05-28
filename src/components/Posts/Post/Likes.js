@@ -14,15 +14,24 @@ export default function Likes({likesProps}){
 
   return (
     <>
-    {isLiked 
-      ? <IoHeartSharp onClick={toggleLike} color="red" size="20"/>
-      : <IoHeartOutline onClick={toggleLike}  color="white" size="20" data-tip="sdgsdg"/>
-    }
-      <ReactTooltip place="bottom" type="light" effect="solid"/> 
+      {isLiked 
+        ? <>
+            <IoHeartSharp onClick={toggleLike} color="red" size="20" data-tip="banana" />
+            <ReactTooltip  place="bottom" type="light" effect="solid" />
+          </>
+        : 
+          <>
+            <IoHeartOutline onClick={toggleLike} color="white" size="20" data-tip="batata" />
+            <ReactTooltip  place="bottom" type="light" effect="solid" />
+          </>
+      }
+
       <p>{likes.length} likes</p>
     </>
   );
 }
+
+
 
 function isLikedByCurrentUser(likes, user){
   const idsOfLikes = likes.map(like=>like["user.id"]);
