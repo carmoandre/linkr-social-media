@@ -31,11 +31,12 @@ function useClickOutside(ref, setShowMenu){
     useEffect(()=>{
         const handleClickOutside = (e) => {
             if (ref.current && !ref.current.contains(e.target)){
+                e.preventDefault();
                 setShowMenu(false);
             }
         }
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
+        document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
     },[ref]) // eslint-disable-line react-hooks/exhaustive-deps
 }
 
