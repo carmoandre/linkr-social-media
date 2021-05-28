@@ -18,18 +18,11 @@ export default function Likes({likesProps}){
   return (
     <>
       {isLiked 
-        ? <>
-            <IoHeartSharp onClick={toggleLike} color="red" size="20" data-tip={tooltip} />
-            <ReactTooltip  place="bottom" type="light" effect="solid" />
-          </>
-        : 
-          <>
-            <IoHeartOutline onClick={toggleLike} color="white" size="20" data-tip={tooltip} />
-            <ReactTooltip  place="bottom" type="light" effect="solid" />
-          </>
+        ? <IoHeartSharp onClick={toggleLike} color="red" size="20" />
+        : <IoHeartOutline onClick={toggleLike} color="white" size="20" />
       }
-
-      <p>{likes.length} likes</p>
+      <ReactTooltip place="bottom" type="light" effect="solid" />
+      <p style={{cursor: "default"}} data-tip={tooltip}>{likes.length} likes</p>
     </>
   );
 }
