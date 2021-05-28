@@ -56,7 +56,7 @@ function getTooltip(likes, user){
 }
 
 function isLikedByCurrentUser(likes, user){
-  const idsOfLikes = likes.map(like=>like["user.id"] || like.userId);
+  const idsOfLikes = likes.map(like=>like["user.id"] || like.userId || like.id);
   return idsOfLikes.includes(user.user.id);
 }
 
