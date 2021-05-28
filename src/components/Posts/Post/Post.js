@@ -1,15 +1,14 @@
 import styled from "styled-components";
 import axios from "axios";
-import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
 import { MdModeEdit, MdDelete } from "react-icons/md";
 import Caption from "./Caption";
 import ArticlePreview from "./LinkContent/ArticlePreview";
 import { Link } from "react-router-dom";
 import React, { useContext, useState } from "react";
-import ReactTooltip from "react-tooltip";
 import UserContext from "../../../contexts/UserContext";
 import Modal from "react-modal";
 import ReactModal from "react-modal";
+import Likes from './Likes';
 import {
     StyledModal,
     ModalText,
@@ -31,7 +30,16 @@ export default function Post(props) {
     const permission = user.user.id === originalPoster.id;
     const [like, setLike] = useState(true);
 
-    console.log(post.likes)
+    const likesProps = {
+        like,
+        user,
+        postID,
+        setLike,
+        post,
+        posts,
+        setPosts,
+        likes
+    }
 
     function toggleModal() {
         modalIsOpen ? setModalIsOPen(false) : setModalIsOPen(true);
@@ -66,41 +74,17 @@ export default function Post(props) {
         });
     }
 
+    // const text = "";
 
-    function likePost(){
-        const config = {
-        headers:{
-            Authorization: `Bearer ${user.token}`
-            }
-        }
-        
-        let request;
-        
-        if (like){
-          request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${postID}/like`, {}, config)
-          setLike(false)
-        } else{
-          request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${postID}/dislike`, {}, config)
-          setLike(true)
-        }
-    
-        request.then(response => {
-          post.likes = response.data.post.likes;
-          setPosts([...posts]);
-        })
-    }
-        
-    function text(){
-        if (post.likes.length=0){
-            return "";
-        } else if (post.likes.length=1){
-            return `${posts[postID].likes[0]["user.username"]} curtiu`;
-        } else if (post.likes.length=2){
-            return `${posts[postID].likes[0]["user.username"]} e mais 1 pessoa`;
-        } else{
-            return `${posts[postID].likes[0]["user.username"]} e mais ${post.likes.length-1} pessoas`;
-        }
-    }
+    // if (post.likes.length=0){
+    //     text = "";
+    // } else if (post.likes.length=1){
+    //     text = `tal pessoa curtiu`
+    // } else if (post.likes.length=2){
+    //     text = `pessoa[0] e mais 1 pessoa`
+    // } else{
+    //     text = `pessoa[0] e mais post.likes.length-1 pessoas`
+    // }
 
     return (
         <>
@@ -112,13 +96,9 @@ export default function Post(props) {
                             alt={originalPoster.name}
                         />
                     </Link>
-                    {
-                        like 
-                        ? <IoHeartOutline onClick={likePost} color="white" size="20" data-tip="sdgsdg"/> 
-                        : <IoHeartSharp onClick={likePost} color="red" size="20"/>
-                    }
-                    <ReactTooltip place="bottom" type="light" effect="solid"/> 
-                    <p>{likes.length} likes</p>
+
+                    <Likes likesProps={likesProps}/>
+
                 </section>
                 <section className="post--body">
                     <header>
