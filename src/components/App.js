@@ -24,7 +24,8 @@ export default function App() {
             const localUserState = JSON.parse(UserStorage);
             if (isValidUserState(localUserState)){
                 setUser(localUserState);
-                history.push(path);
+                if (path === "/sign-up") history.push("/timeline")
+                else history.push(path);
             }
             else {
                 localStorage.clear();
