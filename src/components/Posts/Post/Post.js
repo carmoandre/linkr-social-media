@@ -74,18 +74,6 @@ export default function Post(props) {
         });
     }
 
-    // const text = "";
-
-    // if (post.likes.length=0){
-    //     text = "";
-    // } else if (post.likes.length=1){
-    //     text = `tal pessoa curtiu`
-    // } else if (post.likes.length=2){
-    //     text = `pessoa[0] e mais 1 pessoa`
-    // } else{
-    //     text = `pessoa[0] e mais post.likes.length-1 pessoas`
-    // }
-
     return (
         <>
             <PostWrapper>
