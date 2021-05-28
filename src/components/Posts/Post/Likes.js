@@ -9,8 +9,14 @@ export default function Likes({likesProps}){
 
   const [likes, setLikes] = useState(likesProps.likes);
   const [isLiked, setIsLiked] = useState(isLikedByCurrentUser(likes, user));
+  const [isWaiting, setIsWaiting] = useState(false);
+  const likeBuffer = [{
+    data: {
+      post : likes
+    }
+  }];
 
-  const toggleLike = () => toggleLikeAsync(likesProps, isLiked, setIsLiked, likes, setLikes);
+  const toggleLike = () => !isWaiting && toggleLikeAsync(likesProps, isLiked, setIsLiked, likes, setLikes, setIsWaiting, likeBuffer);
   
   ReactTooltip.rebuild();
   const tooltip = getTooltip(likes, user);
@@ -55,7 +61,7 @@ function isLikedByCurrentUser(likes, user){
   return idsOfLikes.includes(user.user.id);
 }
 
-function toggleLikeAsync(likesProps , isLiked, setIsLiked, likes, setLikes){
+function toggleLikeAsync(likesProps , isLiked, setIsLiked, likes, setLikes, setIsWaiting, likeBuffer){
   function localToggle(){
     const userLike = {
       userId: user.user.id,
@@ -67,18 +73,40 @@ function toggleLikeAsync(likesProps , isLiked, setIsLiked, likes, setLikes){
       ? setLikes(likes.filter(like=> (like["user.username"] || like.username) !== user.user.username))
       : setLikes([userLike, ...likes]);
   }
+
+  function setLastValidResponse(){
+    setIsWaiting(true);
+    for (let i=likeBuffer.length-1; i>=0; i++){
+      if (likeBuffer[i].hasOwnProperty("data")){
+        const responseLikes = likeBuffer[i].data.post.likes;
+        setIsLiked(isLikedByCurrentUser(responseLikes, user));
+        setLikes(responseLikes);
+        likeBuffer[0] = likeBuffer[i];
+        break;
+      }
+    }
+    likeBuffer.length = 1;
+    setIsWaiting(false);
+  }
   
   const { user, postID } = likesProps;
   
   localToggle();
 
+  const requestId = likeBuffer.length+1;
+  likeBuffer[requestId] = false;
   const request = isLiked 
     ? dislikePostAsync(postID, user.token)
     : likePostAsync(postID, user.token);
   request.then(response => {
-    const responseLikes = response.data.post.likes;
-    setIsLiked(isLikedByCurrentUser(responseLikes, user));
-    setLikes(responseLikes);
-  });
+    likeBuffer[requestId] = response;
+  })
+  .catch(err=>{
+    likeBuffer[requestId] = err;
+  })
+  .finally(()=>{
+    if (likeBuffer.reduce((acc,elem)=>acc&&elem, true)){
+      setLastValidResponse();
+    }
+  })
 }
-
