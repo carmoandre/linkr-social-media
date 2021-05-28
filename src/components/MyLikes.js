@@ -23,7 +23,6 @@ export default function MyLikes () {
     },
     [user])
 
-
     return (
         <LayoutInterface pageTitle="my likes">
             {renderPage ? <Posts posts={posts} setPosts={setPosts}/> : <Loading />}

@@ -9,8 +9,9 @@ export default function Likes({likesProps}){
 
   const [likes, setLikes] = useState(likesProps.likes);
   const [isLiked, setIsLikeD] = useState(isLikedByCurrentUser(likes, user));
-  
-  const toggleLike = () => toggleLikeAsync(likesProps, isLiked, setIsLikeD, setLikes);
+  const [isInteractive, setIsInteractive] = useState(true);
+
+  const toggleLike = () => isInteractive && toggleLikeAsync(likesProps, isLiked, setIsLikeD, setLikes, setIsInteractive);
   
   ReactTooltip.rebuild();
   const tooltip = getTooltip(likes, user);
@@ -55,14 +56,15 @@ function isLikedByCurrentUser(likes, user){
   return idsOfLikes.includes(user.user.id);
 }
 
-function toggleLikeAsync(likesProps , isLiked, setIsLikeD, setLikes){
+function toggleLikeAsync(likesProps , isLiked, setIsLikeD, setLikes, setIsInteractive){
+  setIsInteractive(false);
   const { user, postID } = likesProps;
   const request = isLiked 
     ? dislikePostAsync(postID, user.token) 
     : likePostAsync(postID, user.token);
-
   request.then(response => {
     setIsLikeD(!isLiked);
     setLikes(response.data.post.likes);
   });
+  request.finally(()=>setIsInteractive(true));
 }
