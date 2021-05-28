@@ -89,18 +89,18 @@ export default function Post(props) {
           setPosts([...posts]);
         })
     }
-
-    // const text = "";
-
-    // if (post.likes.length=0){
-    //     text = "";
-    // } else if (post.likes.length=1){
-    //     text = `tal pessoa curtiu`
-    // } else if (post.likes.length=2){
-    //     text = `pessoa[0] e mais 1 pessoa`
-    // } else{
-    //     text = `pessoa[0] e mais post.likes.length-1 pessoas`
-    // }
+        
+    function text(){
+        if (post.likes.length=0){
+            return "";
+        } else if (post.likes.length=1){
+            return `${posts[postID].likes[0]["user.username"]} curtiu`;
+        } else if (post.likes.length=2){
+            return `${posts[postID].likes[0]["user.username"]} e mais 1 pessoa`;
+        } else{
+            return `${posts[postID].likes[0]["user.username"]} e mais ${post.likes.length-1} pessoas`;
+        }
+    }
 
     return (
         <>
@@ -114,7 +114,7 @@ export default function Post(props) {
                     </Link>
                     {
                         like 
-                        ? <IoHeartOutline onClick={likePost}  color="white" size="20" data-tip="sdgsdg"/> 
+                        ? <IoHeartOutline onClick={likePost} color="white" size="20" data-tip="sdgsdg"/> 
                         : <IoHeartSharp onClick={likePost} color="red" size="20"/>
                     }
                     <ReactTooltip place="bottom" type="light" effect="solid"/> 
