@@ -47,7 +47,8 @@ function getTooltip(likes, user){
   const numberOfotherPeople = orderedWhoLikedList.slice(2,).length;
 
   if (numberOfotherPeople > 0){
-    tooltip = `${person1}, ${person2} e outras ${numberOfotherPeople} pessoas`;
+    if (numberOfotherPeople === 1) tooltip = `${person1}, ${person2} e outra pessoa`;
+    else tooltip = `${person1}, ${person2} e outras ${numberOfotherPeople} pessoas`;
   } else {
     tooltip += person1 ? person1 : "";
     tooltip += person2 ? ` e ${person2}` : "";
