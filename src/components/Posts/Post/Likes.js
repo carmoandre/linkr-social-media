@@ -8,10 +8,9 @@ export default function Likes({likesProps}){
   const { user } = likesProps;
 
   const [likes, setLikes] = useState(likesProps.likes);
-  const [isLiked, setIsLikeD] = useState(isLikedByCurrentUser(likes, user));
-  const [isInteractive, setIsInteractive] = useState(true);
+  const [isLiked, setIsLiked] = useState(isLikedByCurrentUser(likes, user));
 
-  const toggleLike = () => isInteractive && toggleLikeAsync(likesProps, isLiked, setIsLikeD, setLikes, setIsInteractive);
+  const toggleLike = () => toggleLikeAsync(likesProps, isLiked, setIsLiked, likes, setLikes);
   
   ReactTooltip.rebuild();
   const tooltip = getTooltip(likes, user);
@@ -19,8 +18,8 @@ export default function Likes({likesProps}){
   return (
     <>
       {isLiked 
-        ? <IoHeartSharp onClick={toggleLike} color="red" size="20" />
-        : <IoHeartOutline onClick={toggleLike} color="white" size="20" />
+        ? <IoHeartSharp style={{userSelect: "none"}} onClick={toggleLike} color="red" size="20" />
+        : <IoHeartOutline style={{userSelect: "none"}} onClick={toggleLike} color="white" size="20" />
       }
       <ReactTooltip place="bottom" type="light" effect="solid" />
       <p style={{cursor: "default"}} data-tip={tooltip}>{likes.length} likes</p>
@@ -56,15 +55,30 @@ function isLikedByCurrentUser(likes, user){
   return idsOfLikes.includes(user.user.id);
 }
 
-function toggleLikeAsync(likesProps , isLiked, setIsLikeD, setLikes, setIsInteractive){
-  setIsInteractive(false);
+function toggleLikeAsync(likesProps , isLiked, setIsLiked, likes, setLikes){
+  function localToggle(){
+    const userLike = {
+      userId: user.user.id,
+      username : user.user.username
+    }
+
+    setIsLiked(!isLiked);
+    isLiked 
+      ? setLikes(likes.filter(like=> (like["user.username"] || like.username) !== user.user.username))
+      : setLikes([userLike, ...likes]);
+  }
+  
   const { user, postID } = likesProps;
+  
+  localToggle();
+
   const request = isLiked 
-    ? dislikePostAsync(postID, user.token) 
+    ? dislikePostAsync(postID, user.token)
     : likePostAsync(postID, user.token);
   request.then(response => {
-    setIsLikeD(!isLiked);
+    const likes = response.data.post.likes;
+    setIsLiked(isLikedByCurrentUser(likes, user));
     setLikes(response.data.post.likes);
   });
-  request.finally(()=>setIsInteractive(true));
 }
+
