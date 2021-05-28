@@ -69,7 +69,9 @@ export default function Post(props) {
         request.then((response) => {
             setDisabled(false);
             toggleModal();
-            renderPosts();
+            const indexOfPost = posts.indexOf(post);
+            posts.splice(indexOfPost,1);
+            setPosts([...posts]);
         });
 
         request.catch((error) => {
