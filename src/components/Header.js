@@ -20,7 +20,7 @@ export default function Header(){
                     <img src={user.user.avatar} alt={user.user.username}/>
                 </div>
             </Title>
-            {showMenu && <Navbar />}
+            {showMenu && <Navbar setShowMenu={setShowMenu}/>}
         </>
     );
 }

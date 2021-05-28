@@ -1,16 +1,19 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import { useEffect, useRef } from 'react';
 
-export default function Navbar(){
+export default function Navbar({setShowMenu}){
     const history = useHistory();
     function logOut(){
         localStorage.clear();
         history.push("/");
     }
 
+    const ref = useRef(null);
+    useClickOutside(ref, setShowMenu);
     return(
-        <Box>
+        <Box ref={ref}>
             <Link to="/my-posts">
                 <div><h1>My posts</h1></div>
             </Link>
@@ -22,6 +25,18 @@ export default function Navbar(){
             </em>
         </Box>
     );
+}
+
+function useClickOutside(ref, setShowMenu){
+    useEffect(()=>{
+        const handleClickOutside = (e) => {
+            if (ref.current && !ref.current.contains(e.target)){
+                setShowMenu(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    },[ref]) // eslint-disable-line react-hooks/exhaustive-deps
 }
 
 const Box = styled.nav`
