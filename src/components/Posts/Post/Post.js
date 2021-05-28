@@ -27,6 +27,8 @@ export default function Post(props) {
     const { user } = useContext(UserContext);
     const [modalIsOpen, setModalIsOPen] = useState(false);
     const [disabled, setDisabled] = useState(false);
+    const [onEdition, setOnEdition] = useState(false);
+    const [editedText, setEditedText] = useState(caption);
     const permission = user.user.id === originalPoster.id;
     const [like, setLike] = useState(true);
 
@@ -39,6 +41,11 @@ export default function Post(props) {
         posts,
         setPosts,
         likes
+    }
+
+    function toggleEdition() {
+        onEdition ? setOnEdition(false) : setOnEdition(true);
+        setEditedText(caption);
     }
 
     function toggleModal() {
@@ -94,7 +101,11 @@ export default function Post(props) {
                             {originalPoster.name}
                         </Link>
                         <EditAndEraseHolder permission={permission}>
-                            <MdModeEdit color="#white" size="16" />
+                            <MdModeEdit
+                                onClick={toggleEdition}
+                                color="#white"
+                                size="16"
+                            />
                             <MdDelete
                                 onClick={toggleModal}
                                 color="white"
@@ -102,7 +113,14 @@ export default function Post(props) {
                             />
                         </EditAndEraseHolder>
                     </header>
-                    <Caption caption={caption} />
+                    <Caption
+                        caption={caption}
+                        onEdition={onEdition}
+                        toggleEdition={toggleEdition}
+                        editedText={editedText}
+                        setEditedText={setEditedText}
+                        postID={postID}
+                    />
                     <ArticlePreview linkProps={linkProps} />
                 </section>
             </PostWrapper>
