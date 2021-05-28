@@ -1,6 +1,6 @@
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, useHistory, useLocation} from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
 import SignUp from "./Login-SignUp/SignUp";
 import Login from "./Login-SignUp/Login"
@@ -9,14 +9,35 @@ import MyLikes from "./MyLikes";
 import AnyUsersPosts from "./AnyUsersPosts";
 import HashtagPosts from './HashtagPosts';
 import MyPosts from "./MyPosts"
-
-
+import isValidUserState from '../helperFunctions/isValidUserState';
 
 export default function App() {
 
-    const [user, setUser] = useState("");
+    const [user, setUser] = useState(null);
 
-    return (
+    const UserStorage = localStorage.getItem("user");
+    const history = useHistory();
+    const path = useLocation().pathname;
+
+    useEffect(() => {
+        if (UserStorage !== null) {
+            const localUserState = JSON.parse(UserStorage);
+            if (isValidUserState(localUserState)){
+                setUser(localUserState);
+                history.push(path);
+            }
+            else {
+                localStorage.clear();
+                setUser(undefined);
+                history.push("/");
+            }
+        } else {
+            setUser(undefined);
+            history.push("/");
+        }
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    
+    return user === null ? "" : (
             <UserContext.Provider value={{ user, setUser }}>
                 <BrowserRouter>
                     <ResetCSS />
@@ -33,14 +54,14 @@ export default function App() {
                         <Route exact path="/hashtag/:hashtag">
                             <HashtagPosts />
                         </Route>
-                        <Route path="/" exact>
-                            <Login />
-                        </Route>
-                        <Route path="/timeline" exact>
+                        <Route exact path="/timeline" >
                             <Timeline />
                         </Route>
-                        <Route path="/my-likes">
+                        <Route exact path="/my-likes">
                             <MyLikes />
+                        </Route>
+                        <Route path="/">
+                            <Login />
                         </Route>
                     </Switch>
                 </BrowserRouter>
