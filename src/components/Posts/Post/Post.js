@@ -74,9 +74,6 @@ export default function Post(props) {
         });
     }
 
-
-
-
     // const text = "";
 
     // if (post.likes.length=0){
@@ -99,8 +96,8 @@ export default function Post(props) {
                             alt={originalPoster.name}
                         />
                     </Link>
-                    <Likes likesProps={likesProps}/>
 
+                    <Likes likesProps={likesProps}/>
 
                 </section>
                 <section className="post--body">
