@@ -76,9 +76,9 @@ function toggleLikeAsync(likesProps , isLiked, setIsLiked, likes, setLikes){
     ? dislikePostAsync(postID, user.token)
     : likePostAsync(postID, user.token);
   request.then(response => {
-    const likes = response.data.post.likes;
-    setIsLiked(isLikedByCurrentUser(likes, user));
-    setLikes(response.data.post.likes);
+    const responseLikes = response.data.post.likes;
+    setIsLiked(isLikedByCurrentUser(responseLikes, user));
+    setLikes(responseLikes);
   });
 }
 
