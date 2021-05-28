@@ -48,6 +48,7 @@ export default function Login () {
 
 function sendData (e, email, password, setBoolean, setUser, history) {
     e.preventDefault()
+    setBoolean(true);
     const body = {"email": email, "password": password}
     
     const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-in", body)
@@ -56,10 +57,10 @@ function sendData (e, email, password, setBoolean, setUser, history) {
         history.push("/timeline")
         localStorage.setItem("user", JSON.stringify(promise.data))
         }
-    )
-    request.catch(() => alert("Email/senha incorretos"))
-
-    setBoolean(true)
+    );
+    request.catch(() => alert("Email/senha incorretos"));
+    request.finally(()=>setBoolean(false));
+    
     if(email==="" || password === "") {
         alert("Preencha todos os campos")
     }
