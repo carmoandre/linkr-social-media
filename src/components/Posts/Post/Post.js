@@ -87,7 +87,7 @@ export default function Post(props) {
         <>
             <PostWrapper>
                 <section className="post--avatarAndLikes">
-                    <Link to={`/user/${originalPoster.id}`}>
+                    <Link className="avatarAndLikes--link" to={`/user/${originalPoster.id}`}>
                         <img
                             src={originalPoster.avatar}
                             alt={originalPoster.name}
@@ -159,6 +159,11 @@ const PostWrapper = styled.li`
     }
     font-family: "Lato", sans-serif;
 
+
+    svg {
+        cursor: pointer;
+    }
+
     width: 100%;
     display: flex;
 
@@ -188,6 +193,10 @@ const PostWrapper = styled.li`
             width: 40px;
         }
 
+        .avatarAndLikes--link{
+            margin-bottom: 19px;
+        }
+
         img {
             object-fit: cover;
             overflow: hidden;
@@ -196,7 +205,6 @@ const PostWrapper = styled.li`
 
             height: 50px;
             width: 50px;
-            margin-bottom: 19px;
 
             @media (max-width: 375px) {
                 height: 40px;
