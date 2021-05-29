@@ -1,25 +1,14 @@
 import Header from "../Header";
 import Trending from "../Trending";
 import styled from "styled-components"
-
-// LayoutInterface eh um componente opinionado que espera 1 child dentro 
-// dele e um nome de pagina passado como prop pageTitle
-// o componente renderiza o layout padronizado da pagina e inclui a child na coluna principal
-
-// como usar LayoutInterface :
-// <LayoutInterface pageTitle="nome da pagina">
-//   <componente que vai dentro de Box (pode incluir a caixa de adicionar novo post) />
-// </LayoutInterface>
-// exemplo:
-// <LayoutInterface pageTitle="timeline">
-//   <PostCreatorBox />
-//   <Posts posts={posts} />
-// </LayoutInterface>
+import {useState} from 'react';
 
 export default function LayoutInterface({pageTitle, children}){
+    const [showMenu, setShowMenu] = useState(false);
+
     return(
-        <Main>
-            <Header />
+        <Main onClick={()=>{if(showMenu) setShowMenu(false)}}>
+            <Header showMenu={showMenu} setShowMenu={setShowMenu}/>
             <Title>{pageTitle}</Title>
             <Content>
               <Box>

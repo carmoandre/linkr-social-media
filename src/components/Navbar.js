@@ -1,19 +1,16 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { useEffect, useRef } from 'react';
 
-export default function Navbar({setShowMenu}){
+export default function Navbar({showMenu}){
     const history = useHistory();
     function logOut(){
         localStorage.clear();
         history.push("/");
     }
 
-    const ref = useRef(null);
-    useClickOutside(ref, setShowMenu);
     return(
-        <Box ref={ref}>
+        <Box showMenu={showMenu} >
             <Link to="/my-posts">
                 <div><h1>My posts</h1></div>
             </Link>
@@ -25,19 +22,6 @@ export default function Navbar({setShowMenu}){
             </em>
         </Box>
     );
-}
-
-function useClickOutside(ref, setShowMenu){
-    useEffect(()=>{
-        const handleClickOutside = (e) => {
-            if (ref.current && !ref.current.contains(e.target)){
-                e.preventDefault();
-                setShowMenu(false);
-            }
-        }
-        document.addEventListener('click', handleClickOutside);
-        return () => document.removeEventListener('click', handleClickOutside);
-    },[ref]) // eslint-disable-line react-hooks/exhaustive-deps
 }
 
 const Box = styled.nav`
@@ -52,14 +36,13 @@ const Box = styled.nav`
     color: #FFF;
     font-size: 17px;
     border-bottom-left-radius: 20px;
-    animation-name: menu;
-    animation-duration: 1s;
-    z-index: 1;
 
-    @keyframes menu {
-        0%   {right:0px; top:0px;}
-        100% {right:0px; top:72px;}
-    }
+    z-index: 1;
+    top: ${({showMenu})=>showMenu?"72px":"-58px"};
+
+    transition: top 150ms ease-in-out;
+
+    overflow: hidden;
 
     div{
         width: 100%;
@@ -67,7 +50,6 @@ const Box = styled.nav`
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: all .2s linear;
         cursor: pointer;
         margin-top: 11px;
         padding-top: 5px;
@@ -79,7 +61,7 @@ const Box = styled.nav`
             font-size: 17px;
         }
 
-        :nth-child(3n){
+        :nth-child(3){
             border-bottom-left-radius: 20px;
         }
 
