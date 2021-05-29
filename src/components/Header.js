@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
