@@ -1,9 +1,9 @@
 import Header from "../Header";
 import Trending from "../Trending";
 import styled from "styled-components"
-import Follow from "../Follow";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import UserContext from "../../contexts/UserContext";
+import Follow from "../Follow";
 
 // LayoutInterface eh um componente opinionado que espera 1 child dentro 
 // dele e um nome de pagina passado como prop pageTitle
@@ -21,12 +21,13 @@ import UserContext from "../../contexts/UserContext";
 
 export default function LayoutInterface({pageTitle, children, userData}){
 
+  const [showMenu, setShowMenu] = useState(false);
   const {user} = useContext(UserContext)
 
     return(
         <Main>
             <Header />
-              <Title>{pageTitle}
+            <Title>{pageTitle}
                 {userData !== undefined
                   ? pageTitle !== "my posts" && pageTitle !== "my likes" && pageTitle !== `${user.user.username}’s posts`
                     ? <Follow />

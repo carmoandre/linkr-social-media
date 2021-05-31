@@ -8,6 +8,7 @@ import TextareaAutosize from "react-textarea-autosize";
 export default function Caption(props) {
     const {
         caption,
+        setCaption,
         onEdition,
         toggleEdition,
         editedText,
@@ -55,6 +56,7 @@ export default function Caption(props) {
         request.then((response) => {
             setDisabled(false);
             setEditableCaption(editedText);
+            setCaption(editedText);
             toggleEdition();
         });
 

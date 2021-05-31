@@ -17,7 +17,8 @@ export default function MyLikes () {
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked", config)
         request.then(response => {
             setRenderPage(true)
-            setPosts(response.data.posts)
+            const posts = response.data.posts;
+            setPosts(posts.reverse());
             })
         request.catch((err) => alert(`Falha ao buscar posts erro ${err.response.status}`));
     },

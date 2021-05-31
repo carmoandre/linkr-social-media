@@ -1,12 +1,11 @@
 import styled from "styled-components";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 
-export default function Header(){
-    const [showMenu, setShowMenu] = useState(false);
+export default function Header({showMenu, setShowMenu}){
     const { user } = useContext(UserContext);
 
     return(
@@ -16,11 +15,26 @@ export default function Header(){
                     <h1>linkr</h1>
                 </Link>
                 <div>
-                    {showMenu ? <BiChevronUp onClick={() => setShowMenu(!showMenu)} color="#FFF" size="50px" cursor="pointer" /> : <BiChevronDown onClick={() => setShowMenu(!showMenu)} color="#FFF" size="50px" cursor="pointer" />}               
-                    <img src={user.user.avatar} alt={user.user.username}/>
+                    {showMenu 
+                        ? <BiChevronUp 
+                            onClick={(e) => setShowMenu(!showMenu)} 
+                            color="#FFF" 
+                            size="50px" 
+                            cursor="pointer" 
+                        /> : <BiChevronDown 
+                            onClick={(e) => setShowMenu(!showMenu)} 
+                            color="#FFF" 
+                            size="50px" 
+                            cursor="pointer" 
+                        />}               
+                    <img
+                        onClick={(e) => setShowMenu(!showMenu)}
+                        src={user.user.avatar} 
+                        alt={user.user.username}
+                    />
                 </div>
             </Title>
-            {showMenu && <Navbar />}
+            {<Navbar showMenu={showMenu} setShowMenu={setShowMenu}/>}
         </>
     );
 }
@@ -56,5 +70,6 @@ const Title = styled.div`
         object-fit: cover;
         border-radius: 50%;
         user-select: none;
+        cursor: pointer;
     }
 `;
