@@ -2,41 +2,41 @@ import Posts from './Posts/Posts';
 import {useState, useEffect, useContext} from 'react';
 import LayoutInterface from './LayoutInterface/LayoutInterface';
 import { getUsersPostsAsync } from '../helperFunctions/http/apiRequests';
-import {useHistory} from 'react-router-dom';
-import isValidUserState from '../helperFunctions/isValidUserState';
 import Loading from './Loading';
 import UserContext from '../contexts/UserContext';
+import InfiniteScroll from 'react-infinite-scroller';
 
 export default function MyPosts(){
 
   const [posts, setPosts] = useState([]);
-  const [isReadyToRender, setIsReadyToRender] = useState(false);
-  
+  const [hasMore, setHasMore] = useState(true);
   const { user } = useContext(UserContext);
-  const history = useHistory();
-  useEffect(()=>{
-    if (!isValidUserState(user)) return;
-    window.scrollTo(0, 0);
-    const [token, id] = [user.token, user.user.id];
-    getUsersPostsAsync(id, token)
-    .then(({data})=>{
-      setPosts(data.posts);
-    })
-    .catch((err) => alert(`Falha ao buscar posts erro ${err.response.status}`))
-    .finally(() => setIsReadyToRender(true))
-  },[user])
 
-  if (!isValidUserState(user)){
-    history.push("/")
-  }
-  
+  useEffect(()=>{
+    window.scrollTo(0, 0);
+  },[user]);
+
   return (
     <LayoutInterface pageTitle="my posts">
-      {
-        isReadyToRender 
-        ? <Posts posts={posts} setPosts={setPosts}/>
-        : <Loading />
-      }
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={()=>myOlderPostsLoader(user, posts, setPosts, setHasMore)}
+        hasMore={hasMore}
+        loader={<Loading key="LoadingInfiniteScroll"/>}
+      >
+        <Posts posts={posts} setPosts={setPosts}/>
+      </InfiniteScroll>
     </LayoutInterface>
   );
+}
+
+function myOlderPostsLoader(user, posts, setPosts, setHasMore){
+  const oldestID = posts.length === 0 ? "" : posts[posts.length-1].id;
+  const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
+  getUsersPostsAsync(user.user.id, query)
+  .then(({data})=>{
+    setPosts([...posts, ...data.posts]);
+    if (data.posts.length < 10) setHasMore(false);
+  })
+  .catch((err) => alert(`Falha ao buscar posts erro ${err.response && err.response.status}`))
 }
