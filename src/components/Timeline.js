@@ -1,56 +1,44 @@
 import Posts from "./Posts/Posts";
 import PostCreatorBox from "./PostCreatorBox";
-import { useContext, useEffect } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import { useState } from "react";
 import Loading from "./Loading";
 import LayoutInterface from "./LayoutInterface/LayoutInterface";
-import UserContext from "../contexts/UserContext";
+import {getFollowingPostsAsync} from '../helperFunctions/http/apiRequests';
+import InfiniteScroll from 'react-infinite-scroller';
 
 export default function Timeline() {
-    const { user } = useContext(UserContext);
-    const [posts, setPosts] = useState(false);
+    const [posts, setPosts] = useState([]);
+    const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        renderPosts();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-    function renderPosts() {
-        const token = user.token;
-        const url =
-            "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts";
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        };
-        axios
-            .get(url, config)
-            .then(({ data }) => {
-                if (data.length === 0) {
-                    alert("Nenhum post encontrado");
-                } else {
-                    setPosts(data.posts);
-                }
-            })
-            .catch(() =>
-                alert(
-                    "Houve uma falha ao obter os posts. Por favor, atualize a página"
-                )
-            );
-    }
+    }, []);
 
     return (
-        <LayoutInterface pageTitle="timeline">
+        <LayoutInterface pageTitle="my posts">
             <>
-                <PostCreatorBox renderPosts={renderPosts} />
-                {posts === false ? (
-                    <Loading />
-                ) : (
+                <PostCreatorBox/>
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={()=>followingOlderPostsLoader(posts, setPosts, setHasMore)}
+                    hasMore={hasMore}
+                    loader={<Loading key="LoadingInfiniteScroll"/>}
+                >
                     <Posts posts={posts} setPosts={setPosts}/>
-                )}
+                </InfiniteScroll>
             </>
         </LayoutInterface>
     );
+}
+
+function followingOlderPostsLoader(posts, setPosts, setHasMore){
+    const oldestID = posts.length === 0 ? "" : posts[posts.length-1].id;
+    const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
+    getFollowingPostsAsync(query)
+    .then(({data})=>{
+        setPosts([...posts, ...data.posts]);
+        if (data.posts.length < 10) setHasMore(false);
+    })
+    .catch((err) => alert(`Falha ao buscar posts erro ${err.response && err.response.status}`))
 }
