@@ -10,35 +10,46 @@ import UserContext from "../contexts/UserContext";
 export default function Timeline() {
     const { user } = useContext(UserContext);
     const [posts, setPosts] = useState(false);
+    const [follows, setFollows] = useState([]);
+    const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
+        };
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        myFollows();
         renderPosts();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    function renderPosts() {
-        const token = user.token;
+    function myFollows(){
         const url =
-            "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts";
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        };
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows";
         axios
             .get(url, config)
             .then(({ data }) => {
-                if (data.length === 0) {
-                    alert("Nenhum post encontrado");
+                setFollows(data)
+            })
+    }
+
+    function renderPosts() {
+        const url =
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts";
+        axios
+            .get(url, config)
+            .then(({ data }) => {
+                if (follows.length===0){
+                    alert("Você não segue ninguém ainda, procure por perfis na busca")
+                } else if (data.posts.length===0) {
+                    alert("Nenhuma publicação encontrada");
                 } else {
                     setPosts(data.posts);
                 }
             })
-            .catch(() =>
-                alert(
-                    "Houve uma falha ao obter os posts. Por favor, atualize a página"
-                )
-            );
+            .catch(() => {
+                alert("Ocorreu um erro. Tente novamente")
+            });
     }
 
     return (
@@ -46,7 +57,7 @@ export default function Timeline() {
             <>
                 <PostCreatorBox renderPosts={renderPosts} />
                 {posts === false ? (
-                    <Loading />
+                    ""
                 ) : (
                     <Posts posts={posts} setPosts={setPosts}/>
                 )}
