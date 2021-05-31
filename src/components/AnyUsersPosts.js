@@ -6,13 +6,14 @@ import { getUsersPostsAsync, getUserInfoAsync } from '../helperFunctions/http/ap
 import isValidUserState from '../helperFunctions/isValidUserState';
 import Loading from './Loading';
 import UserContext from '../contexts/UserContext';
+import Follow from './Follow';
 
 export default function AnyUsersPosts(){
 
   const [posts, setPosts] = useState([]);
   const [isReadyToRender, setIsReadyToRender] = useState(false);
   const [targetUserName, setTargetUserName] = useState(null);
-
+  const [userData, setUserData] = useState(undefined)
   const {id:targetId} = useParams();
   
   const { user } = useContext(UserContext);
@@ -24,11 +25,13 @@ export default function AnyUsersPosts(){
     const [token] = [user.token];
     const usersPostsAsync = getUsersPostsAsync(targetId, token)
     const usersInfoAsync = getUserInfoAsync(targetId, token)
+    
 
     Promise.all([usersPostsAsync, usersInfoAsync])
     .then(([usersPosts, usersInfo])=>{
       setPosts(usersPosts.data.posts);
       setTargetUserName(usersInfo.data.user.username);
+      setUserData(usersInfo.data.user)
     })
     .catch((err)=>{
       alert(`Falha ao buscar posts erro ${err.response.status}`)
@@ -41,15 +44,25 @@ export default function AnyUsersPosts(){
   if (!isValidUserState(user)){
     history.push("/");
   }
+
   
   const pageTitle = targetUserName !== null ? `${targetUserName}’s posts` : <>&nbsp;</>;
-  return (
-    <LayoutInterface pageTitle={pageTitle}>
+  
+  if (userData !== undefined) {
+    console.log(userData.username)
+    return (
+      <LayoutInterface pageTitle={pageTitle} userData={userData}>
       {
         isReadyToRender 
         ? <Posts posts={posts} setPosts={setPosts}/>
         : <Loading />
       }
     </LayoutInterface>
-  );
+    );
+  }
+  else {
+    return (
+      <Loading />
+    )
+  }
 }

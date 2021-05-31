@@ -1,6 +1,9 @@
 import Header from "../Header";
 import Trending from "../Trending";
 import styled from "styled-components"
+import Follow from "../Follow";
+import { useContext } from "react";
+import UserContext from "../../contexts/UserContext";
 
 // LayoutInterface eh um componente opinionado que espera 1 child dentro 
 // dele e um nome de pagina passado como prop pageTitle
@@ -16,11 +19,20 @@ import styled from "styled-components"
 //   <Posts posts={posts} />
 // </LayoutInterface>
 
-export default function LayoutInterface({pageTitle, children}){
+export default function LayoutInterface({pageTitle, children, userData}){
+
+  const {user} = useContext(UserContext)
+
     return(
         <Main>
             <Header />
-            <Title>{pageTitle}</Title>
+              <Title>{pageTitle}
+                {userData !== undefined
+                  ? pageTitle !== "my posts" && pageTitle !== "my likes" && pageTitle !== `${user.user.username}’s posts`
+                    ? <Follow />
+                    : <> </> 
+                : <> </>}
+              </Title>
             <Content>
               <Box>
                 {children}
@@ -55,6 +67,9 @@ const Title = styled.div`
     font-weight: bold;
     padding: var(--center-box-padding);
     margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     @media (max-width: 430px){
       padding-left: 17px;
