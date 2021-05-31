@@ -19,6 +19,12 @@ export function getUsersPostsAsync(userID, query){
   return axios.get(url,config);
 }
 
+export function getUsersLikesAsync(query){
+  const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked${query}`;
+  const config = axiosConfig();
+  return axios.get(url,config);
+}
+
 export function getUserInfoAsync(userID){
   const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${userID}`;
   const config = axiosConfig();
