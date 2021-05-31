@@ -3,7 +3,6 @@ import PostCreatorBox from "./PostCreatorBox";
 import { useContext, useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
-import Loading from "./Loading";
 import LayoutInterface from "./LayoutInterface/LayoutInterface";
 import UserContext from "../contexts/UserContext";
 
