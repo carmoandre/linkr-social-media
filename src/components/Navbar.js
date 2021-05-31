@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 
-export default function Navbar(){
+export default function Navbar({showMenu}){
     const history = useHistory();
     function logOut(){
         localStorage.clear();
@@ -10,7 +10,7 @@ export default function Navbar(){
     }
 
     return(
-        <Box>
+        <Box showMenu={showMenu} >
             <Link to="/my-posts">
                 <div><h1>My posts</h1></div>
             </Link>
@@ -36,14 +36,13 @@ const Box = styled.nav`
     color: #FFF;
     font-size: 17px;
     border-bottom-left-radius: 20px;
-    animation-name: menu;
-    animation-duration: 1s;
-    z-index: 1;
 
-    @keyframes menu {
-        0%   {right:0px; top:0px;}
-        100% {right:0px; top:72px;}
-    }
+    z-index: 1;
+    top: ${({showMenu})=>showMenu?"72px":"-58px"};
+
+    transition: top 150ms ease-in-out;
+
+    overflow: hidden;
 
     div{
         width: 100%;
@@ -51,7 +50,6 @@ const Box = styled.nav`
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: all .2s linear;
         cursor: pointer;
         margin-top: 11px;
         padding-top: 5px;
@@ -63,7 +61,7 @@ const Box = styled.nav`
             font-size: 17px;
         }
 
-        :nth-child(3n){
+        :nth-child(3){
             border-bottom-left-radius: 20px;
         }
 

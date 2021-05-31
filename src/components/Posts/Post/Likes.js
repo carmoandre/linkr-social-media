@@ -3,17 +3,34 @@ import React from "react";
 import ReactTooltip from "react-tooltip";
 import {useState} from 'react';
 import {likePostAsync, dislikePostAsync} from '../../../helperFunctions/http/apiRequests';
+import { useLocation } from 'react-router-dom';
 
 export default function Likes({likesProps}){
-  const { user } = likesProps;
+  const { user, post, posts, setPosts } = likesProps;
 
   const [likes, setLikes] = useState(likesProps.likes);
   const [isLiked, setIsLiked] = useState(isLikedByCurrentUser(likes, user));
   const [isInteractive, setIsInteractive] = useState(true);
+  const pathname = useLocation().pathname;
 
-  const toggleLike = () => isInteractive && toggleLikeAsync(likesProps, isLiked, setIsLiked, likes, setLikes, setIsInteractive);
+  const isRouteMyLikes = pathname === "/my-likes" ? true : false;
+  const routeProps ={
+    isRouteMyLikes,
+    post,
+    posts,
+    setPosts
+  }
   
-  
+  const toggleProps = {
+    likesProps, 
+    isLiked, 
+    setIsLiked, 
+    likes, 
+    setLikes, 
+    setIsInteractive
+  }
+  const toggleLike = () => isInteractive && toggleLikeAsync(toggleProps, routeProps);
+
   ReactTooltip.rebuild();
   const tooltip = getTooltip(likes, user);
 
@@ -57,7 +74,10 @@ function isLikedByCurrentUser(likes, user){
   return idsOfLikes.includes(user.user.id);
 }
 
-function toggleLikeAsync(likesProps , isLiked, setIsLiked, likes, setLikes, setIsInteractive){
+function toggleLikeAsync(toggleProps, routeProps){
+  const {likesProps, isLiked, setIsLiked, likes, setLikes, setIsInteractive} = toggleProps
+  const {isRouteMyLikes, post, posts, setPosts} = routeProps;
+  
   setIsInteractive(false);
   function localToggle(){
     const userLike = {
@@ -78,6 +98,13 @@ function toggleLikeAsync(likesProps , isLiked, setIsLiked, likes, setLikes, setI
   const request = isLiked 
     ? dislikePostAsync(postID, user.token)
     : likePostAsync(postID, user.token);
+
+  if (isRouteMyLikes) {
+    const newPosts = posts.filter(aPost => aPost !== post);
+    setPosts(newPosts);
+    return;
+  }
+  
   request.then(response => {
     const likes = response.data.post.likes;
     setIsLiked(isLikedByCurrentUser(likes, user));
