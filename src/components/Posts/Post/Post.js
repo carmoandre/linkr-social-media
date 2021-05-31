@@ -15,6 +15,8 @@ import {
     GoBackButton,
     ConfirmButton,
 } from "./StyledModal";
+import EmbeddedYoutube from './LinkContent/EmbeddedYoutube';
+var getYoutubeID = require('get-youtube-id');
 
 ReactModal.defaultStyles.overlay.zIndex = 5;
 
@@ -84,6 +86,8 @@ export default function Post(props) {
         });
     }
 
+
+    const youtubeID = getYoutubeID(linkProps.href);
     return (
         <>
             <PostWrapper>
@@ -125,7 +129,10 @@ export default function Post(props) {
                         setEditedText={setEditedText}
                         postID={postID}
                     />
-                    <ArticlePreview linkProps={linkProps} />
+                    {youtubeID === null
+                        ? <ArticlePreview linkProps={linkProps} />
+                        : <EmbeddedYoutube postID={postID} youtubeID={youtubeID} linkProps={linkProps} />
+                    }
                 </section>
             </PostWrapper>
             <StyledModal
