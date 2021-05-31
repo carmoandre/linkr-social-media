@@ -1,8 +1,8 @@
 import axios from 'axios';
 import axiosConfig from './axiosConfig';
 
-export function getHashtagPostsAsync(hashtag){
-  const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts`;
+export function getHashtagPostsAsync(hashtag, query){
+  const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts${query}`;
   const config = axiosConfig();
   return axios.get(url,config);
 }
