@@ -131,7 +131,7 @@ export default function Post(props) {
                     />
                     {youtubeID === null
                         ? <ArticlePreview linkProps={linkProps} />
-                        : <EmbeddedYoutube youtubeID={youtubeID} linkProps={linkProps} />
+                        : <EmbeddedYoutube postID={postID} youtubeID={youtubeID} linkProps={linkProps} />
                     }
                 </section>
             </PostWrapper>

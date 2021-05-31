@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-export default function EmbeddedYoutube({youtubeID, linkProps }) {
+export default function EmbeddedYoutube({postID, youtubeID, linkProps }) {
   return (
     <YoutubeWrapper>
       <IFrameWrapper>
-        <iframe src={"https://www.youtube.com/embed/"+youtubeID} />
+        <iframe title={`${linkProps.title} Post${postID}`} src={"https://www.youtube.com/embed/"+youtubeID} />
       </IFrameWrapper>
-      <a target="_blank" href={linkProps.href}>{linkProps.href}</a>
+      <a target="_blank" rel="noreferrer" href={linkProps.href}>{linkProps.href}</a>
     </YoutubeWrapper>
   );
 }
