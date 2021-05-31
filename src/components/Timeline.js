@@ -1,22 +1,23 @@
 import Posts from "./Posts/Posts";
 import PostCreatorBox from "./PostCreatorBox";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Loading from "./Loading";
 import LayoutInterface from "./LayoutInterface/LayoutInterface";
 import {getFollowingPostsAsync} from '../helperFunctions/http/apiRequests';
 import InfiniteScroll from 'react-infinite-scroller';
+import UserContext from "../contexts/UserContext";
 
 export default function Timeline() {
     const [posts, setPosts] = useState([]);
     const [hasMore, setHasMore] = useState(true);
+    const { user } = useContext(UserContext);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, []);
+    }, [user]);
 
     return (
-        <LayoutInterface pageTitle="my posts">
+        <LayoutInterface pageTitle="timeline">
             <>
                 <PostCreatorBox/>
                 <InfiniteScroll

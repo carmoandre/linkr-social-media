@@ -16,7 +16,7 @@ export default function MyLikes () {
     },[user]);
 
     return (
-    <LayoutInterface pageTitle="my posts">
+    <LayoutInterface pageTitle="my likes">
         <InfiniteScroll
             pageStart={0}
             loadMore={()=>myOlderLikesPostsLoader(user, posts, setPosts, setHasMore)}

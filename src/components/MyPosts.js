@@ -20,7 +20,7 @@ export default function MyPosts(){
     <LayoutInterface pageTitle="my posts">
       <InfiniteScroll
         pageStart={0}
-        loadMore={()=>myOlderPostsLoader(user, posts, setPosts, setHasMore)}
+        loadMore={()=>myOlderPostsLoader(user.user.id, posts, setPosts, setHasMore)}
         hasMore={hasMore}
         loader={<Loading key="LoadingInfiniteScroll"/>}
       >
@@ -30,10 +30,10 @@ export default function MyPosts(){
   );
 }
 
-function myOlderPostsLoader(user, posts, setPosts, setHasMore){
+function myOlderPostsLoader(userID, posts, setPosts, setHasMore){
   const oldestID = posts.length === 0 ? "" : posts[posts.length-1].id;
   const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
-  getUsersPostsAsync(user.user.id, query)
+  getUsersPostsAsync(userID, query)
   .then(({data})=>{
     setPosts([...posts, ...data.posts]);
     if (data.posts.length < 10) setHasMore(false);
