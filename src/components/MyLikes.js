@@ -10,6 +10,7 @@ export default function MyLikes () {
     const [posts, setPosts] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const { user } = useContext(UserContext);
+    const token = user.token;
 
     useEffect(()=>{
         window.scrollTo(0, 0);
@@ -19,7 +20,7 @@ export default function MyLikes () {
     <LayoutInterface pageTitle="my likes">
         <InfiniteScroll
             pageStart={0}
-            loadMore={()=>myOlderLikesPostsLoader(user, posts, setPosts, setHasMore)}
+            loadMore={()=>myOlderLikesPostsLoader(token, posts, setPosts, setHasMore)}
             hasMore={hasMore}
             loader={<Loading key="LoadingInfiniteScroll"/>}
         >
@@ -29,13 +30,12 @@ export default function MyLikes () {
     );
 }
 
-function myOlderLikesPostsLoader(user, posts, setPosts, setHasMore){
+function myOlderLikesPostsLoader(token, posts, setPosts, setHasMore){
     const oldestID = posts.length === 0 ? "" : posts[posts.length-1].id;
     const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
-    getUsersLikesAsync(query)
+    getUsersLikesAsync(token, query)
     .then(({data})=>{
-        const newPosts = data.posts.reverse();
-        setPosts([...posts, ...newPosts]);
+        setPosts([...posts, ...data.posts]);
         if (data.posts.length < 10) setHasMore(false);
     })
     .catch((err) => alert(`Falha ao buscar posts erro ${err.response && err.response.status}`))

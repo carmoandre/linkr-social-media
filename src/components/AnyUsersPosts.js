@@ -14,20 +14,22 @@ export default function AnyUsersPosts(){
   const {id:targetId} = useParams();
   const [hasMore, setHasMore] = useState(true);
   const { user } = useContext(UserContext);
+  const token = user.token;
+
   const pageTitle = targetUserName !== null ? `${targetUserName}’s posts` : <>&nbsp;</>;
 
   useEffect(()=>{
     window.scrollTo(0, 0);
-    getUserInfoAsync(targetId)
+    getUserInfoAsync(token, targetId)
     .then(({data})=>setTargetUserName(data.user.username))
     .catch((err)=>alert(`Falha ao buscar posts erro ${err.response.status}`))
-  },[user, targetId])
+  },[user, targetId]);
 
   return (
     <LayoutInterface pageTitle={pageTitle}>
       <InfiniteScroll
         pageStart={0}
-        loadMore={()=>userOlderPostsLoader(targetId, posts, setPosts, setHasMore)}
+        loadMore={()=>userOlderPostsLoader(token, targetId, posts, setPosts, setHasMore)}
         hasMore={hasMore}
         loader={<Loading key="LoadingInfiniteScroll"/>}
       >
@@ -37,10 +39,10 @@ export default function AnyUsersPosts(){
   );
 }
 
-function userOlderPostsLoader(userID, posts, setPosts, setHasMore){
+function userOlderPostsLoader(token, userID, posts, setPosts, setHasMore){
   const oldestID = posts.length === 0 ? "" : posts[posts.length-1].id;
   const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
-  getUsersPostsAsync(userID, query)
+  getUsersPostsAsync(token, userID, query)
   .then(({data})=>{
     setPosts([...posts, ...data.posts]);
     if (data.posts.length < 10) setHasMore(false);

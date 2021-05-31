@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import UserContext from '../contexts/UserContext';
+import {useContext} from 'react';
 
 export default function Navbar({showMenu}){
+    const {setUser} = useContext(UserContext);
     const history = useHistory();
     function logOut(){
         localStorage.clear();
+        setUser(undefined);
         history.push("/");
     }
 

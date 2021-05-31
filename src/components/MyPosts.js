@@ -11,6 +11,7 @@ export default function MyPosts(){
   const [posts, setPosts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const { user } = useContext(UserContext);
+  const token = user.token;
 
   useEffect(()=>{
     window.scrollTo(0, 0);
@@ -20,7 +21,7 @@ export default function MyPosts(){
     <LayoutInterface pageTitle="my posts">
       <InfiniteScroll
         pageStart={0}
-        loadMore={()=>myOlderPostsLoader(user.user.id, posts, setPosts, setHasMore)}
+        loadMore={()=>myOlderPostsLoader(token, user.user.id, posts, setPosts, setHasMore)}
         hasMore={hasMore}
         loader={<Loading key="LoadingInfiniteScroll"/>}
       >
@@ -30,10 +31,10 @@ export default function MyPosts(){
   );
 }
 
-function myOlderPostsLoader(userID, posts, setPosts, setHasMore){
+function myOlderPostsLoader(token, userID, posts, setPosts, setHasMore){
   const oldestID = posts.length === 0 ? "" : posts[posts.length-1].id;
   const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
-  getUsersPostsAsync(userID, query)
+  getUsersPostsAsync(token, userID, query)
   .then(({data})=>{
     setPosts([...posts, ...data.posts]);
     if (data.posts.length < 10) setHasMore(false);

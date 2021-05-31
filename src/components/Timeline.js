@@ -11,6 +11,7 @@ export default function Timeline() {
     const [posts, setPosts] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const { user } = useContext(UserContext);
+    const token = user.token;
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -22,7 +23,7 @@ export default function Timeline() {
                 <PostCreatorBox/>
                 <InfiniteScroll
                     pageStart={0}
-                    loadMore={()=>followingOlderPostsLoader(posts, setPosts, setHasMore)}
+                    loadMore={()=>followingOlderPostsLoader(token, posts, setPosts, setHasMore)}
                     hasMore={hasMore}
                     loader={<Loading key="LoadingInfiniteScroll"/>}
                 >
@@ -33,10 +34,10 @@ export default function Timeline() {
     );
 }
 
-function followingOlderPostsLoader(posts, setPosts, setHasMore){
+function followingOlderPostsLoader(token, posts, setPosts, setHasMore){
     const oldestID = posts.length === 0 ? "" : posts[posts.length-1].id;
     const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
-    getFollowingPostsAsync(query)
+    getFollowingPostsAsync(token, query)
     .then(({data})=>{
         setPosts([...posts, ...data.posts]);
         if (data.posts.length < 10) setHasMore(false);
