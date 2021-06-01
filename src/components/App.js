@@ -1,18 +1,23 @@
-import { BrowserRouter, Switch, Route, useHistory, useLocation} from "react-router-dom";
+import {
+    BrowserRouter,
+    Switch,
+    Route,
+    useHistory,
+    useLocation,
+} from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { useState, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
 import SignUp from "./Login-SignUp/SignUp";
-import Login from "./Login-SignUp/Login"
+import Login from "./Login-SignUp/Login";
 import Timeline from "./Timeline";
 import MyLikes from "./MyLikes";
 import AnyUsersPosts from "./AnyUsersPosts";
-import HashtagPosts from './HashtagPosts';
-import MyPosts from "./MyPosts"
-import isValidUserState from '../helperFunctions/isValidUserState';
+import HashtagPosts from "./HashtagPosts";
+import MyPosts from "./MyPosts";
+import isValidUserState from "../helperFunctions/isValidUserState";
 
 export default function App() {
-
     const [user, setUser] = useState(null);
 
     const UserStorage = localStorage.getItem("user");
@@ -22,12 +27,11 @@ export default function App() {
     useEffect(() => {
         if (UserStorage !== null) {
             const localUserState = JSON.parse(UserStorage);
-            if (isValidUserState(localUserState)){
+            if (isValidUserState(localUserState)) {
                 setUser(localUserState);
-                if (path === "/sign-up") history.push("/timeline")
+                if (path === "/sign-up") history.push("/timeline");
                 else history.push(path);
-            }
-            else {
+            } else {
                 localStorage.clear();
                 setUser(undefined);
                 history.push("/");
@@ -36,39 +40,41 @@ export default function App() {
             setUser(undefined);
             history.push("/");
         }
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
-    
-    return user === null ? "" : (
-            <UserContext.Provider value={{ user, setUser }}>
-                <BrowserRouter>
-                    <ResetCSS />
-                    <Switch>
-                        <Route path="/sign-up">
-                            <SignUp />
-                        </Route>
-                        <Route exact path="/my-posts">
-                            <MyPosts />
-                        </Route>
-                        <Route exact path="/user/:id">
-                            <AnyUsersPosts />
-                        </Route>
-                        <Route exact path="/hashtag/:hashtag">
-                            <HashtagPosts />
-                        </Route>
-                        <Route exact path="/timeline" >
-                            <Timeline />
-                        </Route>
-                        <Route exact path="/my-likes">
-                            <MyLikes />
-                        </Route>
-                        <Route path="/">
-                            <Login />
-                        </Route>
-                    </Switch>
-                </BrowserRouter>
-            </UserContext.Provider>
-        )
-    }
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    return user === null ? (
+        ""
+    ) : (
+        <UserContext.Provider value={{ user, setUser }}>
+            <BrowserRouter>
+                <ResetCSS />
+                <Switch>
+                    <Route path="/sign-up">
+                        <SignUp />
+                    </Route>
+                    <Route exact path="/my-posts">
+                        <MyPosts />
+                    </Route>
+                    <Route exact path="/user/:id">
+                        <AnyUsersPosts />
+                    </Route>
+                    <Route exact path="/hashtag/:hashtag">
+                        <HashtagPosts />
+                    </Route>
+                    <Route exact path="/timeline">
+                        <Timeline />
+                    </Route>
+                    <Route exact path="/my-likes">
+                        <MyLikes />
+                    </Route>
+                    <Route path="/">
+                        <Login />
+                    </Route>
+                </Switch>
+            </BrowserRouter>
+        </UserContext.Provider>
+    );
+}
 
 const ResetCSS = createGlobalStyle`
     /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -124,6 +130,9 @@ const ResetCSS = createGlobalStyle`
     }
     * {
         box-sizing: border-box;
+    }
+    *:focus {
+        outline: none;
     }
     strong {
         font-weight: bold;
