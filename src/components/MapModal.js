@@ -1,26 +1,22 @@
 import React from 'react';
 import ReactModal from "react-modal";
 import styled from 'styled-components';
-import {useState} from 'react';
 import MapContainer from './MapContainer';
 
-export default function MapModal({userName, lat, lng}){
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+export default function MapModal({opName, lat, lng, setShowModal}){
   function ExitModal(){
     return (
-      <p style={{cursor:"pointer"}} onClick={()=>setModalIsOpen(false)}>x</p>
+      <p style={{cursor:"pointer", flexShrink:"0", height: "100%"}} onClick={()=>setShowModal(false)}>x</p>
     )
   }
-
   return (
     <div>
-      <button onClick={()=>setModalIsOpen(true)}>Open Modal</button>
       <StyledModal
-        isOpen={modalIsOpen}
+        isOpen={true}
         contentLabel="User location map"
       >
         <Header>
-          <p>{userName}’s posts</p>
+          <p>{opName}’s location</p>
           <ExitModal />
         </Header>
         <MapContainer initialCenter={{lat:lat, lng:lng}} />
@@ -56,4 +52,5 @@ const Header = styled.header`
   font-weight: bold;
   font-family: Oswald, "sans-serif";
   margin-bottom: 8px;
+  word-break: break-all;
 `;
