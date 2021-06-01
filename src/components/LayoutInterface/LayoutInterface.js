@@ -100,7 +100,7 @@ const Box = styled.div`
     }
 `;
 
-const MobileSearchBarDistance = styled.div`
+/*const MobileSearchBarDistance = styled.div`
     @media (max-width: 430px) {
         background-color: #333333;
         height: 65px;
@@ -110,4 +110,4 @@ const MobileSearchBarDistance = styled.div`
         left: 0;
         right: 0;
     }
-`;
+`;*/
