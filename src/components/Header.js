@@ -29,7 +29,6 @@ export default function Header({ showMenu, setShowMenu }) {
         );
 
         request.then((response) => {
-            console.log(response.data.users);
             setSearchResults(sortResults(response.data.users));
         });
         request.catch((error) => {
