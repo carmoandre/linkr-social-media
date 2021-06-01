@@ -31,8 +31,7 @@ export default function MyLikes () {
 }
 
 function myOlderLikesPostsLoader(token, posts, setPosts, setHasMore){
-    const oldestID = posts.length === 0 ? "" : posts[posts.length-1].id;
-    const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
+    const query = posts.length === 0 ? "" : `?offset=${posts.length}`;
     getUsersLikesAsync(token, query)
     .then(({data})=>{
         setPosts([...posts, ...data.posts]);
