@@ -65,7 +65,7 @@ export default function App() {
                             <MyLikes />
                         </Route>
                         <Route path="/maps">
-                            <MapModal />
+                            <MapModal userName={"banana"} lat={-22.9} lng={-43.2}/>
                         </Route>
                         <Route path="/">
                             <Login />
