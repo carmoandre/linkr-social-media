@@ -53,7 +53,7 @@ export default function Trending(){
 }
 
 const Box = styled.div`
-    flex: 1 1.3 301px;
+    width: 301px;
     height: 441px;
     background: #171717;
     border-radius: 16px;

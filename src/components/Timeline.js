@@ -1,5 +1,6 @@
 import Posts from "./Posts/Posts";
 import PostCreatorBox from "./PostCreatorBox";
+import Message from "./Message";
 import { useContext, useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
@@ -10,6 +11,7 @@ export default function Timeline() {
     const { user } = useContext(UserContext);
     const [posts, setPosts] = useState(false);
     const [follows, setFollows] = useState([]);
+    const [text, setText] = useState("");
     const config = {
             headers: {
                 Authorization: `Bearer ${user.token}`,
@@ -38,17 +40,16 @@ export default function Timeline() {
         axios
             .get(url, config)
             .then(({ data }) => {
-                console.log(data)
                 if (follows.length===0 && data.posts.length===0){
-                    alert("Você não segue ninguém ainda, procure por perfis na busca")
+                    setText("Você não segue ninguém ainda, procure por perfis na busca")
                 } else if (data.posts.length===0) {
-                    alert("Nenhuma publicação encontrada");
+                    setText("Nenhuma publicação encontrada");
                 } else {
                     setPosts(data.posts);
                 }
             })
             .catch(() => {
-                alert("Ocorreu um erro. Tente novamente")
+                setText("Ocorreu um erro. Tente novamente")
             });
     }
 
@@ -57,7 +58,7 @@ export default function Timeline() {
             <>
                 <PostCreatorBox renderPosts={renderPosts} />
                 {posts === false ? (
-                    ""
+                    <Message text={text}/>
                 ) : (
                     <Posts posts={posts} setPosts={setPosts}/>
                 )}
