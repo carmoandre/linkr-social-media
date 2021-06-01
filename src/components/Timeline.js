@@ -6,6 +6,8 @@ import axios from "axios";
 import { useState } from "react";
 import LayoutInterface from "./LayoutInterface/LayoutInterface";
 import UserContext from "../contexts/UserContext";
+import InfiniteScroll from 'react-infinite-scroller';
+import Loading from './Loading';
 
 export default function Timeline() {
     const { user } = useContext(UserContext);
@@ -70,23 +72,20 @@ export default function Timeline() {
                 setText("Ocorreu um erro. Tente novamente")
             });
     }
+    
 
     return (
         <LayoutInterface pageTitle="timeline">
             <>
                 <PostCreatorBox renderPosts={renderPosts}/>
+                {posts.length === 0 ? <Message text={text}/> : ""}
                 <InfiniteScroll
                     pageStart={0}
                     loadMore={()=>loadMore()}
                     hasMore={hasMore}
                     loader={<Loading key="LoadingInfiniteScroll"/>}
                 >
-                    {posts.length === 0 ? (
-                        <Message text={text}/>
-                    ) : (
                         <Posts posts={posts} setPosts={setPosts}/>
-                    )}
-
                 </InfiniteScroll>
             </>
         </LayoutInterface>
