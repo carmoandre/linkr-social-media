@@ -11,6 +11,7 @@ export default function Follow () {
     const [followStatus, setFollowStatus] = useState()
     const [userData, setUserdata] = useState()
     const config = {headers: {"Authorization": `Bearer ${user.token}`}}
+    const [isReadyToRender, setIsReadyToRender] = useState(false)
 
     const {id: userID} = useParams();
 
@@ -20,21 +21,22 @@ export default function Follow () {
       request.then(response => {
         setFollowList(response.data.users)
       })
-    },[])
+    },[]) // eslint-disable-line react-hooks/exhaustive-deps
+
 
     useEffect(()=>{
       if(followList !== undefined) {
         const userIDs = followList.map(element => `${element.id}`);
-        console.log('userIDs,', userIDs)
         if(userIDs.includes(`${userData.id}`)) {
-            console.log('includes')
             setFollowStatus(true)
         }
         else{
             setFollowStatus(false)
         }
+        setIsReadyToRender(true)
       }
-    },[followList, userData])
+    },[followList, userData]) // eslint-disable-line react-hooks/exhaustive-deps
+
 
     function follow () {
         setBoolean(true)
@@ -43,7 +45,6 @@ export default function Follow () {
             request.then(() => {
                 setBoolean(false)
                 setFollowStatus(true)
-                console.log("follow")
             })
             request.catch(() => {
                 setBoolean(false)
@@ -59,7 +60,6 @@ export default function Follow () {
             request.then(() => {
                 setBoolean(false)
                 setFollowStatus(false)
-                console.log("unfollow")
             })
             request.catch(() => {
                 setBoolean(false)
@@ -68,10 +68,12 @@ export default function Follow () {
         }
     }
     
-
+    if (isReadyToRender) {
     return (
         <Button onClick={followStatus ? unfollow : follow} followStatus={followStatus} disabled={boolean}>{followStatus ? "Unfollow" : "Follow"}</Button>
         )
+    }
+    else {return (<> </>)}
 }
 
 const Button = styled.div `

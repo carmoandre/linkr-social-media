@@ -12,7 +12,6 @@ export default function AnyUsersPosts(){
   const [posts, setPosts] = useState([]);
   const [isReadyToRender, setIsReadyToRender] = useState(false);
   const [targetUserName, setTargetUserName] = useState(null);
-  const [userData, setUserData] = useState(undefined)
   const {id:targetId} = useParams();
   
   const { user } = useContext(UserContext);
@@ -30,7 +29,6 @@ export default function AnyUsersPosts(){
     .then(([usersPosts, usersInfo])=>{
       setPosts(usersPosts.data.posts);
       setTargetUserName(usersInfo.data.user.username);
-      setUserData(usersInfo.data.user)
     })
     .catch((err)=>{
       alert(`Falha ao buscar posts erro ${err.response.status}`)
@@ -47,10 +45,8 @@ export default function AnyUsersPosts(){
   
   const pageTitle = targetUserName !== null ? `${targetUserName}’s posts` : <>&nbsp;</>;
   
-  if (userData !== undefined) {
-    console.log(userData.username)
     return (
-      <LayoutInterface pageTitle={pageTitle} userData={userData}>
+      <LayoutInterface pageTitle={pageTitle}>
       {
         isReadyToRender 
         ? <Posts posts={posts} setPosts={setPosts}/>
@@ -58,10 +54,4 @@ export default function AnyUsersPosts(){
       }
     </LayoutInterface>
     );
-  }
-  else {
-    return (
-      <Loading />
-    )
-  }
 }

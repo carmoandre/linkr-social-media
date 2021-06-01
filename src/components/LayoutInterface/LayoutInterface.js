@@ -1,10 +1,9 @@
 import Header from "../Header";
 import Trending from "../Trending";
 import styled from "styled-components"
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import UserContext from "../../contexts/UserContext";
 import Follow from "../Follow";
-import axios from "axios";
 
 // LayoutInterface eh um componente opinionado que espera 1 child dentro 
 // dele e um nome de pagina passado como prop pageTitle
@@ -29,11 +28,9 @@ export default function LayoutInterface({pageTitle, children, userData}){
         <Main onClick={()=>{if(showMenu) setShowMenu(false)}}>
             <Header showMenu={showMenu} setShowMenu={setShowMenu}/>
             <Title>{pageTitle}
-                {userData !== undefined
-                  ? pageTitle !== "my posts" && pageTitle !== "my likes" && pageTitle !== `${user.user.username}’s posts`
+                    {pageTitle !== "my posts" && pageTitle !== "my likes" && pageTitle !== `${user.user.username}’s posts` && pageTitle !== "timeline"
                     ? <Follow />
-                    : <> </> 
-                : <> </>}
+                    : <> </> }
               </Title>
             <Content>
               <Box>
