@@ -38,7 +38,8 @@ export default function Timeline() {
         axios
             .get(url, config)
             .then(({ data }) => {
-                if (follows.length===0){
+                console.log(data)
+                if (follows.length===0 && data.posts.length===0){
                     alert("Você não segue ninguém ainda, procure por perfis na busca")
                 } else if (data.posts.length===0) {
                     alert("Nenhuma publicação encontrada");
