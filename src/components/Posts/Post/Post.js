@@ -8,25 +8,25 @@ import React, { useContext, useState } from "react";
 import UserContext from "../../../contexts/UserContext";
 import Modal from "react-modal";
 import ReactModal from "react-modal";
-import Likes from './Likes';
+import Likes from "./Likes";
 import {
     StyledModal,
     ModalText,
     GoBackButton,
     ConfirmButton,
 } from "./StyledModal";
-import EmbeddedYoutube from './LinkContent/EmbeddedYoutube';
-var getYoutubeID = require('get-youtube-id');
+import EmbeddedYoutube from "./LinkContent/EmbeddedYoutube";
+import Comments from "./Comments";
+var getYoutubeID = require("get-youtube-id");
 
 ReactModal.defaultStyles.overlay.zIndex = 5;
 
 Modal.setAppElement(document.querySelector(".root"));
 
 export default function Post(props) {
-    const { postID, originalPoster, likes, linkProps } =
-        props;
+    const { postID, originalPoster, likes, linkProps } = props;
     const [caption, setCaption] = useState(props.caption);
-    const {post, posts, setPosts} = props;
+    const { post, posts, setPosts } = props;
     const { user } = useContext(UserContext);
     const [modalIsOpen, setModalIsOPen] = useState(false);
     const [disabled, setDisabled] = useState(false);
@@ -34,6 +34,7 @@ export default function Post(props) {
     const [editedText, setEditedText] = useState(caption);
     const permission = user.user.id === originalPoster.id;
     const [like, setLike] = useState(true);
+    const [commentsVisible, setCommentsVisible] = useState(false);
 
     const likesProps = {
         like,
@@ -43,8 +44,8 @@ export default function Post(props) {
         post,
         posts,
         setPosts,
-        likes
-    }
+        likes,
+    };
 
     function toggleEdition() {
         onEdition ? setOnEdition(false) : setOnEdition(true);
@@ -73,7 +74,7 @@ export default function Post(props) {
             setDisabled(false);
             toggleModal();
             const indexOfPost = posts.indexOf(post);
-            posts.splice(indexOfPost,1);
+            posts.splice(indexOfPost, 1);
             setPosts([...posts]);
         });
 
@@ -86,21 +87,27 @@ export default function Post(props) {
         });
     }
 
-
     const youtubeID = getYoutubeID(linkProps.href);
     return (
         <>
             <PostWrapper>
                 <section className="post--avatarAndLikes">
-                    <Link className="avatarAndLikes--link" to={`/user/${originalPoster.id}`}>
+                    <Link
+                        className="avatarAndLikes--link"
+                        to={`/user/${originalPoster.id}`}
+                    >
                         <img
                             src={originalPoster.avatar}
                             alt={originalPoster.name}
                         />
                     </Link>
 
-                    <Likes likesProps={likesProps}/>
-
+                    <Likes likesProps={likesProps} />
+                    <Comments
+                        postID={postID}
+                        commentsVisible={commentsVisible}
+                        setCommentsVisible={setCommentsVisible}
+                    />
                 </section>
                 <section className="post--body">
                     <header>
@@ -129,10 +136,15 @@ export default function Post(props) {
                         setEditedText={setEditedText}
                         postID={postID}
                     />
-                    {youtubeID === null
-                        ? <ArticlePreview linkProps={linkProps} />
-                        : <EmbeddedYoutube postID={postID} youtubeID={youtubeID} linkProps={linkProps} />
-                    }
+                    {youtubeID === null ? (
+                        <ArticlePreview linkProps={linkProps} />
+                    ) : (
+                        <EmbeddedYoutube
+                            postID={postID}
+                            youtubeID={youtubeID}
+                            linkProps={linkProps}
+                        />
+                    )}
                 </section>
             </PostWrapper>
             <StyledModal
@@ -168,7 +180,6 @@ const PostWrapper = styled.li`
     }
     font-family: "Lato", sans-serif;
 
-
     svg {
         cursor: pointer;
     }
@@ -197,12 +208,9 @@ const PostWrapper = styled.li`
         flex-grow: 0;
         flex-shrink: 0;
 
-        width: 50px;
-        @media (max-width: 430px) {
-            width: 40px;
-        }
+        width: 67px;
 
-        .avatarAndLikes--link{
+        .avatarAndLikes--link {
             margin-bottom: 19px;
         }
 
