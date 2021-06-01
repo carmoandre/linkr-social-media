@@ -1,32 +1,41 @@
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/UserContext";
 import LayoutInterface from "./LayoutInterface/LayoutInterface";
 import Loading from "./Loading";
 import Posts from "./Posts/Posts";
+import InfiniteScroll from 'react-infinite-scroller';
+import {getUsersLikesAsync} from '../helperFunctions/http/apiRequests';
 
 export default function MyLikes () {
-
-    const [posts, setPosts] = useState([])
-    const { user } = useContext(UserContext)
-    const [renderPage, setRenderPage] = useState(false)
+    const [posts, setPosts] = useState([]);
+    const [hasMore, setHasMore] = useState(true);
+    const { user } = useContext(UserContext);
+    const token = user.token;
 
     useEffect(()=>{
         window.scrollTo(0, 0);
-        const config = {headers: {Authorization: `Bearer ${user.token}`}};
-        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked", config)
-        request.then(response => {
-            setRenderPage(true)
-            const posts = response.data.posts;
-            setPosts(posts.reverse());
-            })
-        request.catch((err) => alert(`Falha ao buscar posts erro ${err.response.status}`));
-    },
-    [user])
+    },[user]);
 
     return (
-        <LayoutInterface pageTitle="my likes">
-            {renderPage ? <Posts posts={posts} setPosts={setPosts}/> : <Loading />}
-        </LayoutInterface>
-    )
+    <LayoutInterface pageTitle="my likes">
+        <InfiniteScroll
+            pageStart={0}
+            loadMore={()=>myOlderLikesPostsLoader(token, posts, setPosts, setHasMore)}
+            hasMore={hasMore}
+            loader={<Loading key="LoadingInfiniteScroll"/>}
+        >
+        <Posts posts={posts} setPosts={setPosts}/>
+        </InfiniteScroll>
+    </LayoutInterface>
+    );
+}
+
+function myOlderLikesPostsLoader(token, posts, setPosts, setHasMore){
+    const query = posts.length === 0 ? "" : `?offset=${posts.length}`;
+    getUsersLikesAsync(token, query)
+    .then(({data})=>{
+        setPosts([...posts, ...data.posts]);
+        if (data.posts.length < 10) setHasMore(false);
+    })
+    .catch((err) => alert(`Falha ao buscar posts erro ${err.response && err.response.status}`))
 }

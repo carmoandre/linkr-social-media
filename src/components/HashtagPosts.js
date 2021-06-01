@@ -1,51 +1,47 @@
 import Posts from './Posts/Posts';
 import {useState, useEffect, useContext} from 'react';
-import { useParams, useHistory} from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import LayoutInterface from './LayoutInterface/LayoutInterface';
 import { getHashtagPostsAsync } from '../helperFunctions/http/apiRequests';
-import isValidUserState from '../helperFunctions/isValidUserState';
 import Loading from './Loading';
 import UserContext from '../contexts/UserContext';
+import InfiniteScroll from 'react-infinite-scroller';
 
-export default function AnyUsersPosts(){
+export default function MyPosts(){
 
   const [posts, setPosts] = useState([]);
-  const [isReadyToRender, setIsReadyToRender] = useState(false);
-
+  const [hasMore, setHasMore] = useState(true);
   const {hashtag} = useParams();
-  
   const { user } = useContext(UserContext);
-  const history = useHistory();
+  const token = user.token;
 
   useEffect(()=>{
-    if (!isValidUserState(user)) return;
     window.scrollTo(0, 0);
-    const [token] = [user.token];
+    setPosts([]);
+    setHasMore(true);
+  },[user, hashtag]);
 
-    getHashtagPostsAsync(hashtag, token)
-    .then(({data})=>{
-      setPosts(data.posts);
-    })
-    .catch((err)=>{
-      alert(`Falha ao buscar posts erro ${err.response.status}`)
-    })
-    .finally(()=>{
-      setIsReadyToRender(true);
-    })
-
-  },[user, hashtag])
-
-  if (!isValidUserState(user)){
-    history.push("/");
-  }
-  
   return (
     <LayoutInterface pageTitle={`#${hashtag}`}>
-      {
-        isReadyToRender 
-        ? <Posts posts={posts} setPosts={setPosts}/>
-        : <Loading />
-      }
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={()=>hashtagOlderPostsLoader(token, hashtag, posts, setPosts, setHasMore)}
+        hasMore={hasMore}
+        loader={<Loading key="LoadingInfiniteScroll"/>}
+      >
+        <Posts posts={posts} setPosts={setPosts}/>
+      </InfiniteScroll>
     </LayoutInterface>
   );
+}
+
+function hashtagOlderPostsLoader(token, hashtag, posts, setPosts, setHasMore){
+  const oldestID = posts.length === 0 ? "" : posts[posts.length-1].id;
+  const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
+  getHashtagPostsAsync(token, hashtag, query)
+  .then(({data})=>{
+    setPosts([...posts, ...data.posts]);
+    if (data.posts.length < 10) setHasMore(false);
+  })
+  .catch((err) => alert(`Falha ao buscar posts erro ${err.response && err.response.status}`))
 }
