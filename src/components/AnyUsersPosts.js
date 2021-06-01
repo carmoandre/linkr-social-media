@@ -23,7 +23,7 @@ export default function AnyUsersPosts(){
     getUserInfoAsync(token, targetId)
     .then(({data})=>setTargetUserName(data.user.username))
     .catch((err)=>alert(`Falha ao buscar posts erro ${err.response.status}`))
-  },[user, targetId]);
+  },[token, targetId]);
 
   return (
     <LayoutInterface pageTitle={pageTitle}>
