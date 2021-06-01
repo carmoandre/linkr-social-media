@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import UserContext from "../contexts/UserContext";
 
 export default function PostCreatorBox(props) {
-    const { renderPosts } = props;
+    const { posts, setPosts } = props;
     const { user } = useContext(UserContext);
     const [link, setLink] = useState("");
     const [text, setText] = useState("");
@@ -38,7 +38,10 @@ export default function PostCreatorBox(props) {
             setText("");
             setDisabled(false);
             setButtonText("Publish");
-            renderPosts();
+            //handling race condition with future implementation of requests on a setInterval
+            if(response.data.post.id > posts[0].id){
+                setPosts([response.data.post, ...posts]);
+            }
         });
 
         request.catch((error) => {

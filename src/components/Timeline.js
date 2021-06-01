@@ -6,12 +6,16 @@ import axios from "axios";
 import { useState } from "react";
 import LayoutInterface from "./LayoutInterface/LayoutInterface";
 import UserContext from "../contexts/UserContext";
+import InfiniteScroll from 'react-infinite-scroller';
+import Loading from './Loading';
 
 export default function Timeline() {
     const { user } = useContext(UserContext);
-    const [posts, setPosts] = useState(false);
+    const [posts, setPosts] = useState([]);
     const [follows, setFollows] = useState([]);
     const [text, setText] = useState("");
+    const [hasMore, setHasMore] = useState(true);
+    
     const config = {
             headers: {
                 Authorization: `Bearer ${user.token}`,
@@ -21,7 +25,6 @@ export default function Timeline() {
     useEffect(() => {
         window.scrollTo(0, 0);
         myFollows();
-        renderPosts();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     function myFollows(){
@@ -30,13 +33,15 @@ export default function Timeline() {
         axios
             .get(url, config)
             .then(({ data }) => {
-                setFollows(data)
+                setFollows(data.users)
             })
     }
 
     function renderPosts() {
+        const oldestID = posts.length === 0 ? "" : posts[posts.length-1].id;
+        const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
         const url =
-            "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts";
+            `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts${query}`;
         axios
             .get(url, config)
             .then(({ data }) => {
@@ -44,9 +49,9 @@ export default function Timeline() {
                     setText("Você não segue ninguém ainda, procure por perfis na busca")
                 } else if (data.posts.length===0) {
                     setText("Nenhuma publicação encontrada");
-                } else {
-                    setPosts(data.posts);
                 }
+                setPosts([...posts, ...data.posts]);
+                if (data.posts.length < 10) setHasMore(false);
             })
             .catch(() => {
                 setText("Ocorreu um erro. Tente novamente")
@@ -56,12 +61,16 @@ export default function Timeline() {
     return (
         <LayoutInterface pageTitle="timeline">
             <>
-                <PostCreatorBox renderPosts={renderPosts} />
-                {posts === false ? (
-                    <Message text={text}/>
-                ) : (
-                    <Posts posts={posts} setPosts={setPosts}/>
-                )}
+                <PostCreatorBox posts={posts} setPosts={setPosts}/>
+                {posts.length === 0 ? <Message text={text}/> : ""}
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={()=>renderPosts()}
+                    hasMore={hasMore}
+                    loader={<Loading key="LoadingInfiniteScroll"/>}
+                >
+                        <Posts posts={posts} setPosts={setPosts}/>
+                </InfiniteScroll>
             </>
         </LayoutInterface>
     );

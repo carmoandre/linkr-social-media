@@ -96,8 +96,8 @@ function toggleLikeAsync(toggleProps, routeProps){
   localToggle();
 
   const request = isLiked 
-    ? dislikePostAsync(postID, user.token)
-    : likePostAsync(postID, user.token);
+    ? dislikePostAsync(user.token, postID)
+    : likePostAsync(user.token, postID);
 
   if (isRouteMyLikes) {
     const newPosts = posts.filter(aPost => aPost !== post);
