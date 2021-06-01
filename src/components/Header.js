@@ -13,7 +13,7 @@ import {
     ResultsHolder,
     UserLink,
     UserRoundedIMG,
-} from "./SyledSearch";
+} from "./StyledSearch";
 
 export default function Header({ showMenu, setShowMenu }) {
     const { user } = useContext(UserContext);
