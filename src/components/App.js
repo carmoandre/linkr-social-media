@@ -10,6 +10,8 @@ import AnyUsersPosts from "./AnyUsersPosts";
 import HashtagPosts from './HashtagPosts';
 import MyPosts from "./MyPosts"
 import isValidUserState from '../helperFunctions/isValidUserState';
+import MapModal from './MapModal';
+import Modal from 'react-modal';
 
 export default function App() {
 
@@ -18,6 +20,7 @@ export default function App() {
     const UserStorage = localStorage.getItem("user");
     const history = useHistory();
     const path = useLocation().pathname;
+    Modal.setAppElement(document.querySelector(".root"));
 
     useEffect(() => {
         if (UserStorage !== null) {
@@ -61,9 +64,13 @@ export default function App() {
                         <Route exact path="/my-likes">
                             <MyLikes />
                         </Route>
+                        <Route path="/maps">
+                            <MapModal />
+                        </Route>
                         <Route path="/">
                             <Login />
                         </Route>
+
                     </Switch>
                 </BrowserRouter>
             </UserContext.Provider>
