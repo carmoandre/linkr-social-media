@@ -38,8 +38,10 @@ export default function Timeline() {
     }
 
     function renderPosts() {
+        const oldestID = posts.length === 0 ? "" : posts[posts.length-1].id;
+        const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
         const url =
-            "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts";
+            `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts${query}`;
         axios
             .get(url, config)
             .then(({ data }) => {
@@ -47,24 +49,7 @@ export default function Timeline() {
                     setText("Você não segue ninguém ainda, procure por perfis na busca")
                 } else if (data.posts.length===0) {
                     setText("Nenhuma publicação encontrada");
-                } else {
-                    setPosts(data.posts);
                 }
-            })
-            .catch(() => {
-                setText("Ocorreu um erro. Tente novamente")
-            });
-    }
-
-    function loadMore() {
-        const oldestID = posts.length === 0 ? "" : posts[posts.length-1].id;
-        const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
-        
-        const url =
-            `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts${query}`;
-        axios
-            .get(url, config)
-            .then(({ data }) => {
                 setPosts([...posts, ...data.posts]);
                 if (data.posts.length < 10) setHasMore(false);
             })
@@ -72,7 +57,6 @@ export default function Timeline() {
                 setText("Ocorreu um erro. Tente novamente")
             });
     }
-    
 
     return (
         <LayoutInterface pageTitle="timeline">
@@ -81,7 +65,7 @@ export default function Timeline() {
                 {posts.length === 0 ? <Message text={text}/> : ""}
                 <InfiniteScroll
                     pageStart={0}
-                    loadMore={()=>loadMore()}
+                    loadMore={()=>renderPosts()}
                     hasMore={hasMore}
                     loader={<Loading key="LoadingInfiniteScroll"/>}
                 >
