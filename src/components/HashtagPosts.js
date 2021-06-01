@@ -17,7 +17,9 @@ export default function MyPosts(){
 
   useEffect(()=>{
     window.scrollTo(0, 0);
-  },[user]);
+    setPosts([]);
+    setHasMore(true);
+  },[user, hashtag]);
 
   return (
     <LayoutInterface pageTitle={`#${hashtag}`}>
