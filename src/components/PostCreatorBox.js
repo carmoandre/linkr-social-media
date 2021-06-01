@@ -12,6 +12,7 @@ export default function PostCreatorBox(props) {
     const [disabled, setDisabled] = useState(false);
     const [buttonText, setButtonText] = useState("Publish");
     const [geolocation, setGeolocation] = useState(null);
+    console.log(geolocation);
 
     function publish(event) {
         event.preventDefault();
@@ -19,6 +20,11 @@ export default function PostCreatorBox(props) {
             text,
             link,
         };
+        if (geolocation !== null){
+            body.geolocation = geolocation;
+        }
+
+        console.log(body);
 
         const config = {
             headers: {
@@ -42,6 +48,7 @@ export default function PostCreatorBox(props) {
             setButtonText("Publish");
             //handling race condition with future implementation of requests on a setInterval
             if(response.data.post.id > posts[0].id){
+                console.log(response.data.post);
                 setPosts([response.data.post, ...posts]);
             }
         });

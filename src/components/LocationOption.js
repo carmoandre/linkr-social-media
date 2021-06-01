@@ -19,7 +19,7 @@ function handleClick(geolocation, setGeolocation){
   if (geolocation) setGeolocation(null);
   else {
     navigator.geolocation.getCurrentPosition(function(position) {
-      setGeolocation({latitude: position.coords.latitude, longitude: position.coords.longitude});
+      setGeolocation({latitude: `${position.coords.latitude}`, longitude: `${position.coords.longitude}`});
     });
   };
 }
