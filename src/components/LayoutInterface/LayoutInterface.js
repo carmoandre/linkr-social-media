@@ -1,9 +1,10 @@
 import Header from "../Header";
 import Trending from "../Trending";
 import styled from "styled-components"
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserContext from "../../contexts/UserContext";
 import Follow from "../Follow";
+import axios from "axios";
 
 // LayoutInterface eh um componente opinionado que espera 1 child dentro 
 // dele e um nome de pagina passado como prop pageTitle
@@ -22,15 +23,39 @@ import Follow from "../Follow";
 export default function LayoutInterface({pageTitle, children, userData}){
 
   const [showMenu, setShowMenu] = useState(false);
-  const {user} = useContext(UserContext)
+  const { user } = useContext(UserContext)
+  const [followList, setFollowList] = useState()
+  const [usernames, setUsernames] = ([])
+  const [followStatus, setFollowStatus] = useState()
+
+  const config = {headers: {"Authorization": `Bearer ${user.token}`}}
+
+  useEffect(() => {
+    const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows", config)
+    request.then(response => {
+      setFollowList(response.data.users)
+    })
+
+    if(followList !== undefined) {
+    followList.map(element => setUsernames(...usernames, element.username))
+
+    if(usernames.includes(userData.usernames)) {
+        setFollowStatus(true)
+    }
+    else{
+        setFollowList(false)
+    }}
+    }
+  ,[])
+
 
     return(
-        <Main>
-            <Header />
+        <Main onClick={()=>{if(showMenu) setShowMenu(false)}}>
+            <Header showMenu={showMenu} setShowMenu={setShowMenu}/>
             <Title>{pageTitle}
                 {userData !== undefined
                   ? pageTitle !== "my posts" && pageTitle !== "my likes" && pageTitle !== `${user.user.username}’s posts`
-                    ? <Follow />
+                    ? <Follow userData={userData} followStatus={followStatus} setFollowList={setFollowStatus}/>
                     : <> </> 
                 : <> </>}
               </Title>

@@ -6,7 +6,6 @@ import { getUsersPostsAsync, getUserInfoAsync } from '../helperFunctions/http/ap
 import isValidUserState from '../helperFunctions/isValidUserState';
 import Loading from './Loading';
 import UserContext from '../contexts/UserContext';
-import Follow from './Follow';
 
 export default function AnyUsersPosts(){
 
