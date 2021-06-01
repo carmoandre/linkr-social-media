@@ -22,32 +22,8 @@ import axios from "axios";
 
 export default function LayoutInterface({pageTitle, children, userData}){
 
-  const [showMenu, setShowMenu] = useState(false);
-  const { user } = useContext(UserContext)
-  const [followList, setFollowList] = useState()
-  const [usernames, setUsernames] = ([])
-  const [followStatus, setFollowStatus] = useState()
-
-  const config = {headers: {"Authorization": `Bearer ${user.token}`}}
-
-  useEffect(() => {
-    const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows", config)
-    request.then(response => {
-      setFollowList(response.data.users)
-    })
-
-    if(followList !== undefined) {
-    followList.map(element => setUsernames(...usernames, element.username))
-
-    if(usernames.includes(userData.usernames)) {
-        setFollowStatus(true)
-    }
-    else{
-        setFollowList(false)
-    }}
-    }
-  ,[])
-
+    const [showMenu, setShowMenu] = useState(false);
+    const { user } = useContext(UserContext)
 
     return(
         <Main onClick={()=>{if(showMenu) setShowMenu(false)}}>
@@ -55,7 +31,7 @@ export default function LayoutInterface({pageTitle, children, userData}){
             <Title>{pageTitle}
                 {userData !== undefined
                   ? pageTitle !== "my posts" && pageTitle !== "my likes" && pageTitle !== `${user.user.username}’s posts`
-                    ? <Follow userData={userData} followStatus={followStatus} setFollowList={setFollowStatus}/>
+                    ? <Follow />
                     : <> </> 
                 : <> </>}
               </Title>
