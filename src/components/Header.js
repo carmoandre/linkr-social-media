@@ -173,6 +173,7 @@ const SearchBox = styled.div`
     @media (max-width: 430px) {
         margin-top: 72px;
         width: 93%;
+        max-height: 290px;
     }
 `;
 
@@ -184,9 +185,6 @@ const SearchBar = styled.div`
     display: flex;
     align-items: center;
     padding: 11px 15px 11px 17px;
-    @media (max-width: 430px) {
-        margin-top: 72px;
-    }
 `;
 
 const SearchInput = styled(DebounceInput)`
@@ -232,6 +230,10 @@ const UserLink = styled(Link)`
     font-family: "Lato", sans-serif;
     padding-left: 17px;
     margin: 8px 0;
+
+    p {
+        color: #515151;
+    }
 
     span {
         color: #c5c5c5;
