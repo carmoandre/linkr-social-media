@@ -61,7 +61,7 @@ export default function Timeline() {
     return (
         <LayoutInterface pageTitle="timeline">
             <>
-                <PostCreatorBox renderPosts={renderPosts}/>
+                <PostCreatorBox posts={posts} setPosts={setPosts}/>
                 {posts.length === 0 ? <Message text={text}/> : ""}
                 <InfiniteScroll
                     pageStart={0}
