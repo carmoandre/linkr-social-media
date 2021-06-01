@@ -1,20 +1,22 @@
 import Header from "../Header";
 import Trending from "../Trending";
+import { useContext, useState } from "react";
 import styled from "styled-components";
-import { useState } from "react";
+import UserContext from "../../contexts/UserContext";
+import Follow from "../Follow";
 
 export default function LayoutInterface({ pageTitle, children }) {
     const [showMenu, setShowMenu] = useState(false);
+    const { user } = useContext(UserContext)
 
-    return (
-        <Main
-            onClick={() => {
-                if (showMenu) setShowMenu(false);
-            }}
-        >
-            <Header showMenu={showMenu} setShowMenu={setShowMenu} />
-            <MobileSearchBarDistance />
-            <Title>{pageTitle}</Title>
+    return(
+        <Main onClick={()=>{if(showMenu) setShowMenu(false)}}>
+            <Header showMenu={showMenu} setShowMenu={setShowMenu}/>
+            <Title>{pageTitle}
+                    {pageTitle !== "my posts" && pageTitle !== "my likes" && pageTitle !== `${user.user.username}’s posts` && pageTitle !== "timeline"
+                    ? <Follow />
+                    : <> </> }
+              </Title>
             <Content>
                 <Box>{children}</Box>
                 <Trending />
@@ -47,6 +49,9 @@ const Title = styled.div`
     font-weight: bold;
     padding: var(--center-box-padding);
     margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     @media (max-width: 430px) {
         padding-left: 17px;
@@ -95,7 +100,7 @@ const Box = styled.div`
     }
 `;
 
-const MobileSearchBarDistance = styled.div`
+/*const MobileSearchBarDistance = styled.div`
     @media (max-width: 430px) {
         background-color: #333333;
         height: 65px;
@@ -105,4 +110,4 @@ const MobileSearchBarDistance = styled.div`
         left: 0;
         right: 0;
     }
-`;
+`;*/
