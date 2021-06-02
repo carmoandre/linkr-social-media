@@ -8,6 +8,7 @@ import LayoutInterface from "./LayoutInterface/LayoutInterface";
 import UserContext from "../contexts/UserContext";
 import InfiniteScroll from 'react-infinite-scroller';
 import Loading from './Loading';
+import useInterval from "./UseInterval";
 
 export default function Timeline() {
     const { user } = useContext(UserContext);
@@ -57,6 +58,22 @@ export default function Timeline() {
                 setText("Ocorreu um erro. Tente novamente")
             });
     }
+
+    function refreshPosts(){
+        const newestID = posts.length === 0 ? "" : posts[0].id;
+        const query = posts.length === 0 ? "" : `?earlierThan=${newestID}`;
+        const url =
+            `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts${query}`;
+        axios
+            .get(url, config)
+            .then(({ data }) => {
+                setPosts([...data.posts, ...posts]);
+            });
+    }
+
+    useInterval(() => {
+        refreshPosts();
+      }, 15000);
 
     return (
         <LayoutInterface pageTitle="timeline">
