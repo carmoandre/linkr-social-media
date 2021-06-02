@@ -20,6 +20,8 @@ export default function AnyUsersPosts(){
 
   useEffect(()=>{
     window.scrollTo(0, 0);
+    setPosts([]);
+    setHasMore(true);
     getUserInfoAsync(token, targetId)
     .then(({data})=>setTargetUserName(data.user.username))
     .catch((err)=>alert(`Falha ao buscar posts erro ${err.response.status}`))
