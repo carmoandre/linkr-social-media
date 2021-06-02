@@ -4,16 +4,19 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../../contexts/UserContext";
 import Follow from "../Follow";
+import { matchPath, useLocation, useParams } from "react-router";
 
 export default function LayoutInterface({ pageTitle, children }) {
     const [showMenu, setShowMenu] = useState(false);
     const { user } = useContext(UserContext)
-
+    const location = useLocation().pathname;
+    const {id} = useParams();
+    const matchAnyUserPage = matchPath(location,{isExact:true, path:"/user/:id"});
     return(
         <Main onClick={()=>{if(showMenu) setShowMenu(false)}}>
             <Header showMenu={showMenu} setShowMenu={setShowMenu}/>
             <Title>{pageTitle}
-                    {pageTitle !== "my posts" && pageTitle !== "my likes" && pageTitle !== `${user.user.username}’s posts` && pageTitle !== "timeline"
+                    {user.user.id != id && matchAnyUserPage
                     ? <Follow />
                     : <> </> }
               </Title>
