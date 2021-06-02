@@ -16,7 +16,6 @@ import AnyUsersPosts from "./AnyUsersPosts";
 import HashtagPosts from './HashtagPosts';
 import MyPosts from "./MyPosts"
 import isValidUserState from '../helperFunctions/isValidUserState';
-import MapModal from './MapModal';
 import Modal from 'react-modal';
 
 
