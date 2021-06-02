@@ -18,6 +18,7 @@ import {
 export default function Header({ showMenu, setShowMenu }) {
     const { user } = useContext(UserContext);
     const [searchResults, setSearchResults] = useState(null);
+    const [searchInputValue, setSearchInputValue] = useState("");
 
     function searchUsers(keyword) {
         if (keyword === "") {
@@ -69,7 +70,9 @@ export default function Header({ showMenu, setShowMenu }) {
                             placeholder="Search for people and friends"
                             minLength={3}
                             debounceTimeout={300}
+                            value={searchInputValue}
                             onChange={(e) => {
+                                setSearchInputValue(e.target.value);
                                 searchUsers(e.target.value);
                             }}
                         />
@@ -83,6 +86,10 @@ export default function Header({ showMenu, setShowMenu }) {
                                     key={user.id}
                                     to={`/user/${user.id}`}
                                     user={user}
+                                    onClick={()=>{
+                                        setSearchResults(null);
+                                        setSearchInputValue("")
+                                    }}
                                 >
                                     <UserRoundedIMG user={user} />
                                     <p>
