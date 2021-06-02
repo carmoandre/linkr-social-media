@@ -10,18 +10,16 @@ export default function MapModal({opName, lat, lng, setShowModal}){
     )
   }
   return (
-    <div>
-      <StyledModal
-        isOpen={true}
-        contentLabel="User location map"
-      >
-        <Header>
-          <p>{opName}’s location</p>
-          <ExitModal />
-        </Header>
-        <MapContainer initialCenter={{lat:lat, lng:lng}} />
-      </StyledModal>
-    </div>
+    <StyledModal
+      isOpen={true}
+      contentLabel="User location map"
+    >
+      <Header>
+        <p>{opName}’s location</p>
+        <ExitModal />
+      </Header>
+      <MapContainer initialCenter={{lat:lat, lng:lng}} />
+    </StyledModal>
   );
 }
 

@@ -37,11 +37,13 @@ export default function App() {
             } else {
                 localStorage.clear();
                 setUser(undefined);
-                history.push("/");
+                if (path === "/sign-up") history.push("/sign-up");
+                else history.push("/");
             }
         } else {
             setUser(undefined);
-            history.push("/");
+            if (path === "/sign-up") history.push("/sign-up");
+            else history.push("/");
         }
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
     
