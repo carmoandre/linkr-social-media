@@ -34,7 +34,6 @@ export default function Comments(props) {
             setCommentsList(response.data.comments);
         });
         request.catch((error) => {
-            console.log(error);
             alert(
                 "Comentários não carregados. Por favor, tente novamente mais tarde."
             );
