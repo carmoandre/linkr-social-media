@@ -1,7 +1,7 @@
 import Posts from "./Posts/Posts";
 import PostCreatorBox from "./PostCreatorBox";
 import Message from "./Message";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import LayoutInterface from "./LayoutInterface/LayoutInterface";
@@ -59,8 +59,20 @@ export default function Timeline() {
             });
     }
 
+    function refreshPosts(){
+        const newestID = posts.length === 0 ? "" : posts[posts.length-1].id;
+        const query = posts.length === 0 ? "" : `?earlierThan=${newestID}`;
+        const url =
+            `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts${query}`;
+        axios
+            .get(url, config)
+            .then(({ data }) => {
+                setPosts([...posts, ...data.posts]);
+            });
+    }
+
     useInterval(() => {
-        renderPosts();
+        refreshPosts();
       }, 15000);
 
     return (
