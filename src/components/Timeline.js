@@ -1,13 +1,14 @@
 import Posts from "./Posts/Posts";
 import PostCreatorBox from "./PostCreatorBox";
 import Message from "./Message";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import axios from "axios";
 import { useState } from "react";
 import LayoutInterface from "./LayoutInterface/LayoutInterface";
 import UserContext from "../contexts/UserContext";
 import InfiniteScroll from 'react-infinite-scroller';
 import Loading from './Loading';
+import useInterval from "./UseInterval";
 
 export default function Timeline() {
     const { user } = useContext(UserContext);
@@ -57,6 +58,10 @@ export default function Timeline() {
                 setText("Ocorreu um erro. Tente novamente")
             });
     }
+
+    useInterval(() => {
+        renderPosts();
+      }, 15000);
 
     return (
         <LayoutInterface pageTitle="timeline">
