@@ -16,7 +16,10 @@ import {
     ConfirmButton,
 } from "./StyledModal";
 import EmbeddedYoutube from './LinkContent/EmbeddedYoutube';
+import {MdLocationOn} from 'react-icons/md';
+import MapModal from '../../MapModal/MapModal';
 var getYoutubeID = require('get-youtube-id');
+
 
 ReactModal.defaultStyles.overlay.zIndex = 5;
 
@@ -34,6 +37,7 @@ export default function Post(props) {
     const [editedText, setEditedText] = useState(caption);
     const permission = user.user.id === originalPoster.id;
     const [like, setLike] = useState(true);
+    const [showModal, setShowModal] = useState(false)
 
     const likesProps = {
         like,
@@ -104,9 +108,19 @@ export default function Post(props) {
                 </section>
                 <section className="post--body">
                     <header>
-                        <Link to={`/user/${originalPoster.id}`}>
-                            {originalPoster.name}
-                        </Link>
+                        <NameAndLocation>
+                            <Link to={`/user/${originalPoster.id}`}>{originalPoster.name}</Link>
+                            {post.geolocation ? <MdLocationOn onClick={()=>setShowModal(true)}/> : ""}
+                            {post.geolocation && showModal ? 
+                                <MapModal 
+                                    opName={originalPoster.name}
+                                    setShowModal={setShowModal}
+                                    lat={Number(post.geolocation.latitude)}
+                                    lng={Number(post.geolocation.longitude)}
+                                /> 
+                                : ""
+                            }
+                        </NameAndLocation>
                         <EditAndEraseHolder permission={permission}>
                             <MdModeEdit
                                 onClick={toggleEdition}
@@ -250,6 +264,22 @@ const PostWrapper = styled.li`
                 line-height: 20px;
             }
         }
+    }
+`;
+
+const NameAndLocation = styled.div`
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+    a{
+        display: inline-block;
+        max-width: 230px;
+        word-wrap: break-word;
+    }
+
+    svg{
+        cursor: pointer;
     }
 `;
 

@@ -2,6 +2,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { useContext, useState } from "react";
 import UserContext from "../contexts/UserContext";
+import LocationOption from './Posts/Post/LocationOption';
 
 export default function PostCreatorBox(props) {
     const { posts, setPosts } = props;
@@ -10,6 +11,7 @@ export default function PostCreatorBox(props) {
     const [text, setText] = useState("");
     const [disabled, setDisabled] = useState(false);
     const [buttonText, setButtonText] = useState("Publish");
+    const [geolocation, setGeolocation] = useState(null);
 
     function publish(event) {
         event.preventDefault();
@@ -17,6 +19,9 @@ export default function PostCreatorBox(props) {
             text,
             link,
         };
+        if (geolocation !== null){
+            body.geolocation = geolocation;
+        }
 
         const config = {
             headers: {
@@ -38,6 +43,7 @@ export default function PostCreatorBox(props) {
             setText("");
             setDisabled(false);
             setButtonText("Publish");
+            
             //handling race condition with future implementation of requests on a setInterval
             if(posts.length > 0){
                 if (response.data.post.id > posts[0].id){
@@ -74,11 +80,20 @@ export default function PostCreatorBox(props) {
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                 />
-                <PublishButton disabled={disabled}>{buttonText}</PublishButton>
+                <Footer>
+                    <LocationOption geolocation={geolocation} setGeolocation={setGeolocation}/>
+                    <PublishButton disabled={disabled}>{buttonText}</PublishButton>
+                </Footer>
             </InputFields>
         </FormHolder>
     );
 }
+
+const Footer = styled.footer`
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+`;
 
 const FormHolder = styled.form`
     width: 100%;
