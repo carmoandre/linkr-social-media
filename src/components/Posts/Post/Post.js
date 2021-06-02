@@ -30,7 +30,7 @@ export default function Post(props) {
     const { postID, originalPoster, likes, linkProps } = props;
     const [caption, setCaption] = useState(props.caption);
     const { post, posts, setPosts } = props;
-    const { user } = useContext(UserContext);
+    const { user, userFollows } = useContext(UserContext);
     const [modalIsOpen, setModalIsOPen] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const [onEdition, setOnEdition] = useState(false);
@@ -114,9 +114,18 @@ export default function Post(props) {
         );
 
         request.then((response) => {
-            console.log("Sucesso ao postar comentário");
             setNewComment("");
-            //contruir objeto como o recuperado e acrescentar a mão na lista
+            setCommentsList([
+                ...commentsList,
+                {
+                    text: newComment,
+                    user: {
+                        id: user.user.id,
+                        username: user.user.username,
+                        avatar: user.user.avatar,
+                    },
+                },
+            ]);
         });
 
         request.catch((error) => {
@@ -124,6 +133,10 @@ export default function Post(props) {
                 "Não foi possível publicar o comentário. Por favor, tente novamente mais tarde."
             );
         });
+    }
+
+    function checkFollow(authorID) {
+        return userFollows.find((followed) => followed.id === authorID);
     }
 
     const youtubeID = getYoutubeID(linkProps.href);
@@ -210,23 +223,28 @@ export default function Post(props) {
                 </PostWrapper>
                 {commentsVisible &&
                     commentsList.map((comment) => (
-                        <PostCommentBox key={comment.id}>
-                            <img
-                                src={comment.user.avatar}
-                                alt={comment.user.username}
-                            />
-                            <ReadCommentDiv>
-                                <strong>
-                                    {comment.user.username}{" "}
-                                    <span>
-                                        {comment.user.id === user.user.id
-                                            ? "• post’s author"
-                                            : ""}
-                                    </span>
-                                </strong>
-                                <p>{comment.text}</p>
-                            </ReadCommentDiv>
-                        </PostCommentBox>
+                        <>
+                            <PostCommentBox key={comment.id}>
+                                <img
+                                    src={comment.user.avatar}
+                                    alt={comment.user.username}
+                                />
+                                <ReadCommentDiv>
+                                    <strong>
+                                        {comment.user.username}{" "}
+                                        <span>
+                                            {comment.user.id === user.user.id
+                                                ? "• post’s author"
+                                                : checkFollow(comment.user.id)
+                                                ? "• following"
+                                                : ""}
+                                        </span>
+                                    </strong>
+                                    <p>{comment.text}</p>
+                                </ReadCommentDiv>
+                            </PostCommentBox>
+                            <SeparatorLine />
+                        </>
                     ))}
                 {commentsVisible && (
                     <PostCommentBox>
@@ -387,8 +405,7 @@ const CommentsWrapper = styled.div`
 const PostCommentBox = styled.div`
     display: flex;
     align-items: center;
-    height: 80px;
-    padding: 25px;
+    padding: 15px 25px;
     font-size: 14px;
     line-height: 17px;
     font-family: "Lato", sans-serif;
@@ -460,4 +477,10 @@ const ReadCommentDiv = styled.div`
     display: flex;
     flex-direction: column;
     margin-left: 15px;
+`;
+
+const SeparatorLine = styled.div`
+    margin: 0 25px;
+    height: 1px;
+    background-color: #353535;
 `;

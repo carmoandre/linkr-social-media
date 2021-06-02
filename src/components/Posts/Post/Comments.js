@@ -16,7 +16,7 @@ export default function Comments(props) {
 
     useEffect(() => {
         getComments();
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     function getComments() {
         const config = {
@@ -31,7 +31,6 @@ export default function Comments(props) {
         );
 
         request.then((response) => {
-            console.log(response.data);
             setCommentsList(response.data.comments);
         });
         request.catch((error) => {
@@ -49,7 +48,7 @@ export default function Comments(props) {
     return (
         <MenuWrapper>
             <ChatOutline onClick={toggleComments} />
-            <p>{commentsList ? commentsList.length : "X"} comments</p>
+            <p>{commentsList ? commentsList.length : 0} comments</p>
         </MenuWrapper>
     );
 }
