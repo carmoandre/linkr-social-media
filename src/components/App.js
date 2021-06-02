@@ -13,9 +13,11 @@ import Login from "./Login-SignUp/Login";
 import Timeline from "./Timeline";
 import MyLikes from "./MyLikes";
 import AnyUsersPosts from "./AnyUsersPosts";
-import HashtagPosts from "./HashtagPosts";
-import MyPosts from "./MyPosts";
-import isValidUserState from "../helperFunctions/isValidUserState";
+import HashtagPosts from './HashtagPosts';
+import MyPosts from "./MyPosts"
+import isValidUserState from '../helperFunctions/isValidUserState';
+import Modal from 'react-modal';
+
 
 export default function App() {
     const [user, setUser] = useState(null);
@@ -23,6 +25,7 @@ export default function App() {
     const UserStorage = localStorage.getItem("user");
     const history = useHistory();
     const path = useLocation().pathname;
+    Modal.setAppElement(document.querySelector(".root"));
 
     useEffect(() => {
         if (UserStorage !== null) {
@@ -34,17 +37,17 @@ export default function App() {
             } else {
                 localStorage.clear();
                 setUser(undefined);
-                history.push("/");
+                if (path === "/sign-up") history.push("/sign-up");
+                else history.push("/");
             }
         } else {
             setUser(undefined);
-            history.push("/");
+            if (path === "/sign-up") history.push("/sign-up");
+            else history.push("/");
         }
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-    return user === null ? (
-        ""
-    ) : (
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    
+    return user === null ? "" : (
         <UserContext.Provider value={{ user, setUser }}>
             <BrowserRouter>
                 <ResetCSS />
@@ -61,7 +64,7 @@ export default function App() {
                     <Route exact path="/hashtag/:hashtag">
                         <HashtagPosts />
                     </Route>
-                    <Route exact path="/timeline">
+                    <Route exact path="/timeline" >
                         <Timeline />
                     </Route>
                     <Route exact path="/my-likes">
@@ -70,11 +73,13 @@ export default function App() {
                     <Route path="/">
                         <Login />
                     </Route>
+
                 </Switch>
             </BrowserRouter>
         </UserContext.Provider>
-    );
+    )
 }
+
 
 const ResetCSS = createGlobalStyle`
     /* http://meyerweb.com/eric/tools/css/reset/ 
