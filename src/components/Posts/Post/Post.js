@@ -17,7 +17,7 @@ import {
 } from "./StyledModal";
 import EmbeddedYoutube from './LinkContent/EmbeddedYoutube';
 import {MdLocationOn} from 'react-icons/md';
-import MapModal from '../../MapModal';
+import MapModal from '../../MapModal/MapModal';
 var getYoutubeID = require('get-youtube-id');
 
 

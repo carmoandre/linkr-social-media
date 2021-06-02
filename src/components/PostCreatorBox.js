@@ -2,7 +2,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { useContext, useState } from "react";
 import UserContext from "../contexts/UserContext";
-import LocationOption from './LocationOption';
+import LocationOption from './Posts/Post/LocationOption';
 
 export default function PostCreatorBox(props) {
     const { posts, setPosts } = props;
