@@ -20,7 +20,7 @@ export class MapContainer extends Component {
         initialCenter = {initialCenter}
       >
         <Marker onClick={this.onMarkerClick}
-                name={'Current location'} />
+                name={"Poster's location"} />
       </Map>
     );
   }

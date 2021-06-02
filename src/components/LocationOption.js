@@ -13,7 +13,8 @@ function handleClick(geolocation, setGeolocation){
   if ("geolocation" in navigator) {
     /* geolocation is available */
   } else {
-    alert("I'm sorry, but geolocation services are not supported by your browser.");
+    alert("Erro ao obter localização");
+    return;
   }
 
   if (geolocation) setGeolocation(null);
@@ -31,4 +32,5 @@ const LocationWrapper = styled.div`
   line-height: 16px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
