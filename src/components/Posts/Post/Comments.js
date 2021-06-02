@@ -1,16 +1,18 @@
 import axios from "axios";
 import styled from "styled-components";
 import { IoChatbubblesOutline } from "react-icons/io5";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import UserContext from "../../../contexts/UserContext";
 
-export default function Comments({
-    postID,
-    commentsVisible,
-    setCommentsVisible,
-}) {
+export default function Comments(props) {
+    const {
+        postID,
+        commentsVisible,
+        setCommentsVisible,
+        commentsList,
+        setCommentsList,
+    } = props;
     const { user } = useContext(UserContext);
-    const [commentsList, setCommentsList] = useState(0);
 
     useEffect(() => {
         getComments();
@@ -43,6 +45,7 @@ export default function Comments({
     function toggleComments() {
         commentsVisible ? setCommentsVisible(false) : setCommentsVisible(true);
     }
+
     return (
         <MenuWrapper>
             <ChatOutline onClick={toggleComments} />
