@@ -13,14 +13,14 @@ import Login from "./Login-SignUp/Login";
 import Timeline from "./Timeline";
 import MyLikes from "./MyLikes";
 import AnyUsersPosts from "./AnyUsersPosts";
-import HashtagPosts from './HashtagPosts';
-import MyPosts from "./MyPosts"
-import isValidUserState from '../helperFunctions/isValidUserState';
-import Modal from 'react-modal';
-
+import HashtagPosts from "./HashtagPosts";
+import MyPosts from "./MyPosts";
+import isValidUserState from "../helperFunctions/isValidUserState";
+import Modal from "react-modal";
 
 export default function App() {
     const [user, setUser] = useState(null);
+    const [userFollows, SetUserFollows] = useState(null);
 
     const UserStorage = localStorage.getItem("user");
     const history = useHistory();
@@ -45,10 +45,14 @@ export default function App() {
             if (path === "/sign-up") history.push("/sign-up");
             else history.push("/");
         }
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
-    
-    return user === null ? "" : (
-        <UserContext.Provider value={{ user, setUser }}>
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    return user === null ? (
+        ""
+    ) : (
+        <UserContext.Provider
+            value={{ user, setUser, userFollows, SetUserFollows }}
+        >
             <BrowserRouter>
                 <ResetCSS />
                 <Switch>
@@ -64,7 +68,7 @@ export default function App() {
                     <Route exact path="/hashtag/:hashtag">
                         <HashtagPosts />
                     </Route>
-                    <Route exact path="/timeline" >
+                    <Route exact path="/timeline">
                         <Timeline />
                     </Route>
                     <Route exact path="/my-likes">
@@ -73,13 +77,11 @@ export default function App() {
                     <Route path="/">
                         <Login />
                     </Route>
-
                 </Switch>
             </BrowserRouter>
         </UserContext.Provider>
-    )
+    );
 }
-
 
 const ResetCSS = createGlobalStyle`
     /* http://meyerweb.com/eric/tools/css/reset/ 
