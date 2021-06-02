@@ -23,8 +23,6 @@ export default function PostCreatorBox(props) {
             body.geolocation = geolocation;
         }
 
-        console.log(body);
-
         const config = {
             headers: {
                 Authorization: `Bearer ${user.token}`,
