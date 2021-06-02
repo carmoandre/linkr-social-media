@@ -39,7 +39,11 @@ export default function PostCreatorBox(props) {
             setDisabled(false);
             setButtonText("Publish");
             //handling race condition with future implementation of requests on a setInterval
-            if(response.data.post.id > posts[0].id){
+            if(posts.length > 0){
+                if (response.data.post.id > posts[0].id){
+                    setPosts([response.data.post, ...posts]);
+                }
+            } else {
                 setPosts([response.data.post, ...posts]);
             }
         });
