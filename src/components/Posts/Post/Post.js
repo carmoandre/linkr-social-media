@@ -233,7 +233,7 @@ export default function Post(props) {
                                     <strong>
                                         {comment.user.username}{" "}
                                         <span>
-                                            {comment.user.id === user.user.id
+                                            {comment.user.id === originalPoster.id
                                                 ? "• post’s author"
                                                 : checkFollow(comment.user.id)
                                                 ? "• following"
