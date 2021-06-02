@@ -90,6 +90,7 @@ export default function PostCreatorBox(props) {
 const Footer = styled.footer`
     display: flex;
     justify-content: space-between;
+    margin-top: 5px;
 `;
 
 const FormHolder = styled.form`
