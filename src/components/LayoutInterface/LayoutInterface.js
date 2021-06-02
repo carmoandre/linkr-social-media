@@ -16,7 +16,7 @@ export default function LayoutInterface({ pageTitle, children }) {
         <Main onClick={()=>{if(showMenu) setShowMenu(false)}}>
             <Header showMenu={showMenu} setShowMenu={setShowMenu}/>
             <Title>{pageTitle}
-                    {user.user.id != id && matchAnyUserPage
+                    {`${user.user.id}` !== `${id}` && matchAnyUserPage
                     ? <Follow />
                     : <> </> }
               </Title>

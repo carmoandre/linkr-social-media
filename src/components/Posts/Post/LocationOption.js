@@ -14,6 +14,7 @@ function handleClick(geolocation, setGeolocation){
     /* geolocation is available */
   } else {
     alert("Erro ao obter localização");
+    setGeolocation(null);
     return;
   }
 
