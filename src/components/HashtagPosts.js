@@ -36,8 +36,7 @@ export default function MyPosts(){
 }
 
 function hashtagOlderPostsLoader(token, hashtag, posts, setPosts, setHasMore){
-  const oldestID = posts.length === 0 ? "" : posts[posts.length-1].id;
-  const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
+  const query = posts.length === 0 ? "" : `?offset=${posts.length}`;
   getHashtagPostsAsync(token, hashtag, query)
   .then(({data})=>{
     setPosts([...posts, ...data.posts]);

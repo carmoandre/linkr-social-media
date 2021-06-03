@@ -38,7 +38,7 @@ export default function Timeline() {
     }
 
     function renderPosts() {
-        const oldestID = posts.length === 0 ? "" : posts[posts.length - 1].id;
+        const oldestID = posts.length === 0 ? "" : posts[posts.length - 1].repostId ?? posts[posts.length - 1].id;
         const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
         const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts${query}`;
         axios
@@ -60,7 +60,7 @@ export default function Timeline() {
     }
 
     function refreshPosts() {
-        const newestID = posts.length === 0 ? "" : posts[0].id;
+        const newestID = posts.length === 0 ? "" : posts[0].repostId ?? posts[0].id;
         const query = posts.length === 0 ? "" : `?earlierThan=${newestID}`;
         const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts${query}`;
         axios.get(url, config).then(({ data }) => {
