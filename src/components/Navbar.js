@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
 import UserContext from '../contexts/UserContext';
 import {useContext} from 'react';
 
@@ -19,7 +18,7 @@ export default function Navbar({showMenu, setShowMenu}){
             <Link onClick={()=>setShowMenu(false)} to="/my-likes">
                 My likes
             </Link>
-            <Link onClick={()=>setShowMenu(false)} to="/" onClick={logOut}>
+            <Link onClick={()=>logOut()} to="/">
                 Logout
             </Link>
         </Box>
