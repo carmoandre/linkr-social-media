@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import UserContext from '../contexts/UserContext';
 import {useContext} from 'react';
 
-export default function Navbar({showMenu}){
+export default function Navbar({showMenu, setShowMenu}){
     const {setUser} = useContext(UserContext);
     function logOut(){
         localStorage.clear();
@@ -12,14 +12,14 @@ export default function Navbar({showMenu}){
     }
 
     return(
-        <Box showMenu={showMenu} >
-            <Link to="/my-posts">
+        <Box onClick={(e)=>e.stopPropagation()}showMenu={showMenu} >
+            <Link onClick={()=>setShowMenu(false)}to="/my-posts">
                 My posts
             </Link>
-            <Link to="/my-likes">
+            <Link onClick={()=>setShowMenu(false)} to="/my-likes">
                 My likes
             </Link>
-            <Link to="/" onClick={logOut}>
+            <Link onClick={()=>setShowMenu(false)} to="/" onClick={logOut}>
                 Logout
             </Link>
         </Box>
@@ -33,6 +33,7 @@ const Box = styled.nav`
     top: 72px;
     right: 0;
     width: 130px;
+    height: 130px;
     background-color: #171717;
     color: #FFF;
     font-size: 17px;
@@ -58,11 +59,6 @@ const Box = styled.nav`
         font-family: Lato, sans-serif;
         font-weight: 700;
         font-size: 17px;
-
-        :nth-child(3){
-            border-bottom-left-radius: 20px;
-            padding-bottom: 8px;
-        }
 
         :hover{
             background-color: ${({showMenu})=>showMenu?"#3d3d3d":"none"};
