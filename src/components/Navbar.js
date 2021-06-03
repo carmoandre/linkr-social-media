@@ -6,24 +6,22 @@ import {useContext} from 'react';
 
 export default function Navbar({showMenu}){
     const {setUser} = useContext(UserContext);
-    const history = useHistory();
     function logOut(){
         localStorage.clear();
         setUser(undefined);
-        history.push("/");
     }
 
     return(
         <Box showMenu={showMenu} >
             <Link to="/my-posts">
-                <div><h1>My posts</h1></div>
+                My posts
             </Link>
             <Link to="/my-likes">
-                <div><h1>My likes</h1></div>
+                My likes
             </Link>
-            <em className="logout">
-                <div onClick={logOut}><h1>Logout</h1></div>
-            </em>
+            <Link to="/" onClick={logOut}>
+                Logout
+            </Link>
         </Box>
     );
 }
@@ -34,7 +32,6 @@ const Box = styled.nav`
     flex-direction: column;
     top: 72px;
     right: 0;
-    height: 130px;
     width: 130px;
     background-color: #171717;
     color: #FFF;
@@ -48,7 +45,7 @@ const Box = styled.nav`
 
     overflow: hidden;
 
-    div{
+    a{
         width: 100%;
         height: auto;
         display: flex;
@@ -58,23 +55,25 @@ const Box = styled.nav`
         margin-top: 11px;
         padding-top: 5px;
         padding-bottom: 5px;
-
-        h1 {
-            font-family: Lato, sans-serif;
-            font-weight: 700;
-            font-size: 17px;
-        }
+        font-family: Lato, sans-serif;
+        font-weight: 700;
+        font-size: 17px;
 
         :nth-child(3){
             border-bottom-left-radius: 20px;
+            padding-bottom: 8px;
         }
 
         :hover{
-            background-color: #3d3d3d;
+            background-color: ${({showMenu})=>showMenu?"#3d3d3d":"none"};
         }
 
-        :hover:nth-child(3n){
-            background-color: #b33232;
+        :nth-child(3):hover{
+            background-color: ${({showMenu})=>showMenu?"#b33232":"none"};
+        }
+
+        &&&{
+            background-color: none;
         }
     }
 `;
