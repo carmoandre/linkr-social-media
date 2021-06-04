@@ -11,7 +11,7 @@ import UserContext from "../../../contexts/UserContext";
 import axios from "axios";
 
 export default function Reposts(props){
-    const { post } = props;
+    const { post, setPostState} = props;
     const { user } = useContext(UserContext);
     const [modalIsOpen, setModalIsOPen] = useState(false);
     const [disabled, setDisabled] = useState(false);
@@ -21,6 +21,8 @@ export default function Reposts(props){
     }
     
     function repost(){
+        setDisabled(true)
+        console.log('fire')
         const config = {
             headers: {
                 Authorization: `Bearer ${user.token}`,
@@ -31,22 +33,21 @@ export default function Reposts(props){
         
         axios
             .post(url, body, config)
-            .then(({data})=>{
-                console.log(data);
+            .then(()=>{
+                post.repostCount++;
+                setPostState({...post});
             })
             .catch(()=>alert("Falha ao repostar"))
-            .finally(()=>setDisabled(false));
-    }
-
-    function onClickToRepost(){
-        if(disabled) return;
-        toggleModal();
+            .finally(()=>{
+                setDisabled(false)
+                toggleModal();
+            });
     }
 
     return (
         <>
             <MenuWrapper>
-                <RepostIcon onClick={onClickToRepost}></RepostIcon>
+                <RepostIcon onClick={toggleModal}></RepostIcon>
                 <p>{post.repostCount} re-posts</p>
             </MenuWrapper>
             <StyledModal
@@ -63,7 +64,7 @@ export default function Reposts(props){
                     <GoBackButton disabled={disabled} onClick={toggleModal}>
                         No, cancel
                     </GoBackButton>
-                    <ConfirmButton disabled={disabled} onclick={repost}>
+                    <ConfirmButton disabled={disabled} onClick={repost}>
                         Yes, share!
                     </ConfirmButton>
                 </div>

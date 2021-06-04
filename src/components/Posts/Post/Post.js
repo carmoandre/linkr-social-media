@@ -43,6 +43,7 @@ export default function Post(props) {
     const [commentsList, setCommentsList] = useState(0);
     const [newComment, setNewComment] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [, setPostState] = useState(post);
 
     const likesProps = {
         like,
@@ -169,7 +170,7 @@ export default function Post(props) {
                         />
                         <Reposts 
                             post={post}
-                            toggleModal={toggleModal}
+                            setPostState={setPostState}
                         />
                     </section>
                     <section className="post--body">
