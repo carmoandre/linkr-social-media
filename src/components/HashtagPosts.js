@@ -6,13 +6,14 @@ import { getHashtagPostsAsync } from '../helperFunctions/http/apiRequests';
 import Loading from './Loading';
 import UserContext from '../contexts/UserContext';
 import InfiniteScroll from 'react-infinite-scroller';
+import axios from 'axios';
 
-export default function MyPosts(){
+export default function HashtagPosts(){
+  const { user, SetUserFollows } = useContext(UserContext);
 
   const [posts, setPosts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const {hashtag} = useParams();
-  const { user } = useContext(UserContext);
   const token = user.token;
 
   useEffect(()=>{
@@ -20,6 +21,20 @@ export default function MyPosts(){
     setPosts([]);
     setHasMore(true);
   },[user, hashtag]);
+
+  useEffect(()=>{
+    const config = {
+      headers: {
+          Authorization: `Bearer ${user.token}`,
+      },
+    };
+    const url =
+        "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows";
+    axios.get(url, config).then(({ data }) => {
+        SetUserFollows(data.users);
+    });
+  },[]); // eslint-disable-line react-hooks/exhaustive-deps
+
 
   return (
     <LayoutInterface pageTitle={`#${hashtag}`}>
@@ -36,8 +51,7 @@ export default function MyPosts(){
 }
 
 function hashtagOlderPostsLoader(token, hashtag, posts, setPosts, setHasMore){
-  const oldestID = posts.length === 0 ? "" : posts[posts.length-1].id;
-  const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
+  const query = posts.length === 0 ? "" : `?offset=${posts.length}`;
   getHashtagPostsAsync(token, hashtag, query)
   .then(({data})=>{
     setPosts([...posts, ...data.posts]);

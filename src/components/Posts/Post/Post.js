@@ -232,8 +232,8 @@ export default function Post(props) {
                 </PostWrapper>
                 {commentsVisible &&
                     commentsList.map((comment) => (
-                        <>
-                            <PostCommentBox key={comment.id}>
+                        <div key={comment.id}>
+                            <PostCommentBox>
                                 <Link to={`/user/${comment.user.id}`}><img
                                     src={comment.user.avatar}
                                     alt={comment.user.username}
@@ -242,18 +242,18 @@ export default function Post(props) {
                                     <strong>
                                     <Link to={`/user/${comment.user.id}`}>{comment.user.username}</Link>{" "}
                                         <span>
-                                            {comment.user.id === user.user.id
+                                            {comment.user.id === originalPoster.id
                                                 ? "• post’s author"
                                                 : checkFollow(comment.user.id)
                                                 ? "• following"
                                                 : ""}
                                         </span>
                                     </strong>
-                                    <p>{comment.text}</p>
+                                    <CommentText>{comment.text}</CommentText>
                                 </ReadCommentDiv>
                             </PostCommentBox>
                             <SeparatorLine />
-                        </>
+                        </div>
                     ))}
                 {commentsVisible && (
                     <PostCommentBox>
@@ -270,25 +270,29 @@ export default function Post(props) {
                     </PostCommentBox>
                 )}
             </CommentsWrapper>
-            <StyledModal
-                isOpen={modalIsOpen}
-                onRequestClose={toggleModal}
-                contentLabel="Erase Modal"
-            >
-                <ModalText>
-                    {disabled
-                        ? "Excluindo..."
-                        : `Tem certeza que deseja excluir essa publicação?`}
-                </ModalText>
-                <div>
-                    <GoBackButton disabled={disabled} onClick={toggleModal}>
-                        Não, voltar
-                    </GoBackButton>
-                    <ConfirmButton disabled={disabled} onClick={erase}>
-                        Sim, excluir
-                    </ConfirmButton>
-                </div>
-            </StyledModal>
+            {modalIsOpen
+                ?
+                <StyledModal
+                    isOpen={modalIsOpen}
+                    onRequestClose={toggleModal}
+                    contentLabel="Erase Modal"
+                >
+                    <ModalText>
+                        {disabled
+                            ? "Excluindo..."
+                            : `Tem certeza que deseja excluir essa publicação?`}
+                    </ModalText>
+                    <div>
+                        <GoBackButton disabled={disabled} onClick={toggleModal}>
+                            Não, voltar
+                        </GoBackButton>
+                        <ConfirmButton disabled={disabled} onClick={erase}>
+                            Sim, excluir
+                        </ConfirmButton>
+                    </div>
+                </StyledModal>
+                :""
+            }
         </>
     );
 }
@@ -495,4 +499,8 @@ const SeparatorLine = styled.div`
     margin: 0 25px;
     height: 1px;
     background-color: #353535;
+`;
+
+const CommentText = styled.p`
+    word-break: break-word;
 `;

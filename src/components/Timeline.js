@@ -60,11 +60,11 @@ export default function Timeline() {
     }
 
     function refreshPosts() {
-        const newestID = posts.length === 0 ? "" : posts[0].id;
+        const newestID = posts.length === 0 ? "" : posts[0].repostId ?? posts[0].id;
         const query = posts.length === 0 ? "" : `?earlierThan=${newestID}`;
         const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts${query}`;
         axios.get(url, config).then(({ data }) => {
-            setPosts([...data.posts, ...posts]);
+            if (data.posts.length>0) setPosts([...data.posts, ...posts]);
         });
     }
 

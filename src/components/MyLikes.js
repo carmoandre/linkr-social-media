@@ -5,16 +5,31 @@ import Loading from "./Loading";
 import Posts from "./Posts/Posts";
 import InfiniteScroll from 'react-infinite-scroller';
 import {getUsersLikesAsync} from '../helperFunctions/http/apiRequests';
+import axios from 'axios';
 
 export default function MyLikes () {
+    const { user, SetUserFollows } = useContext(UserContext);
+
     const [posts, setPosts] = useState([]);
     const [hasMore, setHasMore] = useState(true);
-    const { user } = useContext(UserContext);
     const token = user.token;
 
     useEffect(()=>{
         window.scrollTo(0, 0);
-    },[user]);
+    },[]);
+
+    useEffect(()=>{
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
+        };
+        const url =
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows";
+        axios.get(url, config).then(({ data }) => {
+            SetUserFollows(data.users);
+        });
+    },[]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
     <LayoutInterface pageTitle="my likes">

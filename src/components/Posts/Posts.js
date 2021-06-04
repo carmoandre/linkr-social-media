@@ -9,7 +9,7 @@ export default function Posts({ posts, renderPosts, setPosts }) {
                     parsePost(post);
                 return (
                     <Post
-                        key={id}
+                        key={post.repostId ?? id}
                         postID={id}
                         renderPosts={renderPosts}
                         originalPoster={originalPoster}
