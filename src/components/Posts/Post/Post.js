@@ -261,25 +261,29 @@ export default function Post(props) {
                     </PostCommentBox>
                 )}
             </CommentsWrapper>
-            <StyledModal
-                isOpen={modalIsOpen}
-                onRequestClose={toggleModal}
-                contentLabel="Erase Modal"
-            >
-                <ModalText>
-                    {disabled
-                        ? "Excluindo..."
-                        : `Tem certeza que deseja excluir essa publicação?`}
-                </ModalText>
-                <div>
-                    <GoBackButton disabled={disabled} onClick={toggleModal}>
-                        Não, voltar
-                    </GoBackButton>
-                    <ConfirmButton disabled={disabled} onClick={erase}>
-                        Sim, excluir
-                    </ConfirmButton>
-                </div>
-            </StyledModal>
+            {modalIsOpen
+                ?
+                <StyledModal
+                    isOpen={modalIsOpen}
+                    onRequestClose={toggleModal}
+                    contentLabel="Erase Modal"
+                >
+                    <ModalText>
+                        {disabled
+                            ? "Excluindo..."
+                            : `Tem certeza que deseja excluir essa publicação?`}
+                    </ModalText>
+                    <div>
+                        <GoBackButton disabled={disabled} onClick={toggleModal}>
+                            Não, voltar
+                        </GoBackButton>
+                        <ConfirmButton disabled={disabled} onClick={erase}>
+                            Sim, excluir
+                        </ConfirmButton>
+                    </div>
+                </StyledModal>
+                :""
+            }
         </>
     );
 }
