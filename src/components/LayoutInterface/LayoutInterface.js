@@ -15,6 +15,7 @@ export default function LayoutInterface({ pageTitle, children }) {
     return(
         <Main onClick={()=>{if(showMenu) setShowMenu(false)}}>
             <Header showMenu={showMenu} setShowMenu={setShowMenu}/>
+            <MobileSearchBarDistance />
             <Title>{pageTitle}
                     {`${user.user.id}` !== `${id}` && matchAnyUserPage
                     ? <Follow />
@@ -103,7 +104,7 @@ const Box = styled.div`
     }
 `;
 
-/*const MobileSearchBarDistance = styled.div`
+const MobileSearchBarDistance = styled.div`
     @media (max-width: 430px) {
         background-color: #333333;
         height: 65px;
@@ -113,4 +114,4 @@ const Box = styled.div`
         left: 0;
         right: 0;
     }
-`;*/
+`;

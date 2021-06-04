@@ -34,18 +34,18 @@ const Box = styled.nav`
     width: 130px;
     height: 130px;
     background-color: #171717;
-    color: #FFF;
+    color: #fff;
     font-size: 17px;
     border-bottom-left-radius: 20px;
 
-    z-index: 1;
-    top: ${({showMenu})=>showMenu?"72px":"-58px"};
+    z-index: 2;
+    top: ${({ showMenu }) => (showMenu ? "72px" : "-58px")};
 
     transition: top 150ms ease-in-out;
 
     overflow: hidden;
 
-    a{
+    a {
         width: 100%;
         height: auto;
         display: flex;

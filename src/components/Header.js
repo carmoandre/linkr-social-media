@@ -63,50 +63,6 @@ export default function Header({ showMenu, setShowMenu }) {
                 <Link to="/timeline">
                     <h1>linkr</h1>
                 </Link>
-                <SearchBox>
-                    <SearchBar>
-                        <SearchInput
-                            type="text"
-                            placeholder="Search for people and friends"
-                            minLength={3}
-                            debounceTimeout={300}
-                            value={searchInputValue}
-                            onChange={(e) => {
-                                setSearchInputValue(e.target.value);
-                                searchUsers(e.target.value);
-                            }}
-                        />
-                        <SearchButton />
-                    </SearchBar>
-
-                    {searchResults ? (
-                        <ResultsHolder>
-                            {searchResults.map((user) => (
-                                <UserLink
-                                    key={user.id}
-                                    to={`/user/${user.id}`}
-                                    user={user}
-                                    onClick={()=>{
-                                        setSearchResults(null);
-                                        setSearchInputValue("")
-                                    }}
-                                >
-                                    <UserRoundedIMG user={user} />
-                                    <p>
-                                        {user.username}{" "}
-                                        {user.isFollowingLoggedUser ? (
-                                            <span> • following</span>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </p>
-                                </UserLink>
-                            ))}
-                        </ResultsHolder>
-                    ) : (
-                        ""
-                    )}
-                </SearchBox>
                 <div>
                     {showMenu ? (
                         <BiChevronUp
@@ -130,6 +86,50 @@ export default function Header({ showMenu, setShowMenu }) {
                     />
                 </div>
             </Title>
+            <SearchBox>
+                <SearchBar>
+                    <SearchInput
+                        type="text"
+                        value={searchInputValue}
+                        placeholder="Search for people and friends"
+                        minLength={3}
+                        debounceTimeout={300}
+                        onChange={(e) => {
+                            setSearchInputValue(e.target.value);
+                            searchUsers(e.target.value);
+                        }}
+                    />
+                    <SearchButton />
+                </SearchBar>
+
+                {searchResults ? (
+                    <ResultsHolder>
+                        {searchResults.map((user) => (
+                            <UserLink
+                                key={user.id}
+                                to={`/user/${user.id}`}
+                                user={user}
+                                onClick={()=>{
+                                    setSearchResults(null);
+                                    setSearchInputValue("")
+                                }}
+                            >
+                                <UserRoundedIMG user={user} />
+                                <p>
+                                    {user.username}{" "}
+                                    {user.isFollowingLoggedUser ? (
+                                        <span> • following</span>
+                                    ) : (
+                                        ""
+                                    )}
+                                </p>
+                            </UserLink>
+                        ))}
+                    </ResultsHolder>
+                ) : (
+                    ""
+                )}
+            </SearchBox>
             {<Navbar showMenu={showMenu} setShowMenu={setShowMenu} />}
         </>
     );
@@ -144,7 +144,7 @@ const Title = styled.div`
     justify-content: space-between;
     padding: 0 17px 0 26px;
     position: fixed;
-    z-index: 2;
+    z-index: 3;
     top: 0;
     left: 0;
 
