@@ -232,8 +232,8 @@ export default function Post(props) {
                 </PostWrapper>
                 {commentsVisible &&
                     commentsList.map((comment) => (
-                        <>
-                            <PostCommentBox key={comment.id}>
+                        <div key={comment.id}>
+                            <PostCommentBox>
                                 <Link to={`/user/${comment.user.id}`}><img
                                     src={comment.user.avatar}
                                     alt={comment.user.username}
@@ -253,7 +253,7 @@ export default function Post(props) {
                                 </ReadCommentDiv>
                             </PostCommentBox>
                             <SeparatorLine />
-                        </>
+                        </div>
                     ))}
                 {commentsVisible && (
                     <PostCommentBox>
