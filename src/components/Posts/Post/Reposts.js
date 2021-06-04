@@ -22,7 +22,6 @@ export default function Reposts(props){
     
     function repost(){
         setDisabled(true)
-        console.log('fire')
         const config = {
             headers: {
                 Authorization: `Bearer ${user.token}`,
