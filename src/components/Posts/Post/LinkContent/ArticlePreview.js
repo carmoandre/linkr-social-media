@@ -1,10 +1,20 @@
+import { useState } from "react";
 import styled from "styled-components";
+import PreviewModal from "./PreviewModal";
+
 
 export default function ArticlePreview({ linkProps }) {
   const { href, title, description, srcImage } = linkProps;
+  const [showModal, setShowModal] = useState(false)
+
+
+  function openModal () {
+    setShowModal(prev => !prev);
+  }
 
   return (
-    <PreviewWrapper href={href} target="_blank">
+    <>
+    <PreviewWrapper onClick={openModal} target="modalURL">
       <ul className="preview--textList">
         <li className="textList--title">{title}</li>
         <li className="textList--description">{description}</li>
@@ -15,6 +25,8 @@ export default function ArticlePreview({ linkProps }) {
         <img src={srcImage} alt={title} />
       </picture>
     </PreviewWrapper>
+    <PreviewModal showModal={showModal} setShowModal={setShowModal} href={href}/>
+    </>
   );
 }
 
