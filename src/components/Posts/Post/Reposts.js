@@ -33,7 +33,11 @@ export default function Reposts(props){
         axios
             .post(url, body, config)
             .then(()=>{
-                post.repostCount++;
+                if (post.hasOwnProperty(repostCount)){
+                    post.repostCount++;
+                } else {
+                    post.repostCount = 1;
+                }
                 setPostState({...post});
             })
             .catch(()=>alert("Falha ao repostar"))
