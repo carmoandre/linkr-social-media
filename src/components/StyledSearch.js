@@ -5,7 +5,7 @@ import { BiSearch } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 const SearchBox = styled.div`
-    position: absolute;
+    position: fixed;
     margin: auto;
     top: 13px;
     left: 0;
@@ -18,10 +18,12 @@ const SearchBox = styled.div`
     border-radius: 8px;
     display: flex;
     flex-direction: column;
+    z-index: 3;
     @media (max-width: 430px) {
         margin-top: 72px;
         width: 93%;
         max-height: 290px;
+        z-index: 2;
     }
 `;
 
