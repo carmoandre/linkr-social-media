@@ -43,15 +43,11 @@ export default function PostCreatorBox(props) {
             setText("");
             setDisabled(false);
             setButtonText("Publish");
-            
-            //handling race condition with future implementation of requests on a setInterval
-            if(posts.length > 0){
-                if (response.data.post.id > posts[0].id){
-                    setPosts([response.data.post, ...posts]);
-                }
-            } else {
-                setPosts([response.data.post, ...posts]);
+            const newPost = response.data.post;
+            if (response.data.hasOwnProperty("geolocation")){
+                newPost.geolocation = response.data.geolocation;
             }
+            setPosts([newPost, ...posts]);
         });
 
         request.catch((error) => {
