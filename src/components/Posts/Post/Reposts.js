@@ -33,7 +33,7 @@ export default function Reposts(props){
         axios
             .post(url, body, config)
             .then(()=>{
-                if (post.hasOwnProperty(repostCount)){
+                if (post.hasOwnProperty("repostCount")){
                     post.repostCount++;
                 } else {
                     post.repostCount = 1;
