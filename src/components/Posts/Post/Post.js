@@ -21,6 +21,7 @@ import Comments from "./Comments";
 import Reposts from "./Reposts";
 import { MdLocationOn } from "react-icons/md";
 import MapModal from "../../MapModal/MapModal";
+import RepostDrawer from './RepostDrawer';
 var getYoutubeID = require("get-youtube-id");
 
 ReactModal.defaultStyles.overlay.zIndex = 5;
@@ -139,11 +140,13 @@ export default function Post(props) {
     function checkFollow(authorID) {
         return userFollows.find((followed) => followed.id === authorID);
     }
-
     const youtubeID = getYoutubeID(linkProps.href);
     return (
         <>
             <CommentsWrapper>
+                {post.hasOwnProperty("repostedBy")
+                ?<RepostDrawer post={post}/>
+                :""}
                 <PostWrapper>
                     <section className="post--avatarAndLikes">
                         <Link
@@ -165,7 +168,7 @@ export default function Post(props) {
                             setCommentsList={setCommentsList}
                         />
                         <Reposts 
-                            posts={posts}
+                            post={post}
                             toggleModal={toggleModal}
                         />
                     </section>
@@ -405,6 +408,9 @@ const CommentsWrapper = styled.div`
     background: #1e1e1e;
     border-radius: 16px;
     margin-bottom: 25px;
+    @media (max-width: 430px) {
+        border-radius: 0;
+    }
 `;
 
 const PostCommentBox = styled.div`

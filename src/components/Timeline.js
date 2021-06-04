@@ -38,7 +38,7 @@ export default function Timeline() {
     }
 
     function renderPosts() {
-        const oldestID = posts.length === 0 ? "" : posts[posts.length - 1].id;
+        const oldestID = posts.length === 0 ? "" : posts[posts.length - 1].repostId ?? posts[posts.length - 1].id;
         const query = posts.length === 0 ? "" : `?olderThan=${oldestID}`;
         const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts${query}`;
         axios

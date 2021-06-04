@@ -11,7 +11,7 @@ import UserContext from "../../../contexts/UserContext";
 import axios from "axios";
 
 export default function Reposts(props){
-    const { posts } = props;
+    const { post } = props;
     const { user } = useContext(UserContext);
     const [modalIsOpen, setModalIsOPen] = useState(false);
     const [disabled, setDisabled] = useState(false);
@@ -27,17 +27,27 @@ export default function Reposts(props){
             },
         };
         const body = {};
-        const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/ID_DO_POST/share`
+        const url = `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}/share`
         
         axios
-            .get(url, body, config)
+            .post(url, body, config)
+            .then(({data})=>{
+                console.log(data);
+            })
+            .catch(()=>alert("Falha ao repostar"))
+            .finally(()=>setDisabled(false));
+    }
+
+    function onClickToRepost(){
+        if(disabled) return;
+        toggleModal();
     }
 
     return (
         <>
             <MenuWrapper>
-                <RepostIcon onClick={toggleModal}></RepostIcon>
-                <p>re-pos</p>
+                <RepostIcon onClick={onClickToRepost}></RepostIcon>
+                <p>re-posts</p>
             </MenuWrapper>
             <StyledModal
                 isOpen={modalIsOpen}
