@@ -11,8 +11,6 @@ export default function PreviewModal ({showModal, setShowModal, href}) {
     function closemodal () {
         setShowModal(false)
     }
-
-    console.log("rodou PreviewModal")
     if(showModal) {
         return (
                 <ModalDiv   isOpen={showModal}

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import ReactModal from "react-modal";
 import styled from "styled-components";
 import PreviewModal from "./PreviewModal";
 
@@ -10,7 +9,6 @@ export default function ArticlePreview({ linkProps }) {
 
 
   function openModal () {
-    console.log("rodou openModal")
     setShowModal(prev => !prev);
   }
 
