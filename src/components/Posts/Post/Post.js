@@ -18,6 +18,7 @@ import {
 } from "./StyledModal";
 import EmbeddedYoutube from "./LinkContent/EmbeddedYoutube";
 import Comments from "./Comments";
+import Reposts from "./Reposts";
 import { MdLocationOn } from "react-icons/md";
 import MapModal from "../../MapModal/MapModal";
 var getYoutubeID = require("get-youtube-id");
@@ -163,6 +164,10 @@ export default function Post(props) {
                             commentsList={commentsList}
                             setCommentsList={setCommentsList}
                         />
+                        <Reposts 
+                            posts={posts}
+                            toggleModal={toggleModal}
+                        />
                     </section>
                     <section className="post--body">
                         <header>
@@ -225,13 +230,13 @@ export default function Post(props) {
                     commentsList.map((comment) => (
                         <>
                             <PostCommentBox key={comment.id}>
-                                <img
+                                <Link to={`/user/${comment.user.id}`}><img
                                     src={comment.user.avatar}
                                     alt={comment.user.username}
-                                />
+                                /></Link>
                                 <ReadCommentDiv>
                                     <strong>
-                                        {comment.user.username}{" "}
+                                    <Link to={`/user/${comment.user.id}`}>{comment.user.username}</Link>{" "}
                                         <span>
                                             {comment.user.id === user.user.id
                                                 ? "• post’s author"
