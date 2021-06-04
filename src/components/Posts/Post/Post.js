@@ -249,7 +249,7 @@ export default function Post(props) {
                                                 : ""}
                                         </span>
                                     </strong>
-                                    <p>{comment.text}</p>
+                                    <CommentText>{comment.text}</CommentText>
                                 </ReadCommentDiv>
                             </PostCommentBox>
                             <SeparatorLine />
@@ -499,4 +499,8 @@ const SeparatorLine = styled.div`
     margin: 0 25px;
     height: 1px;
     background-color: #353535;
+`;
+
+const CommentText = styled.p`
+    word-break: break-word;
 `;
