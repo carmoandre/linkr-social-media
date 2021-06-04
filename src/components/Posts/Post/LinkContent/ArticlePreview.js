@@ -14,7 +14,7 @@ export default function ArticlePreview({ linkProps }) {
 
   return (
     <>
-    <PreviewWrapper onClick={openModal} target="modalURL">
+    <PreviewWrapper onClick={openModal}>
       <ul className="preview--textList">
         <li className="textList--title">{title}</li>
         <li className="textList--description">{description}</li>
@@ -30,7 +30,8 @@ export default function ArticlePreview({ linkProps }) {
   );
 }
 
-const PreviewWrapper = styled.a`
+const PreviewWrapper = styled.div`
+  cursor: pointer;
   width: 100%;
   border-radius: 11px;
   border: 1px solid #4d4d4d;
