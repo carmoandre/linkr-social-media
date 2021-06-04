@@ -7,16 +7,27 @@ import Follow from "../Follow";
 
 export default function LayoutInterface({ pageTitle, children }) {
     const [showMenu, setShowMenu] = useState(false);
-    const { user } = useContext(UserContext)
+    const { user } = useContext(UserContext);
 
-    return(
-        <Main onClick={()=>{if(showMenu) setShowMenu(false)}}>
-            <Header showMenu={showMenu} setShowMenu={setShowMenu}/>
-            <Title>{pageTitle}
-                    {pageTitle !== "my posts" && pageTitle !== "my likes" && pageTitle !== `${user.user.username}’s posts` && pageTitle !== "timeline"
-                    ? <Follow />
-                    : <> </> }
-              </Title>
+    return (
+        <Main
+            onClick={() => {
+                if (showMenu) setShowMenu(false);
+            }}
+        >
+            <Header showMenu={showMenu} setShowMenu={setShowMenu} />
+            <MobileSearchBarDistance />
+            <Title>
+                {pageTitle}
+                {pageTitle !== "my posts" &&
+                pageTitle !== "my likes" &&
+                pageTitle !== `${user.user.username}’s posts` &&
+                pageTitle !== "timeline" ? (
+                    <Follow />
+                ) : (
+                    <> </>
+                )}
+            </Title>
             <Content>
                 <Box>{children}</Box>
                 <Trending />
@@ -100,7 +111,7 @@ const Box = styled.div`
     }
 `;
 
-/*const MobileSearchBarDistance = styled.div`
+const MobileSearchBarDistance = styled.div`
     @media (max-width: 430px) {
         background-color: #333333;
         height: 65px;
@@ -110,4 +121,4 @@ const Box = styled.div`
         left: 0;
         right: 0;
     }
-`;*/
+`;
