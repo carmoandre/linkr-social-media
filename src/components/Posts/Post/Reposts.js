@@ -47,7 +47,7 @@ export default function Reposts(props){
         <>
             <MenuWrapper>
                 <RepostIcon onClick={onClickToRepost}></RepostIcon>
-                <p>re-posts</p>
+                <p>{post.repostCount} re-posts</p>
             </MenuWrapper>
             <StyledModal
                 isOpen={modalIsOpen}
