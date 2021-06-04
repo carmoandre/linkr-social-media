@@ -18,8 +18,10 @@ import {
 } from "./StyledModal";
 import EmbeddedYoutube from "./LinkContent/EmbeddedYoutube";
 import Comments from "./Comments";
+import Reposts from "./Reposts";
 import { MdLocationOn } from "react-icons/md";
 import MapModal from "../../MapModal/MapModal";
+import RepostDrawer from './RepostDrawer';
 var getYoutubeID = require("get-youtube-id");
 
 ReactModal.defaultStyles.overlay.zIndex = 5;
@@ -41,6 +43,7 @@ export default function Post(props) {
     const [commentsList, setCommentsList] = useState(0);
     const [newComment, setNewComment] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [, setPostState] = useState(post);
 
     const likesProps = {
         like,
@@ -138,11 +141,13 @@ export default function Post(props) {
     function checkFollow(authorID) {
         return userFollows.find((followed) => followed.id === authorID);
     }
-
     const youtubeID = getYoutubeID(linkProps.href);
     return (
         <>
             <CommentsWrapper>
+                {post.hasOwnProperty("repostedBy")
+                ?<RepostDrawer post={post}/>
+                :""}
                 <PostWrapper>
                     <section className="post--avatarAndLikes">
                         <Link
@@ -162,6 +167,10 @@ export default function Post(props) {
                             setCommentsVisible={setCommentsVisible}
                             commentsList={commentsList}
                             setCommentsList={setCommentsList}
+                        />
+                        <Reposts 
+                            post={post}
+                            setPostState={setPostState}
                         />
                     </section>
                     <section className="post--body">
@@ -225,13 +234,13 @@ export default function Post(props) {
                     commentsList.map((comment) => (
                         <>
                             <PostCommentBox key={comment.id}>
-                                <img
+                                <Link to={`/user/${comment.user.id}`}><img
                                     src={comment.user.avatar}
                                     alt={comment.user.username}
-                                />
+                                /></Link>
                                 <ReadCommentDiv>
                                     <strong>
-                                        {comment.user.username}{" "}
+                                    <Link to={`/user/${comment.user.id}`}>{comment.user.username}</Link>{" "}
                                         <span>
                                             {comment.user.id === user.user.id
                                                 ? "• post’s author"
@@ -400,6 +409,9 @@ const CommentsWrapper = styled.div`
     background: #1e1e1e;
     border-radius: 16px;
     margin-bottom: 25px;
+    @media (max-width: 430px) {
+        border-radius: 0;
+    }
 `;
 
 const PostCommentBox = styled.div`

@@ -47,7 +47,7 @@ export default function Comments(props) {
     return (
         <MenuWrapper>
             <ChatOutline onClick={toggleComments} />
-            <p>{commentsList ? commentsList.length : 0} comments</p>
+            <p>{commentsList ? commentsList.length : 0} {commentsList.length===1 ? "comment" : "comments"}</p>
         </MenuWrapper>
     );
 }
